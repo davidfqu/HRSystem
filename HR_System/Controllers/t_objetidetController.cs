@@ -1,0 +1,136 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using HR_System.Models;
+
+namespace HR_System.Controllers
+{
+    public class t_objetidetController : Controller
+    {
+        private HRSystemEntities db = new HRSystemEntities();
+
+        // GET: t_objetidet
+        public ActionResult Index()
+        {
+            var t_objetidet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos);
+            return View(t_objetidet.ToList());
+        }
+
+        // GET: t_objetidet/Details/5
+        public ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            t_objetidet t_objetidet = db.t_objetidet.Find(id);
+            if (t_objetidet == null)
+            {
+                return HttpNotFound();
+            }
+            return View(t_objetidet);
+        }
+
+        // GET: t_objetidet/Create
+        public ActionResult Create()
+        {
+            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip");
+            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado");
+            return View();
+        }
+
+        // POST: t_objetidet/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "planta,folio,consec,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet)
+        {
+            if (ModelState.IsValid)
+            {
+                db.t_objetidet.Add(t_objetidet);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
+            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado", t_objetidet.planta);
+            return View(t_objetidet);
+        }
+
+        // GET: t_objetidet/Edit/5
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            t_objetidet t_objetidet = db.t_objetidet.Find(id);
+            if (t_objetidet == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
+            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado", t_objetidet.planta);
+            return View(t_objetidet);
+        }
+
+        // POST: t_objetidet/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "planta,folio,consec,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(t_objetidet).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
+            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado", t_objetidet.planta);
+            return View(t_objetidet);
+        }
+
+        // GET: t_objetidet/Delete/5
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            t_objetidet t_objetidet = db.t_objetidet.Find(id);
+            if (t_objetidet == null)
+            {
+                return HttpNotFound();
+            }
+            return View(t_objetidet);
+        }
+
+        // POST: t_objetidet/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            t_objetidet t_objetidet = db.t_objetidet.Find(id);
+            db.t_objetidet.Remove(t_objetidet);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

@@ -1,0 +1,130 @@
+﻿@model IEnumerable<HR_System.Models.t_objetidet>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.objetivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descrip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.peso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cancelado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nota_cancel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_cancel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.u_cancel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resultado1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nota_r1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_r1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resultado2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nota_r2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_r2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_metricos.descrip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_objetivos.empleado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.objetivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descrip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.peso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cancelado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nota_cancel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_cancel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.u_cancel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.resultado1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nota_r1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_r1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.resultado2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nota_r2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_r2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_metricos.descrip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_objetivos.empleado)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

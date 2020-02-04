@@ -1,0 +1,684 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HRSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="t_config">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="planta" Type="varchar" MaxLength="10" />
+          <Property Name="env_email" Type="varchar" MaxLength="1" />
+          <Property Name="server_mail" Type="varchar" MaxLength="50" />
+          <Property Name="send_email" Type="varchar" MaxLength="50" />
+          <Property Name="send_passwd" Type="varchar" MaxLength="30" />
+          <Property Name="port" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="ind_html" Type="varchar" MaxLength="1" />
+          <Property Name="ind_ssl" Type="varchar" MaxLength="1" />
+          <Property Name="ind_alerta1" Type="varchar" MaxLength="1" />
+          <Property Name="ind_alerta2" Type="varchar" MaxLength="1" />
+          <Property Name="ind_alerta3" Type="varchar" MaxLength="1" />
+          <Property Name="ind_alerta4" Type="varchar" MaxLength="1" />
+          <Property Name="sys_path" Type="varchar" MaxLength="100" />
+          <Property Name="ind_emailtest" Type="varchar" MaxLength="1" />
+          <Property Name="test_email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="t_empleados">
+          <Key>
+            <PropertyRef Name="empleado" />
+          </Key>
+          <Property Name="empleado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="supervisor" Type="varchar" MaxLength="20" />
+          <Property Name="usuario" Type="varchar" MaxLength="20" />
+          <Property Name="f_id" Type="datetime" />
+          <Property Name="planta" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="t_metricos">
+          <Key>
+            <PropertyRef Name="metrico" />
+          </Key>
+          <Property Name="metrico" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="descrip" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="t_objetidet">
+          <Key>
+            <PropertyRef Name="planta" />
+            <PropertyRef Name="folio" />
+            <PropertyRef Name="consec" />
+          </Key>
+          <Property Name="planta" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="folio" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="consec" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="objetivo" Type="varchar" MaxLength="100" />
+          <Property Name="descrip" Type="varchar" MaxLength="500" />
+          <Property Name="peso" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="metrico" Type="varchar" MaxLength="10" />
+          <Property Name="cancelado" Type="varchar" MaxLength="1" />
+          <Property Name="nota_cancel" Type="varchar" MaxLength="100" />
+          <Property Name="f_cancel" Type="datetime" />
+          <Property Name="u_cancel" Type="varchar" MaxLength="20" />
+          <Property Name="resultado1" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="nota_r1" Type="varchar" MaxLength="500" />
+          <Property Name="f_r1" Type="datetime" />
+          <Property Name="resultado2" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="nota_r2" Type="varchar" MaxLength="500" />
+          <Property Name="f_r2" Type="datetime" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_objetivos">
+          <Key>
+            <PropertyRef Name="planta" />
+            <PropertyRef Name="folio" />
+          </Key>
+          <Property Name="planta" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="folio" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="empleado" Type="varchar" MaxLength="20" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="axo" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="estatus" Type="varchar" MaxLength="1" />
+          <Property Name="aprobado" Type="varchar" MaxLength="1" />
+          <Property Name="f_aprobado" Type="datetime" />
+          <Property Name="revision1" Type="varchar" MaxLength="1" />
+          <Property Name="nota_r1" Type="varchar" MaxLength="500" />
+          <Property Name="f_r1" Type="datetime" />
+          <Property Name="revision2" Type="varchar" MaxLength="1" />
+          <Property Name="nota_r2" Type="varchar" MaxLength="500" />
+          <Property Name="f_r2" Type="datetime" />
+          <Property Name="calificacion" Type="varchar" MaxLength="1" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_plantas">
+          <Key>
+            <PropertyRef Name="planta" />
+          </Key>
+          <Property Name="planta" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="servidor" Type="varchar" MaxLength="50" />
+          <Property Name="instancia_sql" Type="varchar" MaxLength="50" />
+          <Property Name="nombre_bd" Type="varchar" MaxLength="50" />
+          <Property Name="usuario_bd" Type="varchar" MaxLength="20" />
+          <Property Name="password_bd" Type="varchar" MaxLength="20" />
+          <Property Name="direct_email" Type="varchar" MaxLength="50" />
+          <Property Name="gte_email" Type="varchar" MaxLength="50" />
+          <Property Name="gte_email2" Type="varchar" MaxLength="50" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_usuarios">
+          <Key>
+            <PropertyRef Name="usuario" />
+          </Key>
+          <Property Name="usuario" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="planta" Type="varchar" MaxLength="10" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="activo" Type="varchar" MaxLength="1" />
+          <Property Name="rol" Type="varchar" MaxLength="10" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
+        <Association Name="fk_emp_pta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_empleados">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleado">
+          <End Role="t_usuarios" Type="Self.t_usuarios" Multiplicity="0..1" />
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_usuarios">
+              <PropertyRef Name="usuario" />
+            </Principal>
+            <Dependent Role="t_empleados">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_obj_emp">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_objetivos">
+              <PropertyRef Name="empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_obj_pta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="1" />
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_objetivos">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_objd_folio">
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="1" />
+          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_objetivos">
+              <PropertyRef Name="planta" />
+              <PropertyRef Name="folio" />
+            </Principal>
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="planta" />
+              <PropertyRef Name="folio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_objd_met">
+          <End Role="t_metricos" Type="Self.t_metricos" Multiplicity="0..1" />
+          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_metricos">
+              <PropertyRef Name="metrico" />
+            </Principal>
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="metrico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_planta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
+          <End Role="t_usuarios" Type="Self.t_usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_usuarios">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRSystemModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_config" EntityType="Self.t_config" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_empleados" EntityType="Self.t_empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_metricos" EntityType="Self.t_metricos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_objetidet" EntityType="Self.t_objetidet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_objetivos" EntityType="Self.t_objetivos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_plantas" EntityType="Self.t_plantas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_usuarios" EntityType="Self.t_usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_emp_pta" Association="Self.fk_emp_pta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_empleados" EntitySet="t_empleados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleado" Association="Self.fk_empleado">
+            <End Role="t_usuarios" EntitySet="t_usuarios" />
+            <End Role="t_empleados" EntitySet="t_empleados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_obj_emp" Association="Self.fk_obj_emp">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_obj_pta" Association="Self.fk_obj_pta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_objd_folio" Association="Self.fk_objd_folio">
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_objd_met" Association="Self.fk_objd_met">
+            <End Role="t_metricos" EntitySet="t_metricos" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_planta" Association="Self.fk_planta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_usuarios" EntitySet="t_usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="t_config">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="env_email" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="server_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="send_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="send_passwd" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="port" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="ind_html" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ind_ssl" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ind_alerta1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ind_alerta2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ind_alerta3" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ind_alerta4" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="sys_path" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ind_emailtest" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="test_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="t_empleados">
+          <Key>
+            <PropertyRef Name="empleado" />
+          </Key>
+          <Property Name="empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="supervisor" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="t_plantas" Relationship="Self.fk_emp_pta" FromRole="t_empleados" ToRole="t_plantas" />
+          <NavigationProperty Name="t_usuarios" Relationship="Self.fk_empleado" FromRole="t_empleados" ToRole="t_usuarios" />
+          <NavigationProperty Name="t_objetivos" Relationship="Self.fk_obj_emp" FromRole="t_empleados" ToRole="t_objetivos" />
+        </EntityType>
+        <EntityType Name="t_metricos">
+          <Key>
+            <PropertyRef Name="metrico" />
+          </Key>
+          <Property Name="metrico" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descrip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="t_objetidet" Relationship="Self.fk_objd_met" FromRole="t_metricos" ToRole="t_objetidet" />
+        </EntityType>
+        <EntityType Name="t_objetidet">
+          <Key>
+            <PropertyRef Name="planta" />
+            <PropertyRef Name="folio" />
+            <PropertyRef Name="consec" />
+          </Key>
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="folio" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="consec" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="objetivo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="descrip" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="peso" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="metrico" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cancelado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="nota_cancel" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="f_cancel" Type="DateTime" Precision="3" />
+          <Property Name="u_cancel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="resultado1" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="nota_r1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="f_r1" Type="DateTime" Precision="3" />
+          <Property Name="resultado2" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="nota_r2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="f_r2" Type="DateTime" Precision="3" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_metricos" Relationship="Self.fk_objd_met" FromRole="t_objetidet" ToRole="t_metricos" />
+          <NavigationProperty Name="t_objetivos" Relationship="Self.fk_objd_folio" FromRole="t_objetidet" ToRole="t_objetivos" />
+        </EntityType>
+        <EntityType Name="t_objetivos">
+          <Key>
+            <PropertyRef Name="planta" />
+            <PropertyRef Name="folio" />
+          </Key>
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="folio" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="axo" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="aprobado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="f_aprobado" Type="DateTime" Precision="3" />
+          <Property Name="revision1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="nota_r1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="f_r1" Type="DateTime" Precision="3" />
+          <Property Name="revision2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="nota_r2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="f_r2" Type="DateTime" Precision="3" />
+          <Property Name="calificacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_empleados" Relationship="Self.fk_obj_emp" FromRole="t_objetivos" ToRole="t_empleados" />
+          <NavigationProperty Name="t_objetidet" Relationship="Self.fk_objd_folio" FromRole="t_objetivos" ToRole="t_objetidet" />
+          <NavigationProperty Name="t_plantas" Relationship="Self.fk_obj_pta" FromRole="t_objetivos" ToRole="t_plantas" />
+        </EntityType>
+        <EntityType Name="t_plantas">
+          <Key>
+            <PropertyRef Name="planta" />
+          </Key>
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="servidor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="instancia_sql" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_bd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_bd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password_bd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="direct_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="gte_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="gte_email2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_empleados" Relationship="Self.fk_emp_pta" FromRole="t_plantas" ToRole="t_empleados" />
+          <NavigationProperty Name="t_objetivos" Relationship="Self.fk_obj_pta" FromRole="t_plantas" ToRole="t_objetivos" />
+          <NavigationProperty Name="t_usuarios" Relationship="Self.fk_planta" FromRole="t_plantas" ToRole="t_usuarios" />
+        </EntityType>
+        <EntityType Name="t_usuarios">
+          <Key>
+            <PropertyRef Name="usuario" />
+          </Key>
+          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="rol" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_empleados" Relationship="Self.fk_empleado" FromRole="t_usuarios" ToRole="t_empleados" />
+          <NavigationProperty Name="t_plantas" Relationship="Self.fk_planta" FromRole="t_usuarios" ToRole="t_plantas" />
+        </EntityType>
+        <Association Name="fk_emp_pta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_empleados">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_empleado">
+          <End Role="t_usuarios" Type="Self.t_usuarios" Multiplicity="0..1" />
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_usuarios">
+              <PropertyRef Name="usuario" />
+            </Principal>
+            <Dependent Role="t_empleados">
+              <PropertyRef Name="usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_obj_emp">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_objetivos">
+              <PropertyRef Name="empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_objd_met">
+          <End Role="t_metricos" Type="Self.t_metricos" Multiplicity="0..1" />
+          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_metricos">
+              <PropertyRef Name="metrico" />
+            </Principal>
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="metrico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_objd_folio">
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="1" />
+          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_objetivos">
+              <PropertyRef Name="planta" />
+              <PropertyRef Name="folio" />
+            </Principal>
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="planta" />
+              <PropertyRef Name="folio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_obj_pta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="1" />
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_objetivos">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_planta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
+          <End Role="t_usuarios" Type="Self.t_usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_usuarios">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="t_config" EntityType="Self.t_config" />
+          <EntitySet Name="t_empleados" EntityType="Self.t_empleados" />
+          <EntitySet Name="t_metricos" EntityType="Self.t_metricos" />
+          <EntitySet Name="t_objetidet" EntityType="Self.t_objetidet" />
+          <EntitySet Name="t_objetivos" EntityType="Self.t_objetivos" />
+          <EntitySet Name="t_plantas" EntityType="Self.t_plantas" />
+          <EntitySet Name="t_usuarios" EntityType="Self.t_usuarios" />
+          <AssociationSet Name="fk_emp_pta" Association="Self.fk_emp_pta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_empleados" EntitySet="t_empleados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_empleado" Association="Self.fk_empleado">
+            <End Role="t_usuarios" EntitySet="t_usuarios" />
+            <End Role="t_empleados" EntitySet="t_empleados" />
+          </AssociationSet>
+          <AssociationSet Name="fk_obj_emp" Association="Self.fk_obj_emp">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_objd_met" Association="Self.fk_objd_met">
+            <End Role="t_metricos" EntitySet="t_metricos" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_objd_folio" Association="Self.fk_objd_folio">
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_obj_pta" Association="Self.fk_obj_pta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_planta" Association="Self.fk_planta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_usuarios" EntitySet="t_usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRSystemModelStoreContainer" CdmEntityContainer="HRSystemEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HRSystemModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_config">
+            <EntityTypeMapping TypeName="HRSystemModel.t_config">
+              <MappingFragment StoreEntitySet="t_config">
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="planta" ColumnName="planta" />
+                <ScalarProperty Name="env_email" ColumnName="env_email" />
+                <ScalarProperty Name="server_mail" ColumnName="server_mail" />
+                <ScalarProperty Name="send_email" ColumnName="send_email" />
+                <ScalarProperty Name="send_passwd" ColumnName="send_passwd" />
+                <ScalarProperty Name="port" ColumnName="port" />
+                <ScalarProperty Name="ind_html" ColumnName="ind_html" />
+                <ScalarProperty Name="ind_ssl" ColumnName="ind_ssl" />
+                <ScalarProperty Name="ind_alerta1" ColumnName="ind_alerta1" />
+                <ScalarProperty Name="ind_alerta2" ColumnName="ind_alerta2" />
+                <ScalarProperty Name="ind_alerta3" ColumnName="ind_alerta3" />
+                <ScalarProperty Name="ind_alerta4" ColumnName="ind_alerta4" />
+                <ScalarProperty Name="sys_path" ColumnName="sys_path" />
+                <ScalarProperty Name="ind_emailtest" ColumnName="ind_emailtest" />
+                <ScalarProperty Name="test_email" ColumnName="test_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_empleados">
+            <EntityTypeMapping TypeName="HRSystemModel.t_empleados">
+              <MappingFragment StoreEntitySet="t_empleados">
+                <ScalarProperty Name="empleado" ColumnName="empleado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="supervisor" ColumnName="supervisor" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="planta" ColumnName="planta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_metricos">
+            <EntityTypeMapping TypeName="HRSystemModel.t_metricos">
+              <MappingFragment StoreEntitySet="t_metricos">
+                <ScalarProperty Name="metrico" ColumnName="metrico" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_objetidet">
+            <EntityTypeMapping TypeName="HRSystemModel.t_objetidet">
+              <MappingFragment StoreEntitySet="t_objetidet">
+                <ScalarProperty Name="planta" ColumnName="planta" />
+                <ScalarProperty Name="folio" ColumnName="folio" />
+                <ScalarProperty Name="consec" ColumnName="consec" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="objetivo" ColumnName="objetivo" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+                <ScalarProperty Name="peso" ColumnName="peso" />
+                <ScalarProperty Name="metrico" ColumnName="metrico" />
+                <ScalarProperty Name="cancelado" ColumnName="cancelado" />
+                <ScalarProperty Name="nota_cancel" ColumnName="nota_cancel" />
+                <ScalarProperty Name="f_cancel" ColumnName="f_cancel" />
+                <ScalarProperty Name="u_cancel" ColumnName="u_cancel" />
+                <ScalarProperty Name="resultado1" ColumnName="resultado1" />
+                <ScalarProperty Name="nota_r1" ColumnName="nota_r1" />
+                <ScalarProperty Name="f_r1" ColumnName="f_r1" />
+                <ScalarProperty Name="resultado2" ColumnName="resultado2" />
+                <ScalarProperty Name="nota_r2" ColumnName="nota_r2" />
+                <ScalarProperty Name="f_r2" ColumnName="f_r2" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_objetivos">
+            <EntityTypeMapping TypeName="HRSystemModel.t_objetivos">
+              <MappingFragment StoreEntitySet="t_objetivos">
+                <ScalarProperty Name="planta" ColumnName="planta" />
+                <ScalarProperty Name="folio" ColumnName="folio" />
+                <ScalarProperty Name="empleado" ColumnName="empleado" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="axo" ColumnName="axo" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="aprobado" ColumnName="aprobado" />
+                <ScalarProperty Name="f_aprobado" ColumnName="f_aprobado" />
+                <ScalarProperty Name="revision1" ColumnName="revision1" />
+                <ScalarProperty Name="nota_r1" ColumnName="nota_r1" />
+                <ScalarProperty Name="f_r1" ColumnName="f_r1" />
+                <ScalarProperty Name="revision2" ColumnName="revision2" />
+                <ScalarProperty Name="nota_r2" ColumnName="nota_r2" />
+                <ScalarProperty Name="f_r2" ColumnName="f_r2" />
+                <ScalarProperty Name="calificacion" ColumnName="calificacion" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_plantas">
+            <EntityTypeMapping TypeName="HRSystemModel.t_plantas">
+              <MappingFragment StoreEntitySet="t_plantas">
+                <ScalarProperty Name="planta" ColumnName="planta" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="servidor" ColumnName="servidor" />
+                <ScalarProperty Name="instancia_sql" ColumnName="instancia_sql" />
+                <ScalarProperty Name="nombre_bd" ColumnName="nombre_bd" />
+                <ScalarProperty Name="usuario_bd" ColumnName="usuario_bd" />
+                <ScalarProperty Name="password_bd" ColumnName="password_bd" />
+                <ScalarProperty Name="direct_email" ColumnName="direct_email" />
+                <ScalarProperty Name="gte_email" ColumnName="gte_email" />
+                <ScalarProperty Name="gte_email2" ColumnName="gte_email2" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_usuarios">
+            <EntityTypeMapping TypeName="HRSystemModel.t_usuarios">
+              <MappingFragment StoreEntitySet="t_usuarios">
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="planta" ColumnName="planta" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
