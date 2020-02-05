@@ -4,14 +4,201 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row rounded " style="background-color:#f2f2f2">
+<style>
+    .selectButton{
+        left:47%; 
+        top:98%; 
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        transition: all ease 0.35s;
+        width: 7vw;
+        height: 3vw;
+        overflow:hidden;
+    }
+
+    .selectButton .infoIcon{
+        display:none;
+    }
+
+     .selectButton2{
+        left:47%; 
+        top:98%; 
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        transition: all ease 0.35s;
+        width: 7vw;
+        height: 3vw;
+        overflow:hidden;
+    }
+
+    .selectButton2 .infoIcon{
+        display:none;
+    }
+
+     .selectButton3{
+        left:47%; 
+        top:98%; 
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        transition: all ease 0.35s;
+        width: 7vw;
+        height: 3vw;
+        overflow:hidden;
+    }
+
+    .selectButton3 .infoIcon{
+        display:none;
+    }
+
+     .selectButton4{
+        left:47%; 
+        top:98%; 
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        transition: all ease 0.35s;
+        width: 7vw;
+        height: 3vw;
+        overflow:hidden;
+    }
+
+    .selectButton4 .infoIcon{
+        display:none;
+    }
+
+     .selectButton5{
+        left:47%; 
+        top:98%; 
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        transition: all ease 0.35s;
+        width: 7vw;
+        height: 3vw;
+        overflow:hidden;
+    }
+
+    .selectButton5 .infoIcon{
+        display:none;
+    }
+    .selectButton[aria-expanded=true]{
+        left:5%;
+        transform: translate(-80%,-10%);
+        width: 3.5vw;
+        height: 3.5vw;
+    }
+
+    .selectButton[aria-expanded=true] .infoText{
+        display: none;
+      
+    }
+
+      .selectButton[aria-expanded=true] .infoIcon{
+        order:1;
+        display:inline-flex;
+        justify-content: center;
+        align-items:center;
+      
+    }
+
+       .selectButton2[aria-expanded=true]{
+        left:5%;
+        transform: translate(-80%,-10%);
+        width: 3.5vw;
+        height: 3.5vw;
+
+    }
+
+    
+    .selectButton2[aria-expanded=true] .infoText{
+        display: none;
+      
+    }
+
+      .selectButton2[aria-expanded=true] .infoIcon{
+        order:1;
+        display:inline-flex;
+        justify-content: center;
+        align-items:center;
+      
+    }
+
+       .selectButton3[aria-expanded=true]{
+        left:5%;
+        transform: translate(-80%,-10%);
+        width: 3.5vw;
+        height: 3.5vw;
+
+    }
+
+    
+    .selectButton3[aria-expanded=true] .infoText{
+        display: none;
+      
+    }
+
+      .selectButton3[aria-expanded=true] .infoIcon{
+        order:1;
+        display:inline-flex;
+        justify-content: center;
+        align-items:center;
+      
+    }
+
+       .selectButton4[aria-expanded=true]{
+        left:5%;
+        transform: translate(-80%,-10%);
+        width: 3.5vw;
+        height: 3.5vw;
+
+    }
+
+    
+    .selectButton4[aria-expanded=true] .infoText{
+        display: none;
+      
+    }
+
+      .selectButton4[aria-expanded=true] .infoIcon{
+        order:1;
+        display:inline-flex;
+        justify-content: center;
+        align-items:center;
+      
+    }
+
+       .selectButton5[aria-expanded=true]{
+        left:5%;
+        transform: translate(-80%,-10%);
+        width: 3.5vw;
+        height: 3.5vw;
+
+    }
+
+    
+    .selectButton5[aria-expanded=true] .infoText{
+        display: none;
+      
+    }
+
+      .selectButton5[aria-expanded=true] .infoIcon{
+        order:1;
+        display:inline-flex;
+        justify-content: center;
+        align-items:center;
+      
+    }
+
+
+
+</style>
+
+<div class="row rounded" style="background-color:#f2f2f2">
     <div class="col-2 mt-4 mb-4 avatar d-flex justify-content-center align-items-center ">
         <img src="~/Images/medline-logo.png" class="img-fluid rounded-circle z-depth-1" />
     </div>
     <div class="col-8 mt-4 mb-4 my-auto">
-        <h1 class="font-weight-bold" style="font-size: 4.5vw">Welcome Erika</h1>
+        <h1 class="font-weight-bold" style="font-size: 4.5vw">Welcome @ViewBag.userFirstName</h1>
         <p class="text-muted" style="font-size: 2vw">
-            Compensation and Benefits Manager
+            @ViewBag.userJobPosition
         </p>
     </div>
     <div class="col-2 mt-3 mb-4 avatar d-flex justify-content-center align-items-center ">
@@ -38,143 +225,290 @@
             <div class="card-body">
                         <div class="row">                            
                             <div class="col-12 text-center">
-                                <i class="fas fa-check-double fa-3x blue-text"></i>
+                                <i class="fas fa-check-double fa-3x primary-ic"></i>
 
                                 <p class="font-weight-bold my-3" style="font-size:1.2vw">Performance Review</p>
 
-                                <p class="text-muted" style="font-size:1vw">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                <p class="text-muted" style="font-size:1vw"></p>
                             </div>
                         </div>
-            </div>
-        </div>
-
-
-        <div class="card collapse multi-collapse mt-4 text-center" id="colaps686">
-            686
-        </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps110">
-            110
-        </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps646">
-            646
-        </div>
-    </div>
-    <div class="col-md-2 p-2">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <i class="fas fa-clipboard-list fa-3x blue-text"></i>
-
-                        <p class="font-weight-bold my-3" style="font-size:1.2vw">Talent Performance Planning</p>
-
-                        <p class="text-muted" style="font-size:1vw">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <button class="btn btn-primary position-absolute rounded-pill d-flex justify-content-center" style="left:50%; top:100%">
-                    <span class="infoText">Select</span>
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton" type="button" data-toggle="collapse" data-target=".multi-collapse"
+                    aria-expanded="false" aria-controls="686m1 110m1 m1 xxm1 xm1">
+                    <span class="infoText" style="font-size:1vw">Enter</span>
+                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
                 </button>
             </div>
         </div>
 
-
-        <div class="card collapse multi-collapse mt-4 text-center" id="colaps686">
-            686
+        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1" id="m1">
+            Select location
         </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps110">
-            110
+        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m1" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MXC-686
+            </div>
+            <div  style="font-size:1vw" class="text-muted">
+                Mexicali
+            </div>
         </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps646">
-            646
+        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m1" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                PDM-110
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Nuevo Laredo
+            </div>
         </div>
+        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm1" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                CMP-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Centurion
+            </div>
+        </div>
+        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm1" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MEX-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexico City
+            </div>
+        </div>
+        
     </div>
     <div class="col-md-2 p-2">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <i class="fas fa-hand-holding-usd fa-3x blue-text"></i>
+                        <i class="fas fa-clipboard-list fa-3x primary-ic"></i>
+
+                        <p class="font-weight-bold my-3" style="font-size:1.2vw">Talent Performance Planning</p>
+
+                        <p class="text-muted" style="font-size:1vw"></p>
+                    </div>
+                </div>
+               
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton2" type="button" data-toggle="collapse" data-target=".multi-collapse2"
+                        aria-expanded="false" aria-controls="686m2 110m2 m2 xm2">
+                    <span class="infoText" style="font-size:1vw">Enter</span>
+                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1" id="m2">
+            Select location
+        </div>
+        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m2" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MXC-686
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexicali
+            </div>
+        </div>
+        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m2" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                PDM-110
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Nuevo Laredo
+            </div>
+        </div>
+        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm2" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                CMP-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Centurion
+            </div>
+        </div>
+        <div id="xxm6565" class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MEX-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexico City
+            </div>
+        </div>
+
+
+ 
+    </div>
+    <div class="col-md-2 p-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <i class="fas fa-hand-holding-usd fa-3x primary-ic"></i>
 
                         <p class="font-weight-bold my-3" style="font-size:1.2vw">Compensation Offer</p>
 
-                        <p class="text-muted" style="font-size:1vw">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p class="text-muted" style="font-size:1vw"></p>
                     </div>
                 </div>
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton3" type="button" data-toggle="collapse" data-target=".multi-collapse3"
+                        aria-expanded="false" aria-controls="686m3 110m3 m3 xxm3 xm3">
+                    <span class="infoText" style="font-size:1vw">Enter</span>
+                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
+                </button>
+            </div>
+        </div>
+        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1" id="m3">
+            Select location
+        </div>
+        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m3" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MXC-686
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexicali
+            </div>
+        </div>
+        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m3" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                PDM-110
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Nuevo Laredo
+            </div>
+        </div>
+        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm3" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                CMP-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Centurion
+            </div>
+        </div>
+        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm3" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MEX-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexico City
             </div>
         </div>
 
-
-        <div class="card collapse multi-collapse mt-4 text-center" id="colaps686">
-            686
-        </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps110">
-            110
-        </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps646">
-            646
-        </div>
+ 
     </div>
     <div class="col-md-2 p-2">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <i class="fas fa-money-check-alt fa-3x blue-text"></i>
+                        <i class="fas fa-money-check-alt fa-3x primary-ic"></i>
 
                         <p class="font-weight-bold my-3" style="font-size:1.2vw">Annual Merit Salary Planning</p>
 
-                        <p class="text-muted" style="font-size:1vw">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p class="text-muted" style="font-size:1vw"></p>
                     </div>
                 </div>
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton4" type="button" data-toggle="collapse" data-target=".multi-collapse4"
+                        aria-expanded="false" aria-controls="686m4 110m4 m4 xxm4 xm4">
+                    <span class="infoText" style="font-size:1vw">Enter</span>
+                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
+                </button>
+
+            </div>
+        </div>
+        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1" id="m4">
+            Select location
+        </div>
+        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m4" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MXC-686
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexicali
+            </div>
+        </div>
+        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m4" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                PDM-110
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Nuevo Laredo
+            </div>
+        </div>
+        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm4" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                CMP-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Centurion
+            </div>
+        </div>
+        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm4" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MEX-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexico City
             </div>
         </div>
 
 
-        <div class="card collapse multi-collapse mt-4 text-center" id="colaps686">
-            686
-        </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps110">
-            110
-        </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps646">
-            646
-        </div>
     </div>
     <div class="col-md-2 p-2">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <i class="fas fa-square-root-alt fa-3x blue-text"></i>
+                        <i class="fas fa-square-root-alt fa-3x primary-ic"></i>
 
                         <p class="font-weight-bold my-3" style="font-size:1.2vw">Formula Bonus</p>
 
-                        <p class="text-muted" style="font-size:1vw">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p class="text-muted" style="font-size:1vw"></p>
                     </div>
                 </div>
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton5" type="button" data-toggle="collapse" data-target=".multi-collapse5"
+                        aria-expanded="false" aria-controls="686m5 110m5 m5 xxm5 xm5">
+                    <span class="infoText" style="font-size:1vw">Enter</span>
+                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
+                </button>
+            </div>
+        </div>
+        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1" id="m5">
+            Select location
+        </div>
+        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m5" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MXC-686
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexicali
+            </div>
+        </div>
+        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m5" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                PDM-110
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Nuevo Laredo
+            </div>
+        </div>
+        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm5" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                CMP-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Centurion
+            </div>
+        </div>
+        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm5" style="background-color:#f2f2f2">
+            <div style="font-size:1vw">
+                MEX-XXX
+            </div>
+            <div style="font-size:1vw" class="text-muted">
+                Mexico City
             </div>
         </div>
 
 
-        <div class="card collapse multi-collapse mt-4 text-center" id="colaps686">
-            686
-        </div>
 
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps110">
-            110
-        </div>
-
-        <div class="card collapse multi-collapse mt-1 text-center" id="colaps646">
-            646
-        </div>
     </div>
     <div class="col-1 p-0">
 
@@ -182,5 +516,11 @@
 </div>
 
 
+@section scripts{
+<script>
+ 
+</script>
+
+    }
 
 

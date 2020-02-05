@@ -3,20 +3,96 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using HR_System.Models;
+using System.Globalization;
+using WebMatrix.Data;
 
 namespace HR_System.Controllers
 {
     public class HomeController : Controller
     {
+        private HRSystemEntities db = new HRSystemEntities();
         // GET: Home
         public ActionResult Index()
         {
+            string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
+            Session["userAccount"] = username;
+            var t_usuarios = db.t_usuarios.Find(username);
+            if(t_usuarios == null)
+            {
+                //si usuario no esta
+            }
+            else
+            {
+                var nombreusuario = t_usuarios.nombre.Split(' ');
+                ViewBag.userFirstName = nombreusuario[0];
+                var empleado = db.t_empleados.Where(x => x.usuario == username).ToList();
+                if(empleado.Any())
+                {
+                    string numempleado = empleado[0].empleado.Substring(3, 5);
+                    string[] infoTressEmpleado = datosTress(numempleado);
+
+                    ViewBag.userJobPosition = infoTressEmpleado[2];
+
+                    return View();
+                }
+                else
+                {
+                    //si el nombre del usuario no existe en empleados
+                }
+                
+            }
+
             return View();
         }
+
+
 
         public ActionResult Prueba()
         {
             return View();
+        }
+
+        public string[] datosTress(string id)
+        {
+
+            TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
+
+            var db = WebMatrix.Data.Database.Open("686TressConn");
+
+
+
+            var selectedQueryString = @"SELECT co.cb_nombres + ' ' +co.CB_APE_PAT + ' ' +co.CB_APE_MAT as NOMBRE
+                                        ,co.CB_TURNO,po.PU_DESCRIP AS PUESTO,
+                                        co.CB_NIVEL2,n3.TB_ELEMENT AS AREA,co2.CB_E_MAIL
+                                        from [Tress_MedlineMXL].[dbo].COLABORA co 
+                                        inner join [Tress_MedlineMXL].[dbo].PUESTO po on co.CB_PUESTO = po.PU_CODIGO 
+                                        inner join [Tress_MedlineMXL].[dbo].NIVEL2 n2 on co.CB_NIVEL2 = n2.TB_CODIGO 
+                                        inner join [Tress_MedlineMXL].[dbo].NIVEL3 n3 on co.CB_NIVEL3 = n3.TB_CODIGO 
+                                        inner join [Tress_MedlineMXL].[dbo].NIVEL4 n4 on co.CB_NIVEL4 = n4.TB_CODIGO 
+                                        inner join [Tress_MedlineMXL].[dbo].TURNO tu on co.CB_TURNO = tu.TU_CODIGO 
+										left join [Tress_MedlineMXL].[dbo].COLABORA co2 on co.CB_NIVEL4 = co2.CB_CODIGO
+
+                                        WHERE co.CB_CODIGO = " + id + @" and co.CB_ACTIVO = 'S' 
+                                        ORDER BY PU_DESCRIP,CB_TURNO";
+
+            var datos = db.Query(selectedQueryString);
+
+
+            string[] empleado = new string[6];
+
+            if (datos.Any())
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    empleado[i] = datos.ElementAt(0)[i];
+                }
+                empleado[0] = cultInfo.ToTitleCase(empleado[0].ToString().ToLower());
+            }
+
+           
+            return empleado;
         }
     }
 }

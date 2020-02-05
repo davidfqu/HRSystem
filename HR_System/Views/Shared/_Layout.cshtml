@@ -46,7 +46,7 @@
                        
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-light">
-                                <i class="fas fa-user"></i>efarias
+                                <i class="fas fa-user"></i>@Session["userAccount"]
                             </a>
                         </li>
                       
@@ -58,6 +58,11 @@
     
         <div class="container-fluid" style="background-color:white">
             @RenderBody()
+
+
+            <div class="row">
+                <canvas id="myChart" style="max-width: 500px;"></canvas>
+            </div>
 
             <footer>
                 <p>&copy; @DateTime.Now.Year - Medline HR System</p>
@@ -72,7 +77,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="~/js/addons/datatables.min.js"></script>
     <script src="~/js/jquery.datetimepicker.js"></script>
-    @RenderSection("scripts", required: false)
 
+    @RenderSection("scripts", required: false)
+    
 </body>
 </html>
