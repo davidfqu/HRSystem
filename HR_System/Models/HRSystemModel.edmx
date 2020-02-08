@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HRSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HRSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -91,7 +91,7 @@
           <Property Name="fecha" Type="datetime" />
           <Property Name="axo" Type="numeric" Precision="4" Scale="0" />
           <Property Name="estatus" Type="varchar" MaxLength="1" />
-          <Property Name="aprobado" Type="varchar" MaxLength="1" />
+          <Property Name="aprobado" Type="varchar" MaxLength="20" />
           <Property Name="f_aprobado" Type="datetime" />
           <Property Name="revision1" Type="varchar" MaxLength="1" />
           <Property Name="nota_r1" Type="varchar" MaxLength="500" />
@@ -101,6 +101,7 @@
           <Property Name="f_r2" Type="datetime" />
           <Property Name="calificacion" Type="varchar" MaxLength="1" />
           <Property Name="f_id" Type="datetime" />
+          <Property Name="f_enviado" Type="datetime" />
         </EntityType>
         <EntityType Name="t_plantas">
           <Key>
@@ -216,6 +217,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_t_empleados_supervisor">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_empleados1" Type="Self.t_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_empleados1">
+              <PropertyRef Name="supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="HRSystemModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_config" EntityType="Self.t_config" Schema="dbo" store:Type="Tables" />
@@ -253,9 +266,12 @@
             <End Role="t_plantas" EntitySet="t_plantas" />
             <End Role="t_usuarios" EntitySet="t_usuarios" />
           </AssociationSet>
+          <AssociationSet Name="FK_t_empleados_supervisor" Association="Self.FK_t_empleados_supervisor">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_empleados1" EntitySet="t_empleados" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HRSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -303,6 +319,8 @@
           <NavigationProperty Name="t_plantas" Relationship="Self.fk_emp_pta" FromRole="t_empleados" ToRole="t_plantas" />
           <NavigationProperty Name="t_usuarios" Relationship="Self.fk_empleado" FromRole="t_empleados" ToRole="t_usuarios" />
           <NavigationProperty Name="t_objetivos" Relationship="Self.fk_obj_emp" FromRole="t_empleados" ToRole="t_objetivos" />
+          <NavigationProperty Name="t_empleados1" Relationship="HRSystemModel.FK_t_empleados_supervisor" FromRole="t_empleados" ToRole="t_empleados1" />
+          <NavigationProperty Name="t_empleados2" Relationship="HRSystemModel.FK_t_empleados_supervisor" FromRole="t_empleados1" ToRole="t_empleados" />
         </EntityType>
         <EntityType Name="t_metricos">
           <Key>
@@ -351,7 +369,7 @@
           <Property Name="fecha" Type="DateTime" Precision="3" />
           <Property Name="axo" Type="Decimal" Precision="4" Scale="0" />
           <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="aprobado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="aprobado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="f_aprobado" Type="DateTime" Precision="3" />
           <Property Name="revision1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="nota_r1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -364,6 +382,7 @@
           <NavigationProperty Name="t_empleados" Relationship="Self.fk_obj_emp" FromRole="t_objetivos" ToRole="t_empleados" />
           <NavigationProperty Name="t_objetidet" Relationship="Self.fk_objd_folio" FromRole="t_objetivos" ToRole="t_objetidet" />
           <NavigationProperty Name="t_plantas" Relationship="Self.fk_obj_pta" FromRole="t_objetivos" ToRole="t_plantas" />
+          <Property Name="f_enviado" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="t_plantas">
           <Key>
@@ -521,7 +540,23 @@
             <End Role="t_plantas" EntitySet="t_plantas" />
             <End Role="t_usuarios" EntitySet="t_usuarios" />
           </AssociationSet>
+          <AssociationSet Name="FK_t_empleados_supervisor" Association="HRSystemModel.FK_t_empleados_supervisor">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_empleados1" EntitySet="t_empleados" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_t_empleados_supervisor">
+          <End Type="HRSystemModel.t_empleados" Role="t_empleados" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_empleados" Role="t_empleados1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_empleados1">
+              <PropertyRef Name="supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -609,6 +644,7 @@
           <EntitySetMapping Name="t_objetivos">
             <EntityTypeMapping TypeName="HRSystemModel.t_objetivos">
               <MappingFragment StoreEntitySet="t_objetivos">
+                <ScalarProperty Name="f_enviado" ColumnName="f_enviado" />
                 <ScalarProperty Name="planta" ColumnName="planta" />
                 <ScalarProperty Name="folio" ColumnName="folio" />
                 <ScalarProperty Name="empleado" ColumnName="empleado" />

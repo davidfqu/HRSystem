@@ -21,6 +21,17 @@ namespace HR_System.Controllers
             return View(t_objetivos.ToList());
         }
 
+        public ActionResult IndexModule1()
+        {
+            ViewBag.Objective = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas);
+            ViewBag.ObjectivesDet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos);
+
+            ViewBag.folio = new SelectList(db.t_objetivos, "folio", "folio");
+            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip");
+            ViewBag.planta = new SelectList(db.t_plantas, "planta", "planta");
+            return View();
+        }
+
         // GET: t_objetivos/Details/5
         public ActionResult Details(string id)
         {
@@ -49,7 +60,7 @@ namespace HR_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "planta,folio,empleado,fecha,axo,estatus,aprobado,f_aprobado,revision1,nota_r1,f_r1,revision2,nota_r2,f_r2,calificacion,f_id")] t_objetivos t_objetivos)
+        public ActionResult Create([Bind(Include = "planta,folio,empleado,fecha,axo,estatus,aprobado,f_aprobado,revision1,nota_r1,f_r1,revision2,nota_r2,f_r2,calificacion,f_id,f_enviado")] t_objetivos t_objetivos)
         {
             if (ModelState.IsValid)
             {
@@ -80,12 +91,27 @@ namespace HR_System.Controllers
             return View(t_objetivos);
         }
 
+        public ActionResult Edit2(string empleado, int axo)
+        {
+            if (empleado == null && axo == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            t_objetivos t_objetivos = db.t_objetivos.Where(x => x.empleado == empleado && x.axo == axo).Single();
+            if (t_objetivos == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.empleado = new SelectList(db.t_empleados, "empleado", "nombre", t_objetivos.empleado);
+            ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetivos.planta);
+            return View(t_objetivos);
+        }
         // POST: t_objetivos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "planta,folio,empleado,fecha,axo,estatus,aprobado,f_aprobado,revision1,nota_r1,f_r1,revision2,nota_r2,f_r2,calificacion,f_id")] t_objetivos t_objetivos)
+        public ActionResult Edit([Bind(Include = "planta,folio,empleado,fecha,axo,estatus,aprobado,f_aprobado,revision1,nota_r1,f_r1,revision2,nota_r2,f_r2,calificacion,f_id,f_enviado")] t_objetivos t_objetivos)
         {
             if (ModelState.IsValid)
             {

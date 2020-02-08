@@ -16,6 +16,7 @@ namespace HR_System.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            string[] infoTressEmpleado;
             string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
             Session["userAccount"] = username;
             var t_usuarios = db.t_usuarios.Find(username);
@@ -30,10 +31,16 @@ namespace HR_System.Controllers
                 var empleado = db.t_empleados.Where(x => x.usuario == username).ToList();
                 if(empleado.Any())
                 {
-                    string numempleado = empleado[0].empleado.Substring(3, 5);
-                    string[] infoTressEmpleado = datosTress(numempleado);
+                    Session["userNo"] = empleado[0].empleado;
 
-                    ViewBag.userJobPosition = infoTressEmpleado[2];
+                    string numempleado = empleado[0].empleado.Substring(3, 5);
+                    if(empleado[0].planta == "686")
+                    {
+                        infoTressEmpleado = datosTress686(numempleado);
+                        ViewBag.userJobPosition = infoTressEmpleado[2];
+                    }
+
+                    Session["EmployeeNo"] = empleado[0].empleado;
 
                     return View();
                 }
@@ -47,14 +54,14 @@ namespace HR_System.Controllers
             return View();
         }
 
-
-
-        public ActionResult Prueba()
+        public ActionResult MyInfo()
         {
             return View();
         }
 
-        public string[] datosTress(string id)
+
+
+        public string[] datosTress686(string id)
         {
 
             TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;

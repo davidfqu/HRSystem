@@ -1,0 +1,175 @@
+﻿@model HR_System.Models.t_objetidet
+
+
+@{
+    ViewBag.Title = "IndexModule1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .md-pills .nav-link.active {
+        color: #fff;
+        background-color: #616161;
+    }
+
+    button.close {
+        position: absolute;
+        right: 0;
+        z-index: 2;
+        padding-right: 1rem;
+        padding-top: .6rem;
+    }
+
+</style>
+
+
+
+    <!-- Section -->
+    <section class="mt-3">
+        <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2" style="font-size:1.5vw">MODULE 1</h6>
+        <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Performance Review</h3>
+        <!--First row-->
+        <div class="row">
+
+            <!--First column-->
+            <div class="col-12">
+
+                <!-- Nav tabs -->
+                <ul class="nav md-pills flex-center flex-wrap mx-0" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active font-weight-bold text-uppercase" data-toggle="tab" href="#panel31" role="tab">My Objectives</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold text-uppercase" data-toggle="tab" href="#panel32" role="tab">Direct Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link font-weight-bold text-uppercase" data-toggle="tab" href="#panel33" role="tab">New Objectives</a>
+                    </li>
+                </ul>
+
+            </div>
+            <!--First column-->
+
+        </div>
+        <!--First row-->
+        <!--Tab panels-->
+        <div class="tab-content mb-5 mt-4">
+
+            <!--Panel 1-->
+            <div class="tab-pane fade show in active" id="panel31" role="tabpanel">
+
+                <!-- Grid row -->
+                <div class="row">
+                    
+                    <div class="col-12">
+                        <h4>Objectives 2020</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="font-weight-bold">Employee #: </label>
+                                <label>90145</label>
+                            </div>
+                            <div class="col-4">
+                                <label class="font-weight-bold">Name: </label>
+                                <label>David Fernando Quiñonez Uribe</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="font-weight-bold">Department: </label>
+                                <label>Information Technologies</label>
+                            </div>
+                            <div class="col-4">
+                                <label class="font-weight-bold">Manager: </label>
+                                <label>Eduardo Villa</label>
+                            </div>
+                            <div class="col-4">
+                                <label class="font-weight-bold">2nd Level Manager: </label>
+                                <label>Mario Chavez</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddObjModal">
+                                    Add Objetive
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                
+                            </div>
+                            <div class="col-4">
+                                
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            @foreach (var item in ViewBag.ObjectivesDet)
+                            {
+                                <div class="card col-12 mb-2">
+                                    <div class="card-header">
+                                        @item.consec @item.objetivo
+                                    </div>
+                                    <div class="card-body">
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                Description
+                                            </dt>
+
+                                            <dd>
+                                                @item.descrip
+                                            </dd>
+
+                                            <dt>
+                                                Metric
+                                            </dt>
+
+                                            <dd>
+                                                @item.metrico
+                                            </dd>
+
+                                            <dt>
+                                                Weigth
+                                            </dt>
+
+                                            <dd>
+                                                @item.peso
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>  
+                            }
+
+                        </div>
+                        <!-- Editable table -->
+                    </div>
+                </div>
+                <!-- Grid row -->
+
+            </div>
+        
+        </div>
+        <!--Tab panels-->
+
+    </section>
+    <!-- Section -->
+
+<!-- Modal -->
+
+
+@section scripts{
+    <script>
+        $(function () {
+            var selectedClass = "";
+            $(".filter").click(function () {
+                selectedClass = $(this).attr("data-rel");
+                $("#gallery").fadeTo(100, 0.1);
+                $("#gallery div").not("." + selectedClass).fadeOut().removeClass('animation');
+                setTimeout(function () {
+                    $("." + selectedClass).fadeIn().addClass('animation');
+                    $("#gallery").fadeTo(300, 1);
+                }, 300);
+            });
+        });
+
+    </script>
+
+   
+    }

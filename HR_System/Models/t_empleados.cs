@@ -17,6 +17,7 @@ namespace HR_System.Models
         public t_empleados()
         {
             this.t_objetivos = new HashSet<t_objetivos>();
+            this.t_empleados1 = new HashSet<t_empleados>();
         }
     
         public string empleado { get; set; }
@@ -29,5 +30,7 @@ namespace HR_System.Models
         public virtual t_plantas t_plantas { get; set; }
         public virtual t_usuarios t_usuarios { get; set; }
         public virtual ICollection<t_objetivos> t_objetivos { get; set; }
+        public virtual ICollection<t_empleados> t_empleados1 { get; set; }
+        public virtual t_empleados t_empleados2 { get; set; }
     }
 }

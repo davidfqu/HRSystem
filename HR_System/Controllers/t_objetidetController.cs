@@ -37,10 +37,35 @@ namespace HR_System.Controllers
         }
 
         // GET: t_objetidet/Create
-        public ActionResult Create()
+        public ActionResult Create(string empleado = "68690012")
         {
+            var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).Single();
+            ViewBag.Objective = objetivoHeader;
+
+            try
+            {
+                ViewBag.Manager = objetivoHeader.t_empleados.t_empleados2.nombre;
+            }
+            catch
+            {
+                ViewBag.Manager = null;
+            }
+
+            try
+            {
+                ViewBag.Manager2 = objetivoHeader.t_empleados.t_empleados2.t_empleados2.nombre;
+            }
+            catch
+            {
+                ViewBag.Manager2 = null;
+            }
+
+
+            ViewBag.ObjectivesDet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos).Where(x => x.planta == objetivoHeader.planta && x.folio == objetivoHeader.folio);
+            
+            ViewBag.folio = new SelectList(db.t_objetivos, "folio", "folio");
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip");
-            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado");
+            ViewBag.planta = new SelectList(db.t_plantas, "planta", "planta");
             return View();
         }
 
@@ -49,8 +74,9 @@ namespace HR_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "planta,folio,consec,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet)
+        public ActionResult Create([Bind(Include = "planta,folio,consec,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet, string planta, int folio, int consec)
         {
+           
             if (ModelState.IsValid)
             {
                 db.t_objetidet.Add(t_objetidet);

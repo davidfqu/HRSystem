@@ -27,7 +27,7 @@
    
         <nav class="navbar navbar-expand-lg navbar-dark primary-color-dark">
             <div class="container-fluid">
-                <a class="navbar-brand font-weight-bold" href="#"><i class="fas fa-users fa-lg mr-1"></i>Medline HR System</a>
+                <a class="navbar-brand font-weight-bold" href="@Url.Action("Index", "Home", null)"><i class="fas fa-users fa-lg mr-1"></i>Medline HR System</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
                         aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -43,9 +43,8 @@
                        
                     </ul>
                     <ul class="navbar-nav ml-auto nav-flex-icons">
-                       
                         <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light">
+                            <a class="nav-link waves-effect waves-light" href="@Url.Action("MyInfo","Home",null)">
                                 <i class="fas fa-user"></i>@Session["userAccount"]
                             </a>
                         </li>
@@ -60,10 +59,8 @@
             @RenderBody()
 
 
-            <div class="row">
-                <canvas id="myChart" style="max-width: 500px;"></canvas>
-            </div>
-
+            
+            <hr class="mt-4" />
             <footer>
                 <p>&copy; @DateTime.Now.Year - Medline HR System</p>
             </footer>

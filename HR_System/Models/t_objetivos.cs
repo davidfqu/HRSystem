@@ -35,6 +35,7 @@ namespace HR_System.Models
         public Nullable<System.DateTime> f_r2 { get; set; }
         public string calificacion { get; set; }
         public Nullable<System.DateTime> f_id { get; set; }
+        public Nullable<System.DateTime> f_enviado { get; set; }
     
         public virtual t_empleados t_empleados { get; set; }
         public virtual ICollection<t_objetidet> t_objetidet { get; set; }

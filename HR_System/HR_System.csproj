@@ -226,7 +226,9 @@
     <Content Include="svg\arrow_left.svg" />
     <Content Include="svg\arrow_right.svg" />
     <Content Include="svg\flags.png" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -350,7 +352,6 @@
     <Content Include="scss\_custom-styles.scss" />
     <Content Include="scss\_custom-variables.scss" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Prueba.cshtml" />
     <EntityDeploy Include="Models\HRSystemModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HRSystemModel.Designer.cs</LastGenOutput>
@@ -363,21 +364,24 @@
     <Content Include="Views\t_usuarios\Details.cshtml" />
     <Content Include="Views\t_usuarios\Edit.cshtml" />
     <Content Include="Views\t_usuarios\Index.cshtml" />
-    <Content Include="Views\t_empleados\Create.cshtml" />
-    <Content Include="Views\t_empleados\Delete.cshtml" />
-    <Content Include="Views\t_empleados\Details.cshtml" />
-    <Content Include="Views\t_empleados\Edit.cshtml" />
-    <Content Include="Views\t_empleados\Index.cshtml" />
-    <Content Include="Views\t_objetivos\Create.cshtml" />
-    <Content Include="Views\t_objetivos\Delete.cshtml" />
-    <Content Include="Views\t_objetivos\Details.cshtml" />
-    <Content Include="Views\t_objetivos\Edit.cshtml" />
-    <Content Include="Views\t_objetivos\Index.cshtml" />
     <Content Include="Views\t_objetidet\Create.cshtml" />
     <Content Include="Views\t_objetidet\Delete.cshtml" />
     <Content Include="Views\t_objetidet\Details.cshtml" />
     <Content Include="Views\t_objetidet\Edit.cshtml" />
     <Content Include="Views\t_objetidet\Index.cshtml" />
+    <Content Include="Views\t_objetivos\Create.cshtml" />
+    <Content Include="Views\t_objetivos\Delete.cshtml" />
+    <Content Include="Views\t_objetivos\Details.cshtml" />
+    <Content Include="Views\t_objetivos\Edit.cshtml" />
+    <Content Include="Views\t_objetivos\Index.cshtml" />
+    <Content Include="Views\t_objetivos\Edit2.cshtml" />
+    <Content Include="Views\t_objetivos\IndexModule1.cshtml" />
+    <Content Include="Views\Home\MyInfo.cshtml" />
+    <Content Include="Views\t_empleados\Create.cshtml" />
+    <Content Include="Views\t_empleados\Delete.cshtml" />
+    <Content Include="Views\t_empleados\Details.cshtml" />
+    <Content Include="Views\t_empleados\Edit.cshtml" />
+    <Content Include="Views\t_empleados\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

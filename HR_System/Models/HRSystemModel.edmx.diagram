@@ -20,6 +20,7 @@
         <AssociationConnector Association="HRSystemModel.fk_objd_folio" ManuallyRouted="false" />
         <AssociationConnector Association="HRSystemModel.fk_obj_pta" ManuallyRouted="false" />
         <AssociationConnector Association="HRSystemModel.fk_planta" ManuallyRouted="false" />
+        <AssociationConnector Association="HRSystemModel.FK_t_empleados_supervisor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

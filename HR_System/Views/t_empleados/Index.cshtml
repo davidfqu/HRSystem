@@ -16,9 +16,6 @@
             @Html.DisplayNameFor(model => model.nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.supervisor)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.f_id)
         </th>
         <th>
@@ -26,6 +23,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.t_usuarios.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_empleados2.nombre)
         </th>
         <th></th>
     </tr>
@@ -36,9 +36,6 @@
             @Html.DisplayFor(modelItem => item.nombre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.supervisor)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.f_id)
         </td>
         <td>
@@ -46,6 +43,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.t_usuarios.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_empleados2.nombre)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.empleado }) |

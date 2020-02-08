@@ -17,7 +17,7 @@ namespace HR_System.Controllers
         // GET: t_empleados
         public ActionResult Index()
         {
-            var t_empleados = db.t_empleados.Include(t => t.t_plantas).Include(t => t.t_usuarios);
+            var t_empleados = db.t_empleados.Include(t => t.t_plantas).Include(t => t.t_usuarios).Include(t => t.t_empleados2);
             return View(t_empleados.ToList());
         }
 
@@ -41,6 +41,7 @@ namespace HR_System.Controllers
         {
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre");
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre");
+            ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre");
             return View();
         }
 
@@ -60,6 +61,7 @@ namespace HR_System.Controllers
 
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_empleados.planta);
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre", t_empleados.usuario);
+            ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.supervisor);
             return View(t_empleados);
         }
 
@@ -77,6 +79,7 @@ namespace HR_System.Controllers
             }
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_empleados.planta);
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre", t_empleados.usuario);
+            ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.supervisor);
             return View(t_empleados);
         }
 
@@ -95,6 +98,7 @@ namespace HR_System.Controllers
             }
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_empleados.planta);
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre", t_empleados.usuario);
+            ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.supervisor);
             return View(t_empleados);
         }
 
