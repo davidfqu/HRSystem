@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="HRSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HRSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -56,13 +56,14 @@
         </EntityType>
         <EntityType Name="t_objetidet">
           <Key>
-            <PropertyRef Name="planta" />
-            <PropertyRef Name="folio" />
+            <PropertyRef Name="empleado" />
+            <PropertyRef Name="axo" />
             <PropertyRef Name="consec" />
           </Key>
-          <Property Name="planta" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="folio" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="empleado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="axo" Type="numeric" Precision="4" Scale="0" Nullable="false" />
           <Property Name="consec" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="planta" Type="varchar" MaxLength="10" />
           <Property Name="fecha" Type="datetime" />
           <Property Name="objetivo" Type="varchar" MaxLength="100" />
           <Property Name="descrip" Type="varchar" MaxLength="500" />
@@ -82,14 +83,13 @@
         </EntityType>
         <EntityType Name="t_objetivos">
           <Key>
-            <PropertyRef Name="planta" />
-            <PropertyRef Name="folio" />
+            <PropertyRef Name="empleado" />
+            <PropertyRef Name="axo" />
           </Key>
-          <Property Name="planta" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="folio" Type="numeric" Precision="10" Scale="0" Nullable="false" />
-          <Property Name="empleado" Type="varchar" MaxLength="20" />
+          <Property Name="empleado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="axo" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="planta" Type="varchar" MaxLength="10" />
           <Property Name="fecha" Type="datetime" />
-          <Property Name="axo" Type="numeric" Precision="4" Scale="0" />
           <Property Name="estatus" Type="varchar" MaxLength="1" />
           <Property Name="aprobado" Type="varchar" MaxLength="20" />
           <Property Name="f_aprobado" Type="datetime" />
@@ -99,7 +99,9 @@
           <Property Name="revision2" Type="varchar" MaxLength="1" />
           <Property Name="nota_r2" Type="varchar" MaxLength="500" />
           <Property Name="f_r2" Type="datetime" />
-          <Property Name="calificacion" Type="varchar" MaxLength="1" />
+          <Property Name="resultado_prom" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="calificacion" Type="varchar" MaxLength="10" />
+          <Property Name="u_id" Type="varchar" MaxLength="20" />
           <Property Name="f_id" Type="datetime" />
           <Property Name="f_enviado" Type="datetime" />
         </EntityType>
@@ -156,7 +158,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_obj_emp">
-          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="1" />
           <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="t_empleados">
@@ -168,7 +170,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_obj_pta">
-          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="1" />
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
           <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="t_plantas">
@@ -176,20 +178,6 @@
             </Principal>
             <Dependent Role="t_objetivos">
               <PropertyRef Name="planta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_objd_folio">
-          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="1" />
-          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="t_objetivos">
-              <PropertyRef Name="planta" />
-              <PropertyRef Name="folio" />
-            </Principal>
-            <Dependent Role="t_objetidet">
-              <PropertyRef Name="planta" />
-              <PropertyRef Name="folio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -202,6 +190,32 @@
             </Principal>
             <Dependent Role="t_objetidet">
               <PropertyRef Name="metrico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_objd_pta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
+          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_objetivodet">
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="1" />
+          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_objetivos">
+              <PropertyRef Name="empleado" />
+              <PropertyRef Name="axo" />
+            </Principal>
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="empleado" />
+              <PropertyRef Name="axo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -254,12 +268,16 @@
             <End Role="t_plantas" EntitySet="t_plantas" />
             <End Role="t_objetivos" EntitySet="t_objetivos" />
           </AssociationSet>
-          <AssociationSet Name="fk_objd_folio" Association="Self.fk_objd_folio">
-            <End Role="t_objetivos" EntitySet="t_objetivos" />
-            <End Role="t_objetidet" EntitySet="t_objetidet" />
-          </AssociationSet>
           <AssociationSet Name="fk_objd_met" Association="Self.fk_objd_met">
             <End Role="t_metricos" EntitySet="t_metricos" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_objd_pta" Association="Self.fk_objd_pta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_objetivodet" Association="Self.fk_objetivodet">
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
             <End Role="t_objetidet" EntitySet="t_objetidet" />
           </AssociationSet>
           <AssociationSet Name="fk_planta" Association="Self.fk_planta">
@@ -319,8 +337,8 @@
           <NavigationProperty Name="t_plantas" Relationship="Self.fk_emp_pta" FromRole="t_empleados" ToRole="t_plantas" />
           <NavigationProperty Name="t_usuarios" Relationship="Self.fk_empleado" FromRole="t_empleados" ToRole="t_usuarios" />
           <NavigationProperty Name="t_objetivos" Relationship="Self.fk_obj_emp" FromRole="t_empleados" ToRole="t_objetivos" />
-          <NavigationProperty Name="t_empleados1" Relationship="HRSystemModel.FK_t_empleados_supervisor" FromRole="t_empleados" ToRole="t_empleados1" />
-          <NavigationProperty Name="t_empleados2" Relationship="HRSystemModel.FK_t_empleados_supervisor" FromRole="t_empleados1" ToRole="t_empleados" />
+          <NavigationProperty Name="t_empleados1" Relationship="Self.FK_t_empleados_supervisor" FromRole="t_empleados" ToRole="t_empleados1" />
+          <NavigationProperty Name="t_empleados2" Relationship="Self.FK_t_empleados_supervisor" FromRole="t_empleados1" ToRole="t_empleados" />
         </EntityType>
         <EntityType Name="t_metricos">
           <Key>
@@ -332,13 +350,14 @@
         </EntityType>
         <EntityType Name="t_objetidet">
           <Key>
-            <PropertyRef Name="planta" />
-            <PropertyRef Name="folio" />
+            <PropertyRef Name="empleado" />
+            <PropertyRef Name="axo" />
             <PropertyRef Name="consec" />
           </Key>
-          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="folio" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="axo" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
           <Property Name="consec" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="3" />
           <Property Name="objetivo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="descrip" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -356,18 +375,18 @@
           <Property Name="f_r2" Type="DateTime" Precision="3" />
           <Property Name="f_id" Type="DateTime" Precision="3" />
           <NavigationProperty Name="t_metricos" Relationship="Self.fk_objd_met" FromRole="t_objetidet" ToRole="t_metricos" />
-          <NavigationProperty Name="t_objetivos" Relationship="Self.fk_objd_folio" FromRole="t_objetidet" ToRole="t_objetivos" />
+          <NavigationProperty Name="t_plantas" Relationship="HRSystemModel.fk_objd_pta" FromRole="t_objetidet" ToRole="t_plantas" />
+          <NavigationProperty Name="t_objetivos" Relationship="HRSystemModel.fk_objetivodet" FromRole="t_objetidet" ToRole="t_objetivos" />
         </EntityType>
         <EntityType Name="t_objetivos">
           <Key>
-            <PropertyRef Name="planta" />
-            <PropertyRef Name="folio" />
+            <PropertyRef Name="empleado" />
+            <PropertyRef Name="axo" />
           </Key>
-          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="folio" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
-          <Property Name="empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="empleado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="axo" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="3" />
-          <Property Name="axo" Type="Decimal" Precision="4" Scale="0" />
           <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="aprobado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="f_aprobado" Type="DateTime" Precision="3" />
@@ -377,12 +396,14 @@
           <Property Name="revision2" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="nota_r2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="f_r2" Type="DateTime" Precision="3" />
-          <Property Name="calificacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="resultado_prom" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="calificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="u_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="f_id" Type="DateTime" Precision="3" />
           <NavigationProperty Name="t_empleados" Relationship="Self.fk_obj_emp" FromRole="t_objetivos" ToRole="t_empleados" />
-          <NavigationProperty Name="t_objetidet" Relationship="Self.fk_objd_folio" FromRole="t_objetivos" ToRole="t_objetidet" />
-          <NavigationProperty Name="t_plantas" Relationship="Self.fk_obj_pta" FromRole="t_objetivos" ToRole="t_plantas" />
           <Property Name="f_enviado" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_plantas" Relationship="HRSystemModel.fk_obj_pta" FromRole="t_objetivos" ToRole="t_plantas" />
+          <NavigationProperty Name="t_objetidet" Relationship="HRSystemModel.fk_objetivodet" FromRole="t_objetivos" ToRole="t_objetidet" />
         </EntityType>
         <EntityType Name="t_plantas">
           <Key>
@@ -400,8 +421,9 @@
           <Property Name="gte_email2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="f_id" Type="DateTime" Precision="3" />
           <NavigationProperty Name="t_empleados" Relationship="Self.fk_emp_pta" FromRole="t_plantas" ToRole="t_empleados" />
-          <NavigationProperty Name="t_objetivos" Relationship="Self.fk_obj_pta" FromRole="t_plantas" ToRole="t_objetivos" />
           <NavigationProperty Name="t_usuarios" Relationship="Self.fk_planta" FromRole="t_plantas" ToRole="t_usuarios" />
+          <NavigationProperty Name="t_objetidet" Relationship="HRSystemModel.fk_objd_pta" FromRole="t_plantas" ToRole="t_objetidet" />
+          <NavigationProperty Name="t_objetivos" Relationship="HRSystemModel.fk_obj_pta" FromRole="t_plantas" ToRole="t_objetivos" />
         </EntityType>
         <EntityType Name="t_usuarios">
           <Key>
@@ -442,7 +464,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_obj_emp">
-          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="1" />
           <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="t_empleados">
@@ -450,6 +472,18 @@
             </Principal>
             <Dependent Role="t_objetivos">
               <PropertyRef Name="empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_t_empleados_supervisor">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_empleados1" Type="Self.t_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_empleados1">
+              <PropertyRef Name="supervisor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -462,32 +496,6 @@
             </Principal>
             <Dependent Role="t_objetidet">
               <PropertyRef Name="metrico" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_objd_folio">
-          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="1" />
-          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="t_objetivos">
-              <PropertyRef Name="planta" />
-              <PropertyRef Name="folio" />
-            </Principal>
-            <Dependent Role="t_objetidet">
-              <PropertyRef Name="planta" />
-              <PropertyRef Name="folio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_obj_pta">
-          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="1" />
-          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="t_plantas">
-              <PropertyRef Name="planta" />
-            </Principal>
-            <Dependent Role="t_objetivos">
-              <PropertyRef Name="planta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -524,36 +532,66 @@
             <End Role="t_empleados" EntitySet="t_empleados" />
             <End Role="t_objetivos" EntitySet="t_objetivos" />
           </AssociationSet>
+          <AssociationSet Name="FK_t_empleados_supervisor" Association="Self.FK_t_empleados_supervisor">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_empleados1" EntitySet="t_empleados" />
+          </AssociationSet>
           <AssociationSet Name="fk_objd_met" Association="Self.fk_objd_met">
             <End Role="t_metricos" EntitySet="t_metricos" />
             <End Role="t_objetidet" EntitySet="t_objetidet" />
-          </AssociationSet>
-          <AssociationSet Name="fk_objd_folio" Association="Self.fk_objd_folio">
-            <End Role="t_objetivos" EntitySet="t_objetivos" />
-            <End Role="t_objetidet" EntitySet="t_objetidet" />
-          </AssociationSet>
-          <AssociationSet Name="fk_obj_pta" Association="Self.fk_obj_pta">
-            <End Role="t_plantas" EntitySet="t_plantas" />
-            <End Role="t_objetivos" EntitySet="t_objetivos" />
           </AssociationSet>
           <AssociationSet Name="fk_planta" Association="Self.fk_planta">
             <End Role="t_plantas" EntitySet="t_plantas" />
             <End Role="t_usuarios" EntitySet="t_usuarios" />
           </AssociationSet>
-          <AssociationSet Name="FK_t_empleados_supervisor" Association="HRSystemModel.FK_t_empleados_supervisor">
-            <End Role="t_empleados" EntitySet="t_empleados" />
-            <End Role="t_empleados1" EntitySet="t_empleados" />
+          <AssociationSet Name="fk_objd_pta" Association="HRSystemModel.fk_objd_pta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_obj_pta" Association="HRSystemModel.fk_obj_pta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_objetivodet" Association="HRSystemModel.fk_objetivodet">
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+            <End Role="t_objetidet" EntitySet="t_objetidet" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_t_empleados_supervisor">
-          <End Type="HRSystemModel.t_empleados" Role="t_empleados" Multiplicity="0..1" />
-          <End Type="HRSystemModel.t_empleados" Role="t_empleados1" Multiplicity="*" />
+        <Association Name="fk_objd_pta">
+          <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_objetidet" Role="t_objetidet" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="t_empleados">
-              <PropertyRef Name="empleado" />
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
             </Principal>
-            <Dependent Role="t_empleados1">
-              <PropertyRef Name="supervisor" />
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_obj_pta">
+          <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_objetivos" Role="t_objetivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_objetivos">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_objetivodet">
+          <End Type="HRSystemModel.t_objetivos" Role="t_objetivos" Multiplicity="1" />
+          <End Type="HRSystemModel.t_objetidet" Role="t_objetidet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_objetivos">
+              <PropertyRef Name="empleado" />
+              <PropertyRef Name="axo" />
+            </Principal>
+            <Dependent Role="t_objetidet">
+              <PropertyRef Name="empleado" />
+              <PropertyRef Name="axo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -619,9 +657,10 @@
           <EntitySetMapping Name="t_objetidet">
             <EntityTypeMapping TypeName="HRSystemModel.t_objetidet">
               <MappingFragment StoreEntitySet="t_objetidet">
-                <ScalarProperty Name="planta" ColumnName="planta" />
-                <ScalarProperty Name="folio" ColumnName="folio" />
+                <ScalarProperty Name="empleado" ColumnName="empleado" />
+                <ScalarProperty Name="axo" ColumnName="axo" />
                 <ScalarProperty Name="consec" ColumnName="consec" />
+                <ScalarProperty Name="planta" ColumnName="planta" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="objetivo" ColumnName="objetivo" />
                 <ScalarProperty Name="descrip" ColumnName="descrip" />
@@ -645,11 +684,10 @@
             <EntityTypeMapping TypeName="HRSystemModel.t_objetivos">
               <MappingFragment StoreEntitySet="t_objetivos">
                 <ScalarProperty Name="f_enviado" ColumnName="f_enviado" />
-                <ScalarProperty Name="planta" ColumnName="planta" />
-                <ScalarProperty Name="folio" ColumnName="folio" />
                 <ScalarProperty Name="empleado" ColumnName="empleado" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="axo" ColumnName="axo" />
+                <ScalarProperty Name="planta" ColumnName="planta" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="estatus" ColumnName="estatus" />
                 <ScalarProperty Name="aprobado" ColumnName="aprobado" />
                 <ScalarProperty Name="f_aprobado" ColumnName="f_aprobado" />
@@ -659,7 +697,9 @@
                 <ScalarProperty Name="revision2" ColumnName="revision2" />
                 <ScalarProperty Name="nota_r2" ColumnName="nota_r2" />
                 <ScalarProperty Name="f_r2" ColumnName="f_r2" />
+                <ScalarProperty Name="resultado_prom" ColumnName="resultado_prom" />
                 <ScalarProperty Name="calificacion" ColumnName="calificacion" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
                 <ScalarProperty Name="f_id" ColumnName="f_id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -710,7 +750,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

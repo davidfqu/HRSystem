@@ -17,7 +17,7 @@ namespace HR_System.Controllers
         // GET: t_objetidet
         public ActionResult Index()
         {
-            var t_objetidet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos);
+            var t_objetidet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_plantas);
             return View(t_objetidet.ToList());
         }
 
@@ -37,7 +37,7 @@ namespace HR_System.Controllers
         }
 
         // GET: t_objetidet/Create
-        public ActionResult Create(string empleado = "68690012")
+        public ActionResult Create(string empleado = "68690145")
         {
             var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).Single();
             ViewBag.Objective = objetivoHeader;
@@ -61,8 +61,18 @@ namespace HR_System.Controllers
             }
 
 
-            ViewBag.ObjectivesDet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos).Where(x => x.planta == objetivoHeader.planta && x.folio == objetivoHeader.folio);
-            
+            var ObjectivesDet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos).Where(x => x.empleado == objetivoHeader.empleado && x.axo == objetivoHeader.axo);
+            ViewBag.ObjectivesDet = ObjectivesDet;
+            try
+            {
+                ViewBag.NextObjective = ObjectivesDet.OrderByDescending(x => x.consec).ToList().ElementAt(0).consec + 1;
+            }
+            catch
+            {
+                ViewBag.NextObjective = 1;
+            }
+
+
             ViewBag.folio = new SelectList(db.t_objetivos, "folio", "folio");
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip");
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "planta");
@@ -74,18 +84,18 @@ namespace HR_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "planta,folio,consec,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet, string planta, int folio, int consec)
+        public ActionResult Create([Bind(Include = "empleado,axo,consec,planta,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet)
         {
-           
+            t_objetidet.fecha = System.DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.t_objetidet.Add(t_objetidet);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
-            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado", t_objetidet.planta);
+            ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
             return View(t_objetidet);
         }
 
@@ -102,7 +112,7 @@ namespace HR_System.Controllers
                 return HttpNotFound();
             }
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
-            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado", t_objetidet.planta);
+            ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
             return View(t_objetidet);
         }
 
@@ -111,7 +121,7 @@ namespace HR_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "planta,folio,consec,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet)
+        public ActionResult Edit([Bind(Include = "empleado,axo,consec,planta,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet)
         {
             if (ModelState.IsValid)
             {
@@ -120,7 +130,7 @@ namespace HR_System.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
-            ViewBag.planta = new SelectList(db.t_objetivos, "planta", "empleado", t_objetidet.planta);
+            ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
             return View(t_objetidet);
         }
 

@@ -8,11 +8,11 @@
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">My Objectives @ViewBag.Objective.axo</h3>
 <hr />
 <div class="row">
-    
+
     <hr />
     <div class="col-12">
-       
-        
+
+
         <div class="row">
             <div class="col-4">
                 <label class="font-weight-bold">Employee #: </label>
@@ -50,41 +50,126 @@
 
             </div>
         </div>
-        <div class="row mt-2">
+        <div class="row">
             @foreach (var item in ViewBag.ObjectivesDet)
             {
-                <div class="card col-12 mb-2">
-                    <div class="card-header">
-                        @item.consec @item.objetivo
+                <div class="col-4 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    @item.consec @item.objetivo
+                                </div>
+                                <div class="col-4 text-right">
+                                    @Html.ActionLink("Edit", "Edit", new { planta = item.planta, folio = item.folio, consec = item.consec })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Description
+                                </dt>
+
+                                <dd>
+                                    @item.descrip
+                                </dd>
+
+                                <dt>
+                                    Metric
+                                </dt>
+
+                                <dd>
+                                    @item.t_metricos.descrip
+                                </dd>
+
+                                <dt>
+                                    Weigth
+                                </dt>
+
+                                <dd>
+                                    @item.peso
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <dl class="dl-horizontal">
-                            <dt>
-                                Description
-                            </dt>
 
-                            <dd>
-                                @item.descrip
-                            </dd>
+                </div>
 
-                            <dt>
-                                Metric
-                            </dt>
+                <div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        @using (Html.BeginForm("Edit", "t_objetidet", FormMethod.Post))
+                        {
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Objective @ViewBag.NextObjective</h4>
+                                    <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="modal-body">
 
-                            <dd>
-                                @item.t_metricos.descrip
-                            </dd>
+                                            @Html.AntiForgeryToken()
 
-                            <dt>
-                                Weigth
-                            </dt>
+                                            <div class="form-horizontal">
 
-                            <dd>
-                                @item.peso
-                            </dd>
-                        </dl>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                @Html.HiddenFor(model => model.planta, new { @Value = item.planta })
+                                             
+                                                @Html.HiddenFor(model => model.consec, new { @Value = item.consec })
+
+
+
+                                                <div class="form-group">
+                                                    <div class="md-form md-outline ">
+                                                        @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "form-control", @maxlenght = "100" } })
+                                                        <label for="objetivo">Title</label>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="md-form md-outline">
+                                                        <textarea id="descrip" name="descrip" class="md-textarea form-control" rows="3"></textarea>
+                                                        <label for="descrip">Description</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label for="peso" class="text-muted">Weight: <span id="pesoval" style="color:black"></span><span style="color:black">%</span></label>
+                                                        <input type="range" class="custom-range" min="0" max="100" id="peso" name="peso">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+
+                                                    <div class="col-md-12">
+                                                        <label for="metrico" class="text-muted">Metric : </label>
+                                                        @Html.DropDownList("metrico", null, htmlAttributes: new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.metrico, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" value="Create" class="btn btn-default" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
                     </div>
                 </div>
+
             }
 
         </div>
@@ -94,193 +179,91 @@
 
 <div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
+    <div class="modal-dialog" role="document">
+        @using (Html.BeginForm())
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Objective @ViewBag.NextObjective</h4>
+                    <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="modal-body">
 
-                    <div class="form-horizontal">
-                        <h4>t_objetidet</h4>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.planta, "planta", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("planta", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.planta, "", new { @class = "text-danger" })
-                                
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.planta, new { @Value = ViewBag.Objective.planta })
+                                @Html.HiddenFor(model => model.empleado, new { @Value = ViewBag.Objective.empleado })
+                                @Html.HiddenFor(model => model.axo, new { @Value = ViewBag.Objective.axo })
+                                @Html.HiddenFor(model => model.consec, new { @Value = ViewBag.NextObjective })
+
+
+                                <div class="form-group">
+                                    <div class="md-form md-outline ">
+                                        @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "form-control", @maxlenght = "100" } })
+                                        <label for="objetivo">Title</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="md-form md-outline">
+                                        <textarea id="descrip" name="descrip" class="md-textarea form-control" rows="3"></textarea>
+                                        <label for="descrip">Description</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label for="peso" class="text-muted">Weight: <span id="pesoval" style="color:black"></span><span style="color:black">%</span></label>
+                                        <input type="range" class="custom-range" min="0" max="100" id="peso" name="peso">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <div class="col-md-12">
+                                        <label for="metrico" class="text-muted">Metric : </label>
+                                        @Html.DropDownList("metrico", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.metrico, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
                             </div>
+
                         </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.folio, "folio", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("folio", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.folio, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.consec, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.consec, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.consec, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.objetivo, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.objetivo, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.descrip, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.descrip, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.descrip, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.peso, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.peso, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.peso, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.metrico, "metrico", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownList("metrico", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.metrico, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.cancelado, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.cancelado, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.cancelado, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.nota_cancel, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.nota_cancel, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.nota_cancel, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.f_cancel, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.f_cancel, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.f_cancel, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.u_cancel, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.u_cancel, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.u_cancel, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.resultado1, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.resultado1, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.resultado1, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.nota_r1, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.nota_r1, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.nota_r1, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.f_r1, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.f_r1, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.f_r1, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.resultado2, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.resultado2, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.resultado2, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.nota_r2, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.nota_r2, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.nota_r2, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.f_r2, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.f_r2, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.f_r2, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.f_id, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.f_id, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.f_id, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-default" />
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" value="Create" class="btn btn-default" />
                         </div>
                     </div>
-                }
+                </div>
+
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
+        }
     </div>
 </div>
+
 
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section scripts{
+    <script>
+        var slider = document.getElementById("peso");
+var output = document.getElementById("pesoval");
+output.innerHTML = slider.value;
+slider.oninput = function () {
+    output.innerHTML = this.value;
+}
+    </script>
+
+}

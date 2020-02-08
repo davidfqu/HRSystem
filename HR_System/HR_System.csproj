@@ -211,15 +211,15 @@
     <Content Include="js\modules\waves.js" />
     <Content Include="js\modules\wow.js" />
     <Content Include="js\popper.min.js" />
-    <Content Include="Models\HRSystemModel.Context.tt">
+    <Content Include="Models\HRSystem.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HRSystemModel.Context.cs</LastGenOutput>
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
+      <DependentUpon>HRSystem.edmx</DependentUpon>
+      <LastGenOutput>HRSystem.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\HRSystemModel.tt">
+    <Content Include="Models\HRSystem.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
-      <LastGenOutput>HRSystemModel.cs</LastGenOutput>
+      <DependentUpon>HRSystem.edmx</DependentUpon>
+      <LastGenOutput>HRSystem.cs</LastGenOutput>
     </Content>
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
@@ -233,51 +233,48 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\t_empleadosController.cs" />
     <Compile Include="Controllers\t_objetidetController.cs" />
-    <Compile Include="Controllers\t_objetivosController.cs" />
-    <Compile Include="Controllers\t_usuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\HRSystemModel.Context.cs">
+    <Compile Include="Models\HRSystem.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HRSystemModel.Context.tt</DependentUpon>
+      <DependentUpon>HRSystem.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HRSystemModel.cs">
+    <Compile Include="Models\HRSystem.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HRSystemModel.Designer.cs">
+    <Compile Include="Models\HRSystem.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
+      <DependentUpon>HRSystem.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_config.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_empleados.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_metricos.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_objetidet.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_objetivos.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_plantas.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_usuarios.cs">
-      <DependentUpon>HRSystemModel.tt</DependentUpon>
+      <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -352,36 +349,19 @@
     <Content Include="scss\_custom-styles.scss" />
     <Content Include="scss\_custom-variables.scss" />
     <Content Include="Views\Home\Index.cshtml" />
-    <EntityDeploy Include="Models\HRSystemModel.edmx">
+    <Content Include="Views\Home\MyInfo.cshtml" />
+    <EntityDeploy Include="Models\HRSystem.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HRSystemModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>HRSystem.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\HRSystemModel.edmx.diagram">
-      <DependentUpon>HRSystemModel.edmx</DependentUpon>
+    <Content Include="Models\HRSystem.edmx.diagram">
+      <DependentUpon>HRSystem.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\t_usuarios\Create.cshtml" />
-    <Content Include="Views\t_usuarios\Delete.cshtml" />
-    <Content Include="Views\t_usuarios\Details.cshtml" />
-    <Content Include="Views\t_usuarios\Edit.cshtml" />
-    <Content Include="Views\t_usuarios\Index.cshtml" />
     <Content Include="Views\t_objetidet\Create.cshtml" />
     <Content Include="Views\t_objetidet\Delete.cshtml" />
     <Content Include="Views\t_objetidet\Details.cshtml" />
     <Content Include="Views\t_objetidet\Edit.cshtml" />
     <Content Include="Views\t_objetidet\Index.cshtml" />
-    <Content Include="Views\t_objetivos\Create.cshtml" />
-    <Content Include="Views\t_objetivos\Delete.cshtml" />
-    <Content Include="Views\t_objetivos\Details.cshtml" />
-    <Content Include="Views\t_objetivos\Edit.cshtml" />
-    <Content Include="Views\t_objetivos\Index.cshtml" />
-    <Content Include="Views\t_objetivos\Edit2.cshtml" />
-    <Content Include="Views\t_objetivos\IndexModule1.cshtml" />
-    <Content Include="Views\Home\MyInfo.cshtml" />
-    <Content Include="Views\t_empleados\Create.cshtml" />
-    <Content Include="Views\t_empleados\Delete.cshtml" />
-    <Content Include="Views\t_empleados\Details.cshtml" />
-    <Content Include="Views\t_empleados\Edit.cshtml" />
-    <Content Include="Views\t_empleados\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
