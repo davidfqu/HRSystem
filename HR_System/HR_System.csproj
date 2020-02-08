@@ -234,6 +234,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\t_objetidetController.cs" />
+    <Compile Include="Controllers\t_objetivosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -362,6 +363,11 @@
     <Content Include="Views\t_objetidet\Details.cshtml" />
     <Content Include="Views\t_objetidet\Edit.cshtml" />
     <Content Include="Views\t_objetidet\Index.cshtml" />
+    <Content Include="Views\t_objetivos\Create.cshtml" />
+    <Content Include="Views\t_objetivos\Delete.cshtml" />
+    <Content Include="Views\t_objetivos\Details.cshtml" />
+    <Content Include="Views\t_objetivos\Edit.cshtml" />
+    <Content Include="Views\t_objetivos\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

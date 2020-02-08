@@ -127,13 +127,15 @@ namespace HR_System.Controllers
             {
                 db.Entry(t_objetidet).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
             return View(t_objetidet);
         }
 
+
+       
         // GET: t_objetidet/Delete/5
         public ActionResult Delete(string id)
         {

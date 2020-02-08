@@ -6,6 +6,55 @@
 }
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">MODULE 1</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">My Objectives @ViewBag.Objective.axo</h3>
+
+<div class="row">
+    <div class="col-md-12 m-0 p-0">
+
+        <!-- Stepers Wrapper -->
+        <ul class="stepper stepper-horizontal m-0 p-0">
+
+            <!-- First Step -->
+            <li class="@(ViewBag.Objective.estatus == "PE"? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">1</span>
+                    <span class="label">Creation</span>
+                </a>
+            </li>
+
+            <!-- Second Step -->
+            <li class="@(ViewBag.Objective.estatus == "EN" ||ViewBag.Objective.estatus == "AP" ? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">2</span>
+                    <span class="label">Approval</span>
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Objective.estatus == "RI"? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">3</span>
+                    <span class="label">1st Revision</span>
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Objective.estatus == "RF"? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">4</span>
+                    <span class="label">2nd Revision</span>
+                </a>
+            </li>
+
+            <li class="warning">
+                <a href="#!">
+                    <span class="circle">5</span>
+                    <span class="label">Results</span>
+                </a>
+            </li>
+
+        </ul>
+        <!-- /.Stepers Wrapper -->
+
+    </div>
+</div>
 <hr />
 <div class="row">
 
@@ -37,74 +86,80 @@
                 <label>@ViewBag.Manager2</label>
             </div>
         </div>
+      
         <div class="row">
-            <div class="col-4">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddObjModal">
+            <div class="col-12">
+                <button type="button" class="btn btn-success rounded-pill" data-toggle="modal" data-target="#AddObjModal">
                     Add Objetive
                 </button>
-            </div>
-            <div class="col-4">
-
-            </div>
-            <div class="col-4">
-
+                <a href="@Url.Action("SendToFirstApproval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-primary rounded-pill" role="button">Send objectives for manager approval</a>
             </div>
         </div>
         <div class="row">
             @foreach (var item in ViewBag.ObjectivesDet)
             {
+                string numitem = Convert.ToString(item.consec);
                 <div class="col-4 mt-3">
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-8">
-                                    @item.consec @item.objetivo
+                                    <span class="badge primary-color-dark">@item.consec</span> @item.objetivo
                                 </div>
                                 <div class="col-4 text-right">
-                                    @Html.ActionLink("Edit", "Edit", new { planta = item.planta, folio = item.folio, consec = item.consec })
+                                    <i class="fas fa-edit" data-toggle="modal" data-target="@Html.Raw("#" + "AddObjModal" + numitem)"></i>
                                 </div>
                             </div>
 
                         </div>
                         <div class="card-body">
-                            <dl class="dl-horizontal">
-                                <dt>
-                                    Description
-                                </dt>
+                            <div class="row">
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Description
+                                        </dt>
 
-                                <dd>
-                                    @item.descrip
-                                </dd>
+                                        <dd>
+                                            @item.descrip
+                                        </dd>
 
-                                <dt>
-                                    Metric
-                                </dt>
+                                    </dl>
+                                </div>
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Metric
+                                        </dt>
 
-                                <dd>
-                                    @item.t_metricos.descrip
-                                </dd>
+                                        <dd>
+                                            @item.t_metricos.descrip
+                                        </dd>
 
-                                <dt>
-                                    Weigth
-                                </dt>
+                                        <dt>
+                                            Weigth
+                                        </dt>
 
-                                <dd>
-                                    @item.peso
-                                </dd>
-                            </dl>
+                                        <dd>
+                                            @item.peso
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
 
                 </div>
 
-                <div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="@Html.Raw("AddObjModal" + numitem)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         @using (Html.BeginForm("Edit", "t_objetidet", FormMethod.Post))
                         {
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4>Objective @ViewBag.NextObjective</h4>
+                                    <h4>Edit objective @item.consec</h4>
                                     <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -119,14 +174,14 @@
 
                                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                                 @Html.HiddenFor(model => model.planta, new { @Value = item.planta })
-                                             
-                                                @Html.HiddenFor(model => model.consec, new { @Value = item.consec })
-
+                                                @Html.HiddenFor(model => model.empleado, new { @Value = item.empleado })
+                                                @Html.HiddenFor(model => model.axo, new { @Value = item.axo })
+                                                @Html.HiddenFor(model => model.consec, new { @Value = item.consec})
 
 
                                                 <div class="form-group">
                                                     <div class="md-form md-outline ">
-                                                        @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "form-control", @maxlenght = "100" } })
+                                                        @Html.EditorFor(model => model.objetivo, new { htmlAttributes = new { @class = "form-control", @maxlenght = "100", @Value = item.objetivo } })
                                                         <label for="objetivo">Title</label>
                                                     </div>
 
@@ -134,15 +189,15 @@
 
                                                 <div class="form-group">
                                                     <div class="md-form md-outline">
-                                                        <textarea id="descrip" name="descrip" class="md-textarea form-control" rows="3"></textarea>
+                                                        <textarea id="descrip" name="descrip" class="md-textarea form-control" rows="3">@item.descrip</textarea>
                                                         <label for="descrip">Description</label>
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="col-md-12">
-                                                        <label for="peso" class="text-muted">Weight: <span id="pesoval" style="color:black"></span><span style="color:black">%</span></label>
-                                                        <input type="range" class="custom-range" min="0" max="100" id="peso" name="peso">
+                                                        <label for="peso" class="text-muted">Weight: <span class="pesoval"style="color:black"></span><span style="color:black">%</span></label>
+                                                        <input type="range" class="custom-range peso" min="0" max="100"  name="peso" value= @item.peso>
                                                     </div>
                                                 </div>
 
@@ -150,8 +205,8 @@
 
                                                     <div class="col-md-12">
                                                         <label for="metrico" class="text-muted">Metric : </label>
-                                                        @Html.DropDownList("metrico", null, htmlAttributes: new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(model => model.metrico, "", new { @class = "text-danger" })
+                                                        @Html.DropDownList("metrico", null, htmlAttributes: new { @class = "form-control", @Value = item.t_metricos.descrip })
+                                                        @Html.ValidationMessageFor(model => model.metrico, "", new { @class = "text-danger"})
                                                     </div>
                                                 </div>
 
@@ -160,7 +215,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <input type="submit" value="Create" class="btn btn-default" />
+                                            <input type="submit" value="Update" class="btn btn-default" />
                                         </div>
                                     </div>
                                 </div>
@@ -221,8 +276,8 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <label for="peso" class="text-muted">Weight: <span id="pesoval" style="color:black"></span><span style="color:black">%</span></label>
-                                        <input type="range" class="custom-range" min="0" max="100" id="peso" name="peso">
+                                        <label for="peso" class="text-muted">Weight: <span class="pesoval" style="color:black"></span><span style="color:black">%</span></label>
+                                        <input type="range" class="custom-range peso" min="0" max="100" id="peso" name="peso">
                                     </div>
                                 </div>
 
@@ -258,12 +313,12 @@
 
 @section scripts{
     <script>
-        var slider = document.getElementById("peso");
-var output = document.getElementById("pesoval");
+        var slider = document.getElementByClassName("peso");
+var output = document.getElementByClassName("pesoval");
 output.innerHTML = slider.value;
 slider.oninput = function () {
     output.innerHTML = this.value;
-}
+}         
     </script>
 
 }

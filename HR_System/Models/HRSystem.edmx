@@ -90,7 +90,7 @@
           <Property Name="axo" Type="numeric" Precision="4" Scale="0" Nullable="false" />
           <Property Name="planta" Type="varchar" MaxLength="10" />
           <Property Name="fecha" Type="datetime" />
-          <Property Name="estatus" Type="varchar" MaxLength="1" />
+          <Property Name="estatus" Type="varchar" MaxLength="2" />
           <Property Name="aprobado" Type="varchar" MaxLength="20" />
           <Property Name="f_aprobado" Type="datetime" />
           <Property Name="revision1" Type="varchar" MaxLength="1" />
@@ -387,7 +387,7 @@
           <Property Name="axo" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
           <Property Name="planta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="fecha" Type="DateTime" Precision="3" />
-          <Property Name="estatus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="estatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="aprobado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="f_aprobado" Type="DateTime" Precision="3" />
           <Property Name="revision1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
