@@ -4,6 +4,17 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section style{
+    
+<link href="~/css/Toasts.css" rel="stylesheet" />
+    }
+
+<div id="snackbar">
+    Verify that you have at least 3 objectives and that the sum of all objectives weights are exactly 100
+</div>
+
+
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">MODULE 1</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">My Objectives @ViewBag.Objective.axo</h3>
 
@@ -86,13 +97,27 @@
                 <label>@ViewBag.Manager2</label>
             </div>
         </div>
-      
+        <hr />
         <div class="row">
-            <div class="col-12">
-                <button type="button" class="btn btn-success rounded-pill" data-toggle="modal" data-target="#AddObjModal">
+            <div class="col-9">
+                <button type="button" class="btn btn-success rounded-pill" data-toggle="modal" data-target="#AddObjModal" @(ViewBag.ObjectivesQty == 5 ? "hidden" : "")>
                     Add Objetive
                 </button>
-                <a href="@Url.Action("SendToFirstApproval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-primary rounded-pill" role="button">Send objectives for manager approval</a>
+                @if (ViewBag.ObjectivesQty > 2 && ViewBag.TotalWeight == 100)
+                {
+                    <a href="@Url.Action("SendToFirstApproval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-primary rounded-pill" role="button" )>Send objectives for manager approval</a>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary rounded-pill" onclick="myFunction()" >
+                        Send objectives for manager approval
+                    </button>
+                }
+               
+            </div>
+            <div class="col-3 text-right">
+                <label class="font-weight-bold">Total Weight: </label>
+                <label class="@(ViewBag.TotalWeight == 100 ? "text-success" : "text-danger")">@ViewBag.TotalWeight</label>
             </div>
         </div>
         <div class="row">
@@ -104,10 +129,11 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-8">
-                                    <span class="badge primary-color-dark">@item.consec</span> @item.objetivo
+                                    <div class="badge primary-color pt-1 m-0 text-center" style="border-radius: 50%; height: 25px; width:25px;font-size:17px">@item.consec</div> @item.objetivo
                                 </div>
-                                <div class="col-4 text-right">
-                                    <i class="fas fa-edit" data-toggle="modal" data-target="@Html.Raw("#" + "AddObjModal" + numitem)"></i>
+                                <div class="col-4 text-right ml-0">
+                                    <a class="fas fa-trash-alt danger-ic mr-1" href="@Url.Action("DeleteObjective","t_objetidet",new {empleado = item.empleado, axo = item.axo, consec = item.consec })"></a>
+                                    <a class="fas fa-edit" data-toggle="modal" data-target="@Html.Raw("#" + "AddObjModal" + numitem)"></a>
                                 </div>
                             </div>
 
@@ -137,7 +163,7 @@
                                         </dd>
 
                                         <dt>
-                                            Weigth
+                                            Weight
                                         </dt>
 
                                         <dd>
@@ -196,8 +222,8 @@
 
                                                 <div class="form-group">
                                                     <div class="col-md-12">
-                                                        <label for="peso" class="text-muted">Weight: <span class="pesoval"style="color:black"></span><span style="color:black">%</span></label>
-                                                        <input type="range" class="custom-range peso" min="0" max="100"  name="peso" value= @item.peso>
+                                                        <label for="peso" class="text-muted">Weight: <span class="outputpesoe" style="color:black">@item.peso</span><span style="color:black">%</span></label>
+                                                        <input type="range" class="custom-range inputpesoe" min="0" max="100"  name="peso" value= @item.peso>
                                                     </div>
                                                 </div>
 
@@ -276,8 +302,8 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <label for="peso" class="text-muted">Weight: <span class="pesoval" style="color:black"></span><span style="color:black">%</span></label>
-                                        <input type="range" class="custom-range peso" min="0" max="100" id="peso" name="peso">
+                                        <label for="peso" class="text-muted">Weight: <span id="outputpesoc" style="color:black"></span><span style="color:black">%</span></label>
+                                        <input type="range" class="custom-range inputpeso" min="0" max="100" id="pesoc" name="peso">
                                     </div>
                                 </div>
 
@@ -313,12 +339,32 @@
 
 @section scripts{
     <script>
-        var slider = document.getElementByClassName("peso");
-var output = document.getElementByClassName("pesoval");
+        function myFunction() {
+            // Get the snackbar DIV
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 10000);
+        }
+    </script>
+
+    <script>
+        var slider = document.getElementById("pesoc");
+        var output = document.getElementById("outputpesoc");
 output.innerHTML = slider.value;
 slider.oninput = function () {
     output.innerHTML = this.value;
 }         
     </script>
+
+<script>
+    $(".inputpesoe").on('input', function () {
+        $(".outputpesoe").html(this.value);
+    });
+
+</script>
 
 }

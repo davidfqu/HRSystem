@@ -1,0 +1,203 @@
+﻿@model HR_System.Models.t_objetidet
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section style{
+
+    <link href="~/css/Toasts.css" rel="stylesheet" />
+}
+
+<div id="snackbar">
+    
+</div>
+
+
+<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">MODULE 1</h6>
+<h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">My Objectives @ViewBag.Objective.axo</h3>
+
+<div class="row">
+    <div class="col-md-12 m-0 p-0">
+
+        <!-- Stepers Wrapper -->
+        <ul class="stepper stepper-horizontal m-0 p-0">
+
+            <!-- First Step -->
+            <li class="@(ViewBag.Objective.estatus == "PE"? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">1</span>
+                    <span class="label">Creation</span>
+                </a>
+            </li>
+
+            <!-- Second Step -->
+            <li class="@(ViewBag.Objective.estatus == "EN" ||ViewBag.Objective.estatus == "AP" ? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">2</span>
+                    <span class="label">Approval</span>
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Objective.estatus == "RI"? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">3</span>
+                    <span class="label">1st Revision</span>
+                </a>
+            </li>
+
+            <li class="@(ViewBag.Objective.estatus == "RF"? "completed" : "warning")">
+                <a href="#!">
+                    <span class="circle">4</span>
+                    <span class="label">2nd Revision</span>
+                </a>
+            </li>
+
+            <li class="warning">
+                <a href="#!">
+                    <span class="circle">5</span>
+                    <span class="label">Results</span>
+                </a>
+            </li>
+
+        </ul>
+        <!-- /.Stepers Wrapper -->
+
+    </div>
+</div>
+<hr />
+<div class="row">
+
+    <hr />
+    <div class="col-12">
+
+
+        <div class="row">
+            <div class="col-4">
+                <label class="font-weight-bold">Employee #: </label>
+                <label>@ViewBag.Objective.empleado</label>
+            </div>
+            <div class="col-4">
+                <label class="font-weight-bold">Name: </label>
+                <label>@ViewBag.Objective.t_empleados.nombre</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label class="font-weight-bold">Department: </label>
+                <label>(Departamento de Tress)</label>
+            </div>
+            <div class="col-4">
+                <label class="font-weight-bold">Manager: </label>
+                <label>@ViewBag.Manager
+                 </label>
+            </div>
+            <div class="col-4">
+                <label class="font-weight-bold">2nd Level Manager: </label>
+                <label>@ViewBag.Manager2
+                   
+                </label>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-9">
+                @if (ViewBag.FirstManager == true)
+                {
+                    <a href="@Url.Action("Approval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-success rounded-pill" role="button" )>Approve</a>
+                    <a href="@Url.Action("Reject","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-danger rounded-pill" role="button" )>Reject</a>
+                }
+               
+            </div>
+            <div class="col-3 text-right">
+               @if (ViewBag.Objective.estatus == "RI")
+               {
+                <div class="text-success"> Objectives Approved </div>
+               }
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewBag.ObjectivesDet)
+            {
+                
+                <div class="col-4 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="badge primary-color pt-1 m-0 text-center" style="border-radius: 50%; height: 25px; width:25px;font-size:17px">@item.consec</div> @item.objetivo
+                                </div>
+                                <div class="col-4 text-right ml-0">
+                                   
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Description
+                                        </dt>
+
+                                        <dd>
+                                            @item.descrip
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Metric
+                                        </dt>
+
+                                        <dd>
+                                            @item.t_metricos.descrip
+                                        </dd>
+
+                                        <dt>
+                                            Weight
+                                        </dt>
+
+                                        <dd>
+                                            @item.peso
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+    
+
+            }
+
+        </div>
+        <!-- Editable table -->
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts{
+    <script>
+        function myFunction() {
+            // Get the snackbar DIV
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 10000);
+        }
+    </script> 
+}

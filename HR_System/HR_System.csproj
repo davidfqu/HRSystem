@@ -149,6 +149,7 @@
     <Content Include="css\modules\animations-extended.min.css" />
     <Content Include="css\style.css" />
     <Content Include="css\style.min.css" />
+    <Content Include="css\Toasts.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
@@ -368,6 +369,8 @@
     <Content Include="Views\t_objetivos\Details.cshtml" />
     <Content Include="Views\t_objetivos\Edit.cshtml" />
     <Content Include="Views\t_objetivos\Index.cshtml" />
+    <Content Include="Views\t_objetidet\Approval.cshtml" />
+    <Content Include="Views\t_objetivos\MenuModule1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

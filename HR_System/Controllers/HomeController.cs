@@ -13,43 +13,11 @@ namespace HR_System.Controllers
     public class HomeController : Controller
     {
         private HRSystemEntities db = new HRSystemEntities();
-        // GET: Home
+        
+
         public ActionResult Index()
         {
-            string[] infoTressEmpleado;
-            string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
-            Session["userAccount"] = username;
-            var t_usuarios = db.t_usuarios.Find(username);
-            if(t_usuarios == null)
-            {
-                //si usuario no esta
-            }
-            else
-            {
-                var nombreusuario = t_usuarios.nombre.Split(' ');
-                ViewBag.userFirstName = nombreusuario[0];
-                var empleado = db.t_empleados.Where(x => x.usuario == username).ToList();
-                if(empleado.Any())
-                {
-                    Session["userNo"] = empleado[0].empleado;
-
-                    string numempleado = empleado[0].empleado.Substring(3, 5);
-                    if(empleado[0].planta == "686")
-                    {
-                        infoTressEmpleado = datosTress686(numempleado);
-                        ViewBag.userJobPosition = infoTressEmpleado[2];
-                    }
-
-                    Session["EmployeeNo"] = empleado[0].empleado;
-
-                    return View();
-                }
-                else
-                {
-                    //si el nombre del usuario no existe en empleados
-                }
-                
-            }
+            Login();
 
             return View();
         }
@@ -59,7 +27,42 @@ namespace HR_System.Controllers
             return View();
         }
 
+        public void Login()
+        {
+            string[] infoTressEmpleado;
+            string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
+            Session["userAccount"] = username;
+            var t_usuarios = db.t_usuarios.Find(username);
+            if (t_usuarios == null)
+            {
+                //si usuario no esta
+            }
+            else
+            {
+                var nombreusuario = t_usuarios.nombre.Split(' ');
+                ViewBag.userFirstName = nombreusuario[0];
+                var empleado = db.t_empleados.Where(x => x.usuario == username).ToList();
+                if (empleado.Any())
+                {
+                    Session["userNo"] = empleado[0].empleado;
 
+                    string numempleado = empleado[0].empleado.Substring(3, 5);
+                    if (empleado[0].planta == "686")
+                    {
+                        infoTressEmpleado = datosTress686(numempleado);
+                        ViewBag.userJobPosition = infoTressEmpleado[2];
+                    }
+
+                    Session["EmployeeNo"] = empleado[0].empleado;
+                }
+                else
+                {
+                    //si el nombre del usuario no existe en empleados
+                }
+
+            }
+
+        }
 
         public string[] datosTress686(string id)
         {
@@ -98,7 +101,7 @@ namespace HR_System.Controllers
                 empleado[0] = cultInfo.ToTitleCase(empleado[0].ToString().ToLower());
             }
 
-           
+
             return empleado;
         }
     }

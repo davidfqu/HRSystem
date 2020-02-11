@@ -14,11 +14,17 @@ namespace HR_System.Controllers
     {
         private HRSystemEntities db = new HRSystemEntities();
 
+         
         // GET: t_objetivos
         public ActionResult Index()
         {
             var t_objetivos = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas);
             return View(t_objetivos.ToList());
+        }
+
+        public ActionResult MenuModule1()
+        {
+            return View();
         }
 
         // GET: t_objetivos/Details/5
@@ -90,11 +96,52 @@ namespace HR_System.Controllers
             {
                 return HttpNotFound();
             }
-            t_objetivos.estatus = "E";
+            t_objetivos.estatus = "EN";
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Create", "t_objetidet");
+            return RedirectToAction("Approval", "t_objetidet");
           
+        }
+
+        public ActionResult Approval(string empleado, int axo)
+        {
+            if (empleado == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            t_objetivos t_objetivos = db.t_objetivos.Find(empleado, axo);
+            if (t_objetivos == null)
+            {
+                return HttpNotFound();
+            }
+
+            t_objetivos.aprobado = Convert.ToString(Session["EmployeeNo"]);
+            t_objetivos.estatus = "RI";
+
+            db.Entry(t_objetivos).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Approval", "t_objetidet");
+
+        }
+
+        public ActionResult Reject(string empleado, int axo)
+        {
+            if (empleado == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            t_objetivos t_objetivos = db.t_objetivos.Find(empleado, axo);
+            if (t_objetivos == null)
+            {
+                return HttpNotFound();
+            }
+            t_objetivos.aprobado = Convert.ToString(Session["EmployeeNo"]);
+            t_objetivos.estatus = "PE";
+
+            db.Entry(t_objetivos).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Approval", "t_objetidet");
+
         }
         // POST: t_objetivos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
