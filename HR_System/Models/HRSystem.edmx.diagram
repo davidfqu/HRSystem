@@ -22,6 +22,7 @@
         <AssociationConnector Association="HRSystemModel.fk_objd_pta" />
         <AssociationConnector Association="HRSystemModel.fk_obj_pta" />
         <AssociationConnector Association="HRSystemModel.fk_objetivodet" />
+        <EntityTypeShape EntityType="HRSystemModel.t_config_m1" Width="1.5" PointX="10.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

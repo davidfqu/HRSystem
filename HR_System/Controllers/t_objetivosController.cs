@@ -28,16 +28,43 @@ namespace HR_System.Controllers
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
 
+            decimal lastyearobj = 0;
+
+            bool newobj = false;
+
             string empleado = Convert.ToString(Session["EmployeeNo"]);
+
+            ViewBag.empleado = empleado;
+
+            var t_objetivos = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).ToList();
+
             var t_empleados = db.t_empleados.Include(t => t.t_plantas).Include(t => t.t_usuarios).Include(t => t.t_empleados2).Where(x => x.supervisor == empleado).ToList();
 
+            var t_config_m1 = db.t_config_m1.ToList().ElementAt(0);
+
+            if(t_objetivos.Any())
+            {
+                lastyearobj = t_objetivos.ElementAt(0).axo;
+                if (lastyearobj != t_config_m1.axo_activo)
+                    newobj = true;
+            }
+            else
+            {
+                newobj = true;
+            }
+            
+            if(System.DateTime.Now >= t_config_m1.f_objini && System.DateTime.Now <= t_config_m1.f_objfin && newobj)
+            {
+                ViewBag.NewObjective = "1";
+                ViewBag.NewYear = t_config_m1.axo_activo;
+            }
             if(t_empleados.Any())
             {
                 ViewBag.DReports = "1";
             }
 
 
-            return View();
+            return View(t_objetivos);
         }
 
         public ActionResult DirectReports()
@@ -46,7 +73,8 @@ namespace HR_System.Controllers
                 return RedirectToAction("NoUser", "Home", null);
 
             string empleado = Convert.ToString(Session["EmployeeNo"]);
-            var t_objetivos = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.t_empleados.t_empleados2.empleado == empleado && x.estatus != "CE").ToList();
+            var t_objetivos = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.t_empleados.t_empleados2.empleado == empleado && x.estatus != "CA").ToList();
+
 
             return View(t_objetivos);
         }
@@ -93,6 +121,26 @@ namespace HR_System.Controllers
             return View(t_objetivos);
         }
 
+        public ActionResult CreateHeader(string empleado, decimal axo)
+        {
+            t_objetivos t_objetivos = new t_objetivos();
+            t_objetivos.empleado = empleado;
+            t_objetivos.axo = axo;
+            t_objetivos.estatus = "PE";
+            t_objetivos.fecha = System.DateTime.Now;
+            t_objetivos.planta = empleado.Substring(0, 3);
+
+            if (ModelState.IsValid)
+            {
+                db.t_objetivos.Add(t_objetivos);
+                db.SaveChanges();
+                return RedirectToAction("Create","t_objetidet", new {empleado = t_objetivos.empleado, axo = t_objetivos.axo });
+            }
+            
+            return View(t_objetivos);
+        }
+
+
         // GET: t_objetivos/Edit/5
         public ActionResult Edit(string id)
         {
@@ -123,11 +171,11 @@ namespace HR_System.Controllers
             t_objetivos.estatus = "EN";
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Approval", "t_objetidet");
+            return RedirectToAction("Approval", "t_objetidet", new { empleado = empleado, axo = axo });
           
         }
 
-        public ActionResult Approval(string empleado, int axo)
+        public ActionResult Approve(string empleado, int axo)
         {
             if (empleado == null)
             {
@@ -144,7 +192,7 @@ namespace HR_System.Controllers
 
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Approval", "t_objetidet");
+            return RedirectToAction("Approval", "t_objetidet", new { empleado = empleado, axo = axo });
 
         }
 
@@ -163,7 +211,7 @@ namespace HR_System.Controllers
             t_objetivos.n_aprobado = n_aprobado;
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Approval", "t_objetidet");
+            return RedirectToAction("Approval", "t_objetidet", new {empleado= empleado, axo = axo });
 
         }
         // POST: t_objetivos/Edit/5

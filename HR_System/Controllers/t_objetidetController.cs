@@ -38,17 +38,17 @@ namespace HR_System.Controllers
         }
 
         // GET: t_objetidet/Create
-        public ActionResult Create()
+        public ActionResult Create(string empleado, decimal axo)
         {
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
 
-            string empleado = Convert.ToString(Session["EmployeeNo"]);
+             empleado = Convert.ToString(Session["EmployeeNo"]);
             int totalweight = 0;
-            var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).ToList().ElementAt(0);
+            var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado && x.axo == axo).ToList().ElementAt(0);
 
             if (objetivoHeader.estatus != "PE")
-                return RedirectToAction("Approval", new {empleado = objetivoHeader.empleado });
+                return RedirectToAction("Approval", new {empleado = objetivoHeader.empleado, axo = objetivoHeader.axo });
 
             ViewBag.Objective = objetivoHeader;
 
@@ -100,13 +100,15 @@ namespace HR_System.Controllers
             return View();
         }
 
-        public ActionResult Approval(string empleado)
+        public ActionResult Approval(string empleado, decimal axo, bool ismanager  = false)
         {
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
 
+            if (!ismanager)
             empleado = Convert.ToString(Session["EmployeeNo"]);
-            var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).ToList().ElementAt(0);
+
+            var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado && x.axo == axo).ToList().ElementAt(0);
             ViewBag.Objective = objetivoHeader;
 
             try
@@ -152,7 +154,7 @@ namespace HR_System.Controllers
             {
                 db.t_objetidet.Add(t_objetidet);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new {emplado = t_objetidet.axo, axo = t_objetidet.axo});
             }
 
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
@@ -188,7 +190,7 @@ namespace HR_System.Controllers
             {
                 db.Entry(t_objetidet).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { emplado = t_objetidet.axo, axo = t_objetidet.axo });
             }
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
@@ -228,7 +230,7 @@ namespace HR_System.Controllers
             t_objetidet t_objetidet = db.t_objetidet.Find(empleado,axo,consec);
             db.t_objetidet.Remove(t_objetidet);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Create", new { emplado = t_objetidet.axo, axo = t_objetidet.axo });
         }
 
 

@@ -12,15 +12,15 @@
     <tr>
        
         <th>
-            @Html.DisplayNameFor(model => model.estatus)
+            Employee #
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.t_empleados.nombre)
+            Name
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.axo)
+            
         </th>
         <th></th>
     </tr>
@@ -30,7 +30,7 @@
         <tr>
             
             <td>
-                @Html.DisplayFor(modelItem => item.estatus)
+                @Html.DisplayFor(modelItem => item.t_empleados.empleado)
             </td>
            
             <td>
@@ -38,11 +38,11 @@
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.axo)
+                
             </td>
 
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Objectives", "Approval","t_objetidet",new { empleado = item.empleado, axo = item.axo, ismanager = true },null) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
@@ -50,3 +50,7 @@
     }
 
 </table>
+
+<div>
+    @Html.ActionLink("Back", "MenuModule1", "t_objetivos", null, null)
+</div>

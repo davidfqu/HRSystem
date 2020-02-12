@@ -1,4 +1,4 @@
-﻿@model HR_System.Models.t_objetidet
+﻿@model IEnumerable<HR_System.Models.t_objetivos>
 
 @{
     ViewBag.Title = "Create";
@@ -11,12 +11,33 @@
 
 <div class="row">
     <div class="col-4">
-        <a href='@Url.Action("Create","t_objetidet", null)'>
+        <a data-toggle="collapse" href="#CollapseObjectives" aria-expanded="false" aria-controls="CollapseObjectives">
             <div class="card">
                 My Objectives
             </div>
         </a>
-    </div>
+
+        <div class="collapse" id="CollapseObjectives">
+            @if (ViewBag.NewObjective == "1")
+            {
+                <a href='@Url.Action("CreateHeader","t_objetivos",new {empleado = ViewBag.empleado, axo = ViewBag.NewYear})' class="hoverable">
+                    <div style="font-size:1vw">
+                        @ViewBag.NewYear <span class="badge-danger">New</span>
+                    </div>
+                </a>
+            }
+
+            @foreach (var item in Model)
+            {
+                <a href='@Url.Action("Create","t_objetidet",new {empleado = item.empleado, axo = item.axo})' class="hoverable">
+                    <div style="font-size:1vw">
+                        @item.axo
+                    </div>
+                </a>
+            }
+          </div>
+
+        </div>
     @if (ViewBag.DReports == "1")
     {
         <div class="col-4">
@@ -33,6 +54,6 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index", "Home", null)
+    @Html.ActionLink("Back to Home", "Index", "Home", null,null)
 </div>
 

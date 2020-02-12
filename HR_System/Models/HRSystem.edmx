@@ -36,6 +36,21 @@
           <Property Name="ind_emailtest" Type="varchar" MaxLength="1" />
           <Property Name="test_email" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="t_config_m1">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="f_objini" Type="date" />
+          <Property Name="f_objfin" Type="date" />
+          <Property Name="axo_activo" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="f_evalini1" Type="date" />
+          <Property Name="f_evalfin1" Type="date" />
+          <Property Name="f_evalini2" Type="date" />
+          <Property Name="f_evalfin2" Type="date" />
+          <Property Name="f_califica" Type="date" />
+          <Property Name="f_calificafin" Type="date" />
+        </EntityType>
         <EntityType Name="t_empleados">
           <Key>
             <PropertyRef Name="empleado" />
@@ -247,6 +262,7 @@
         <EntityContainer Name="HRSystemModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_config" EntityType="Self.t_config" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_config_m1" EntityType="Self.t_config_m1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_empleados" EntityType="Self.t_empleados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_metricos" EntityType="Self.t_metricos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_objetidet" EntityType="Self.t_objetidet" Schema="dbo" store:Type="Tables" />
@@ -558,6 +574,7 @@
             <End Role="t_objetivos" EntitySet="t_objetivos" />
             <End Role="t_objetidet" EntitySet="t_objetidet" />
           </AssociationSet>
+          <EntitySet Name="t_config_m1" EntityType="HRSystemModel.t_config_m1" />
         </EntityContainer>
         <Association Name="fk_objd_pta">
           <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="0..1" />
@@ -597,6 +614,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="t_config_m1">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="f_objini" Type="DateTime" Precision="0" />
+          <Property Name="f_objfin" Type="DateTime" Precision="0" />
+          <Property Name="axo_activo" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="f_evalini1" Type="DateTime" Precision="0" />
+          <Property Name="f_evalfin1" Type="DateTime" Precision="0" />
+          <Property Name="f_evalini2" Type="DateTime" Precision="0" />
+          <Property Name="f_evalfin2" Type="DateTime" Precision="0" />
+          <Property Name="f_califica" Type="DateTime" Precision="0" />
+          <Property Name="f_calificafin" Type="DateTime" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -734,6 +766,22 @@
                 <ScalarProperty Name="activo" ColumnName="activo" />
                 <ScalarProperty Name="rol" ColumnName="rol" />
                 <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_config_m1">
+            <EntityTypeMapping TypeName="HRSystemModel.t_config_m1">
+              <MappingFragment StoreEntitySet="t_config_m1">
+                <ScalarProperty Name="f_calificafin" ColumnName="f_calificafin" />
+                <ScalarProperty Name="f_califica" ColumnName="f_califica" />
+                <ScalarProperty Name="f_evalfin2" ColumnName="f_evalfin2" />
+                <ScalarProperty Name="f_evalini2" ColumnName="f_evalini2" />
+                <ScalarProperty Name="f_evalfin1" ColumnName="f_evalfin1" />
+                <ScalarProperty Name="f_evalini1" ColumnName="f_evalini1" />
+                <ScalarProperty Name="axo_activo" ColumnName="axo_activo" />
+                <ScalarProperty Name="f_objfin" ColumnName="f_objfin" />
+                <ScalarProperty Name="f_objini" ColumnName="f_objini" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

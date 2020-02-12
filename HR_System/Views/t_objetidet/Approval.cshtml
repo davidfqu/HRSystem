@@ -38,7 +38,7 @@
                 </a>
             </li>
 
-            <li class="@(ViewBag.Objective.estatus == "RF"? "completed" : "warning")">
+            <li class="@(ViewBag.Objective.estatus == "RF" || ViewBag.Objective.estatus == "CA"? "completed" : "warning")">
                 <a href="#!">
                     <span class="circle">4</span>
                     <span class="label">2nd Revision</span>
@@ -96,7 +96,7 @@
             <div class="col-9">
                 @if (ViewBag.FirstManager == true && ViewBag.Objective.estatus == "AP")
                 {
-                    <a href="@Url.Action("Approval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-success rounded-pill" role="button" )>Approve</a>
+                    <a href="@Url.Action("Approve","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-success rounded-pill" role="button" )>Approve</a>
                     <button type="button" class="btn btn-danger rounded-pill" data-toggle="modal" data-target="#AddObjModal">
                        Reject
                     </button>
@@ -106,7 +106,7 @@
             <div class="col-3 text-right">
                @if (ViewBag.Objective.estatus == "EN")
                {
-                <div class="text-success"> Objectives Approved </div>
+                <div > Waiting For Approval</div>
                }
                 @if (ViewBag.Objective.estatus == "AP")
                 {
@@ -183,9 +183,19 @@
     </div>
 </div>
 
-<div>
-    @Html.ActionLink("Back to List", "MenuModule1", "t_objetivos", null, null)
-</div>
+@if (ViewBag.FirstManager == true)
+{
+    <div>
+        @Html.ActionLink("Back to List", "DirectReports", "t_objetivos", null, null)
+    </div>
+}
+else
+{
+    <div>
+        @Html.ActionLink("Back", "MenuModule1", "t_objetivos", null, null)
+    </div>
+}
+
 
 
 <div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

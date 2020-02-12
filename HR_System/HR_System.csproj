@@ -261,6 +261,9 @@
     <Compile Include="Models\t_config.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\t_config_m1.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\t_empleados.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
