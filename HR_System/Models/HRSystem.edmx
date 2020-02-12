@@ -104,6 +104,7 @@
           <Property Name="u_id" Type="varchar" MaxLength="20" />
           <Property Name="f_id" Type="datetime" />
           <Property Name="f_enviado" Type="datetime" />
+          <Property Name="n_aprobado" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="t_plantas">
           <Key>
@@ -404,6 +405,7 @@
           <Property Name="f_enviado" Type="DateTime" Precision="3" />
           <NavigationProperty Name="t_plantas" Relationship="HRSystemModel.fk_obj_pta" FromRole="t_objetivos" ToRole="t_plantas" />
           <NavigationProperty Name="t_objetidet" Relationship="HRSystemModel.fk_objetivodet" FromRole="t_objetivos" ToRole="t_objetidet" />
+          <Property Name="n_aprobado" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="t_plantas">
           <Key>
@@ -683,6 +685,7 @@
           <EntitySetMapping Name="t_objetivos">
             <EntityTypeMapping TypeName="HRSystemModel.t_objetivos">
               <MappingFragment StoreEntitySet="t_objetivos">
+                <ScalarProperty Name="n_aprobado" ColumnName="n_aprobado" />
                 <ScalarProperty Name="f_enviado" ColumnName="f_enviado" />
                 <ScalarProperty Name="empleado" ColumnName="empleado" />
                 <ScalarProperty Name="axo" ColumnName="axo" />

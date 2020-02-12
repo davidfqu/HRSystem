@@ -99,6 +99,12 @@
         </div>
         <hr />
         <div class="row">
+            @if(ViewBag.Rechazado == "1")
+            {
+                <div class="col-12">
+                    <p> <span style="font-size:15px" class="badge badge-danger badge-pill">Your objectives were rejected</span><span class="ml-2 font-weight-bold">Note: </span>@ViewBag.Objective.n_aprobado </p>
+                </div>
+            }
             <div class="col-9">
                 <button type="button" class="btn btn-success rounded-pill" data-toggle="modal" data-target="#AddObjModal" @(ViewBag.ObjectivesQty == 5 ? "hidden" : "")>
                     Add Objetive
@@ -128,10 +134,10 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-9">
                                     <div class="badge primary-color pt-1 m-0 text-center" style="border-radius: 50%; height: 25px; width:25px;font-size:17px">@item.consec</div> @item.objetivo
                                 </div>
-                                <div class="col-4 text-right ml-0">
+                                <div class="col-3 text-right ml-0">
                                     <a class="fas fa-trash-alt danger-ic mr-1" href="@Url.Action("DeleteObjective","t_objetidet",new {empleado = item.empleado, axo = item.axo, consec = item.consec })"></a>
                                     <a class="fas fa-edit" data-toggle="modal" data-target="@Html.Raw("#" + "AddObjModal" + numitem)"></a>
                                 </div>
@@ -140,7 +146,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <dl class="dl-horizontal">
                                         <dt>
                                             Description
@@ -161,7 +167,11 @@
                                         <dd>
                                             @item.t_metricos.descrip
                                         </dd>
-
+                                    </dl>
+                                </div>
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                       
                                         <dt>
                                             Weight
                                         </dt>
@@ -334,7 +344,7 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "MenuModule1",  "t_objetivos",null,null)
 </div>
 
 @section scripts{

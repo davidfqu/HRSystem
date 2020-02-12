@@ -13,21 +13,25 @@ namespace HR_System.Controllers
     public class HomeController : Controller
     {
         private HRSystemEntities db = new HRSystemEntities();
-        
 
         public ActionResult Index()
         {
-            Login();
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
 
             return View();
         }
 
+        public ActionResult NoUser()
+        {
+            return View();
+        }
         public ActionResult MyInfo()
         {
             return View();
         }
 
-        public void Login()
+        public bool Login()
         {
             string[] infoTressEmpleado;
             string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
@@ -36,6 +40,7 @@ namespace HR_System.Controllers
             if (t_usuarios == null)
             {
                 //si usuario no esta
+                return false;
             }
             else
             {
@@ -54,10 +59,12 @@ namespace HR_System.Controllers
                     }
 
                     Session["EmployeeNo"] = empleado[0].empleado;
+                    return true;
                 }
                 else
                 {
                     //si el nombre del usuario no existe en empleados
+                    return false;
                 }
 
             }

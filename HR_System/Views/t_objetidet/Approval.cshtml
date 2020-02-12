@@ -5,15 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section style{
-
-    <link href="~/css/Toasts.css" rel="stylesheet" />
-}
-
-<div id="snackbar">
-    
-</div>
-
 
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">MODULE 1</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">My Objectives @ViewBag.Objective.axo</h3>
@@ -103,18 +94,24 @@
         <hr />
         <div class="row">
             <div class="col-9">
-                @if (ViewBag.FirstManager == true)
+                @if (ViewBag.FirstManager == true && ViewBag.Objective.estatus == "AP")
                 {
                     <a href="@Url.Action("Approval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-success rounded-pill" role="button" )>Approve</a>
-                    <a href="@Url.Action("Reject","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-danger rounded-pill" role="button" )>Reject</a>
+                    <button type="button" class="btn btn-danger rounded-pill" data-toggle="modal" data-target="#AddObjModal">
+                       Reject
+                    </button>
                 }
                
             </div>
             <div class="col-3 text-right">
-               @if (ViewBag.Objective.estatus == "RI")
+               @if (ViewBag.Objective.estatus == "EN")
                {
                 <div class="text-success"> Objectives Approved </div>
                }
+                @if (ViewBag.Objective.estatus == "AP")
+                {
+                    <div class="text-success"> Objectives Approved </div>
+                }
             </div>
         </div>
         <div class="row">
@@ -136,7 +133,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <dl class="dl-horizontal">
                                         <dt>
                                             Description
@@ -157,6 +154,10 @@
                                         <dd>
                                             @item.t_metricos.descrip
                                         </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
 
                                         <dt>
                                             Weight
@@ -179,14 +180,58 @@
             }
 
         </div>
-        <!-- Editable table -->
     </div>
 </div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "MenuModule1", "t_objetivos", null, null)
 </div>
 
+
+<div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        @using (Html.BeginForm("Reject", "t_objetivos"))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Reject</h4>
+                    <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="modal-body">
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+                                <input id="empleado" name="empleado" type="hidden" value= @ViewBag.Objective.empleado />
+                                <input id="axo" name="axo" type="hidden" value=@ViewBag.Objective.axo />
+
+                                <div class="form-group">
+                                    <div class="md-form md-outline">
+                                        <textarea id="n_aprobado" name="n_aprobado" class="md-textarea form-control" rows="5" maxlength="500"></textarea>
+                                        <label for="n_aprobado">Reason</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" value="Reject" class="btn btn-danger" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
 @section scripts{
     <script>
         function myFunction() {

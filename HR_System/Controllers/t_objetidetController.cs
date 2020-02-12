@@ -40,13 +40,15 @@ namespace HR_System.Controllers
         // GET: t_objetidet/Create
         public ActionResult Create()
         {
-            Login();
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
+
             string empleado = Convert.ToString(Session["EmployeeNo"]);
             int totalweight = 0;
             var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).ToList().ElementAt(0);
 
-            if (objetivoHeader.estatus == "EN")
-                RedirectToAction("Approval", new {empleado = objetivoHeader.empleado });
+            if (objetivoHeader.estatus != "PE")
+                return RedirectToAction("Approval", new {empleado = objetivoHeader.empleado });
 
             ViewBag.Objective = objetivoHeader;
 
@@ -85,6 +87,12 @@ namespace HR_System.Controllers
                 ViewBag.NextObjective = 1;
             }
 
+            if(objetivoHeader.n_aprobado != null)
+            {
+                ViewBag.Rechazado = "1";
+            }
+            else
+                ViewBag.Rechazado = "0";
 
             ViewBag.folio = new SelectList(db.t_objetivos, "folio", "folio");
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip");
@@ -94,8 +102,10 @@ namespace HR_System.Controllers
 
         public ActionResult Approval(string empleado)
         {
-            Login();
-        
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
+
+            empleado = Convert.ToString(Session["EmployeeNo"]);
             var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).ToList().ElementAt(0);
             ViewBag.Objective = objetivoHeader;
 
@@ -231,7 +241,7 @@ namespace HR_System.Controllers
             base.Dispose(disposing);
         }
 
-        public void Login()
+        public bool Login()
         {
             string[] infoTressEmpleado;
             string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
@@ -240,6 +250,7 @@ namespace HR_System.Controllers
             if (t_usuarios == null)
             {
                 //si usuario no esta
+                return false;
             }
             else
             {
@@ -258,10 +269,12 @@ namespace HR_System.Controllers
                     }
 
                     Session["EmployeeNo"] = empleado[0].empleado;
+                    return true;
                 }
                 else
                 {
                     //si el nombre del usuario no existe en empleados
+                    return false;
                 }
 
             }

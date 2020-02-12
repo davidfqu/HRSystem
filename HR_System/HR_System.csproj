@@ -234,6 +234,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\t_empleadosController.cs" />
     <Compile Include="Controllers\t_objetidetController.cs" />
     <Compile Include="Controllers\t_objetivosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -371,6 +372,13 @@
     <Content Include="Views\t_objetivos\Index.cshtml" />
     <Content Include="Views\t_objetidet\Approval.cshtml" />
     <Content Include="Views\t_objetivos\MenuModule1.cshtml" />
+    <Content Include="Views\Home\NoUser.cshtml" />
+    <Content Include="Views\t_empleados\Create.cshtml" />
+    <Content Include="Views\t_empleados\Delete.cshtml" />
+    <Content Include="Views\t_empleados\Details.cshtml" />
+    <Content Include="Views\t_empleados\Edit.cshtml" />
+    <Content Include="Views\t_empleados\Index.cshtml" />
+    <Content Include="Views\t_objetivos\DirectReports.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

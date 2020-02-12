@@ -38,6 +38,7 @@ namespace HR_System.Models
         public string u_id { get; set; }
         public Nullable<System.DateTime> f_id { get; set; }
         public Nullable<System.DateTime> f_enviado { get; set; }
+        public string n_aprobado { get; set; }
     
         public virtual t_empleados t_empleados { get; set; }
         public virtual t_plantas t_plantas { get; set; }
