@@ -38,14 +38,14 @@
                 </a>
             </li>
 
-            <li class="@(ViewBag.Objective.estatus == "RF" || ViewBag.Objective.estatus == "CA"? "completed" : "warning")">
+            <li class="@(ViewBag.Objective.estatus == "RF" ? "completed" : "warning")">
                 <a href="#!">
                     <span class="circle">4</span>
                     <span class="label">2nd Revision</span>
                 </a>
             </li>
 
-            <li class="warning">
+            <li class="@(ViewBag.Objective.estatus == "CA"? "completed" : "warning")">
                 <a href="#!">
                     <span class="circle">5</span>
                     <span class="label">Results</span>

@@ -326,7 +326,7 @@ namespace HR_System.Controllers
 
             var selectedQueryString = @"SELECT co.cb_nombres + ' ' +co.CB_APE_PAT + ' ' +co.CB_APE_MAT as NOMBRE
                                         ,co.CB_TURNO,po.PU_DESCRIP AS PUESTO,
-                                        co.CB_NIVEL2,n3.TB_ELEMENT AS AREA,co2.CB_E_MAIL
+                                        co.CB_NIVEL2,n3.TB_ELEMENT AS AREA,co2.CB_E_MAIL,im.IM_BLOB 
                                         from [Tress_MedlineMXL].[dbo].COLABORA co 
                                         inner join [Tress_MedlineMXL].[dbo].PUESTO po on co.CB_PUESTO = po.PU_CODIGO 
                                         inner join [Tress_MedlineMXL].[dbo].NIVEL2 n2 on co.CB_NIVEL2 = n2.TB_CODIGO 
@@ -334,7 +334,7 @@ namespace HR_System.Controllers
                                         inner join [Tress_MedlineMXL].[dbo].NIVEL4 n4 on co.CB_NIVEL4 = n4.TB_CODIGO 
                                         inner join [Tress_MedlineMXL].[dbo].TURNO tu on co.CB_TURNO = tu.TU_CODIGO 
 										left join [Tress_MedlineMXL].[dbo].COLABORA co2 on co.CB_NIVEL4 = co2.CB_CODIGO
-
+                                        left join [Tress_MedlineMXL].[dbo].IMAGEN im ON co.CB_CODIGO = im.CB_CODIGO 
                                         WHERE co.CB_CODIGO = " + id + @" and co.CB_ACTIVO = 'S' 
                                         ORDER BY PU_DESCRIP,CB_TURNO";
 
@@ -352,6 +352,8 @@ namespace HR_System.Controllers
                 empleado[0] = cultInfo.ToTitleCase(empleado[0].ToString().ToLower());
             }
 
+            Byte[] btImga = (Byte[])datos.ElementAt(0)[6];
+            ViewBag.userImage = "data:image/png;base64," + Convert.ToBase64String(btImga, 0, btImga.Length);
 
             return empleado;
         }

@@ -20,7 +20,14 @@
 
 <div class="row rounded" style="background-color:#f2f2f2">
     <div class="col-2 mt-4 mb-4 avatar d-flex justify-content-center align-items-center ">
-        <img src="~/Images/medline-logo.png" class="img-fluid rounded-circle z-depth-1" />
+       @if (ViewBag.userImage != null)
+       {
+        <img alt="" src="@ViewBag.userImage" style="height:10vw" class="img-fluid rounded-circle z-depth-1" id="imgMedline" />
+       }
+       else
+       {
+        <img src="~/Images/medline-logo.png" style="height:10vw" class="img-fluid rounded-circle z-depth-1" id="logoMedline" />
+       }
     </div>
     <div class="col-8 mt-4 mb-4 my-auto">
         <h1 class="font-weight-bold" style="font-size: 4.5vw">Welcome @ViewBag.userFirstName</h1>
@@ -29,7 +36,7 @@
         </p>
     </div>
     <div class="col-2 mt-3 mb-4 avatar d-flex justify-content-center align-items-center ">
-        <img src="~/Images/HR_system_LOGO.png" class="img-fluid rounded-circle z-depth-1" />
+        <img src="~/Images/HR_system_LOGO.png"  style="height:10vw" class="img-fluid rounded-circle z-depth-1" />
     </div>
 
 </div>
