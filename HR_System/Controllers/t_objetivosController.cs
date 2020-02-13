@@ -192,7 +192,7 @@ namespace HR_System.Controllers
 
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Approval", "t_objetidet", new { empleado = empleado, axo = axo });
+            return RedirectToAction("Approval", "t_objetidet", new { empleado = empleado, axo = axo, ismanager = true });
 
         }
 
@@ -211,7 +211,7 @@ namespace HR_System.Controllers
             t_objetivos.n_aprobado = n_aprobado;
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Approval", "t_objetidet", new {empleado= empleado, axo = axo });
+            return RedirectToAction("Approval", "t_objetidet", new {empleado= empleado, axo = axo, ismanager = true });
 
         }
         // POST: t_objetivos/Edit/5
