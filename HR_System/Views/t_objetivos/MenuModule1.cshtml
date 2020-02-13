@@ -5,31 +5,120 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section style{
+    <style>
+        .selectButton{
+        left:47%; 
+        top:98%; 
+        transform: translate(-45%, -50%);
+        z-index: 2;
+        transition: all ease 0.35s;
+        width: 7vw;
+        height: 3vw;
+        overflow:hidden;
+    }
+
+    .selectButton .infoIcon{
+        display:none;
+    }
+
+     .selectButton[aria-expanded=true]{
+        left:5%;
+        transform: translate(-80%,-10%);
+        width: 3.5vw;
+        height: 3.5vw;
+    }
+
+    .selectButton[aria-expanded=true] .infoText{
+        display: none;
+      
+    }
+
+      .selectButton[aria-expanded=true] .infoIcon{
+        order:1;
+        display:inline-flex;
+        justify-content: center;
+        align-items:center;
+      
+    }
+    </style>
+    }
 
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">MODULE 1</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Performance Review</h3>
 
-<div class="row">
+<div class="row rounded-pill pl-0" style="background-color:#f2f2f2">
+    <div class="col-2 mt-0 mb-0 avatar d-flex align-items-center ">
+        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" class="img-fluid rounded-circle z-depth-1" style="height:10vw" />
+    </div>
+    <div class="col-3 mt-0 mb-0 my-auto" style="font-size:1.25vw">
+        <label>
+            <span class="font-weight-bold">Employee #:</span><span class="ml-2">90145</span>
+        </label>
+        <br />
+        <label>
+            <span class="font-weight-bold">Name:</span><span class="ml-2">David Quiñonez Uribe</span>
+        </label>
+    </div>
+    <div class="col-3 mt-0 mb-0 my-auto" style="font-size:1.25vw">
+        <label>
+            <span class="font-weight-bold">Department:</span><span class="ml-2">IT</span>
+        </label>
+        <br />
+        <label>
+            <span class="font-weight-bold">Job Position:</span><span class="ml-2">IT Developer</span>
+        </label>
+
+    </div>
+    <div class="col-3 mt-0 mb-0 my-auto" style="font-size:1.25vw">
+        <label>
+            <span class="font-weight-bold">Manager:</span><span class="ml-2">Eduardo Villa</span>
+        </label>
+        <br />
+        <label>
+            <span class="font-weight-bold">2nd Level Manager:</span><span class="ml-2">Mario Chavez</span>
+        </label>
+    </div>
+
+
+</div>
+<div class="row mt-4">
+    <div class="@(ViewBag.DReports == "1"? "col-2" : "col-4")"></div>
     <div class="col-4">
-        <a data-toggle="collapse" href="#CollapseObjectives" aria-expanded="false" aria-controls="CollapseObjectives">
-            <div class="card">
-                My Objectives
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <i class="fas fa-crosshairs fa-3x primary-ic"></i>
+                        <p class="font-weight-bold my-3" style="font-size:1.5vw">My Objectives</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton" type="button" data-toggle="collapse" data-target="#CollapseObjectives"
+                        aria-expanded="false" aria-controls="CollapseObjectives">
+                    <span class="infoText" style="font-size:1vw">Enter</span>
+                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
+                </button>
             </div>
-        </a>
+        </div>
+
 
         <div class="collapse" id="CollapseObjectives">
+            <div class="card rounded hoverable text-center mt-1 mb-1 p-1 font-weight-bold">
+                Select Year
+            </div>
+
             @if (ViewBag.NewObjective == "1")
             {
-                <a href='@Url.Action("CreateHeader","t_objetivos",new {empleado = ViewBag.empleado, axo = ViewBag.NewYear})' class="hoverable">
-                    <div style="font-size:1vw">
-                        @ViewBag.NewYear <span class="badge-danger">New</span>
+                <a href='@Url.Action("CreateHeader","t_objetivos",new {empleado = ViewBag.empleado, axo = ViewBag.NewYear})' class="card rounded hoverable text-center mt-1 mb-1 p-1">
+                    <div style="font-size:1vw" class="d-flex align-items-center justify-content-center">
+                        @ViewBag.NewYear <span class="badge badge-danger ml-1">New</span>
                     </div>
                 </a>
             }
 
             @foreach (var item in Model)
             {
-                <a href='@Url.Action("Create","t_objetidet",new {empleado = item.empleado, axo = item.axo})' class="hoverable">
+                <a href='@Url.Action("Create","t_objetidet",new {empleado = item.empleado, axo = item.axo})' class="hoverable card rounded text-center mt-1 mb-1 p-1">
                     <div style="font-size:1vw">
                         @item.axo
                     </div>
@@ -41,11 +130,19 @@
     @if (ViewBag.DReports == "1")
     {
         <div class="col-4">
-            <a href='@Url.Action("DirectReports","t_objetivos", null)'>
                 <div class="card">
-                    Direct Reports
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <i class="fas fa-users fa-3x primary-ic"></i>
+                                <p class="font-weight-bold my-3" style="font-size:1.5vw">Direct Reports</p>
+                            </div>
+                        </div>
+                        <a href='@Url.Action("DirectReports","t_objetivos", null)' class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton align-items-md-center" type="button">
+                            <span class="infoText" style="font-size:1vw">Enter</span>
+                        </a>
+                    </div>
                 </div>
-            </a>
         </div>
     }
     
@@ -53,7 +150,7 @@
 </div>
 
 
-<div>
+<div class="mt-5">
     @Html.ActionLink("Back to Home", "Index", "Home", null,null)
 </div>
 

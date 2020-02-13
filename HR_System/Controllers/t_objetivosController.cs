@@ -42,13 +42,21 @@ namespace HR_System.Controllers
 
             var t_config_m1 = db.t_config_m1.ToList().ElementAt(0);
 
-            if(t_objetivos.Any())
+            int i = 0;
+
+            if (t_objetivos.Any())
             {
-                lastyearobj = t_objetivos.ElementAt(0).axo;
-                if (lastyearobj != t_config_m1.axo_activo)
-                    newobj = true;
+                
+                foreach (var item in t_objetivos)
+                    if (item.axo == t_config_m1.axo_activo)
+                        i++;
             }
             else
+            {
+                newobj = true;
+            }
+
+            if (i == 0)
             {
                 newobj = true;
             }

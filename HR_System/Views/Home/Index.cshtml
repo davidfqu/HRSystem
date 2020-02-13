@@ -16,179 +16,6 @@
         overflow:hidden;
     }
 
-    .selectButton .infoIcon{
-        display:none;
-    }
-
-     .selectButton2{
-        left:47%; 
-        top:98%; 
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        transition: all ease 0.35s;
-        width: 7vw;
-        height: 3vw;
-        overflow:hidden;
-    }
-
-    .selectButton2 .infoIcon{
-        display:none;
-    }
-
-     .selectButton3{
-        left:47%; 
-        top:98%; 
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        transition: all ease 0.35s;
-        width: 7vw;
-        height: 3vw;
-        overflow:hidden;
-    }
-
-    .selectButton3 .infoIcon{
-        display:none;
-    }
-
-     .selectButton4{
-        left:47%; 
-        top:98%; 
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        transition: all ease 0.35s;
-        width: 7vw;
-        height: 3vw;
-        overflow:hidden;
-    }
-
-    .selectButton4 .infoIcon{
-        display:none;
-    }
-
-     .selectButton5{
-        left:47%; 
-        top:98%; 
-        transform: translate(-50%, -50%);
-        z-index: 2;
-        transition: all ease 0.35s;
-        width: 7vw;
-        height: 3vw;
-        overflow:hidden;
-    }
-
-    .selectButton5 .infoIcon{
-        display:none;
-    }
-    .selectButton[aria-expanded=true]{
-        left:5%;
-        transform: translate(-80%,-10%);
-        width: 3.5vw;
-        height: 3.5vw;
-    }
-
-    .selectButton[aria-expanded=true] .infoText{
-        display: none;
-      
-    }
-
-      .selectButton[aria-expanded=true] .infoIcon{
-        order:1;
-        display:inline-flex;
-        justify-content: center;
-        align-items:center;
-      
-    }
-
-       .selectButton2[aria-expanded=true]{
-        left:5%;
-        transform: translate(-80%,-10%);
-        width: 3.5vw;
-        height: 3.5vw;
-
-    }
-
-    
-    .selectButton2[aria-expanded=true] .infoText{
-        display: none;
-      
-    }
-
-      .selectButton2[aria-expanded=true] .infoIcon{
-        order:1;
-        display:inline-flex;
-        justify-content: center;
-        align-items:center;
-      
-    }
-
-       .selectButton3[aria-expanded=true]{
-        left:5%;
-        transform: translate(-80%,-10%);
-        width: 3.5vw;
-        height: 3.5vw;
-
-    }
-
-    
-    .selectButton3[aria-expanded=true] .infoText{
-        display: none;
-      
-    }
-
-      .selectButton3[aria-expanded=true] .infoIcon{
-        order:1;
-        display:inline-flex;
-        justify-content: center;
-        align-items:center;
-      
-    }
-
-       .selectButton4[aria-expanded=true]{
-        left:5%;
-        transform: translate(-80%,-10%);
-        width: 3.5vw;
-        height: 3.5vw;
-
-    }
-
-    
-    .selectButton4[aria-expanded=true] .infoText{
-        display: none;
-      
-    }
-
-      .selectButton4[aria-expanded=true] .infoIcon{
-        order:1;
-        display:inline-flex;
-        justify-content: center;
-        align-items:center;
-      
-    }
-
-       .selectButton5[aria-expanded=true]{
-        left:5%;
-        transform: translate(-80%,-10%);
-        width: 3.5vw;
-        height: 3.5vw;
-
-    }
-
-    
-    .selectButton5[aria-expanded=true] .infoText{
-        display: none;
-      
-    }
-
-      .selectButton5[aria-expanded=true] .infoIcon{
-        order:1;
-        display:inline-flex;
-        justify-content: center;
-        align-items:center;
-      
-    }
-
-
-
 </style>
 
 <div class="row rounded" style="background-color:#f2f2f2">
@@ -232,47 +59,9 @@
                                 <p class="text-muted" style="font-size:1vw"></p>
                             </div>
                         </div>
-                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton" type="button" data-toggle="collapse" data-target=".multi-collapse"
-                    aria-expanded="false" aria-controls="686m1 110m1 m1 xxm1 xm1">
+                <a  href='@Url.Action("MenuModule1","t_objetivos", null)' class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton align-items-md-center" type="button">
                     <span class="infoText" style="font-size:1vw">Enter</span>
-                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
-                </button>
-            </div>
-        </div>
-
-        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1" id="m1">
-            Select location
-        </div>
-        <a href='@Url.Action("MenuModule1","t_objetivos", null)' class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m1" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MXC-686
-            </div>
-            <div  style="font-size:1vw" class="text-muted">
-                Mexicali
-            </div>
-        </a>
-        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m1" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                PDM-110
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Nuevo Laredo
-            </div>
-        </div>
-        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm1" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                CMP-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Centurion
-            </div>
-        </div>
-        <div class="collapse multi-collapse card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm1" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MEX-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexico City
+                </a>
             </div>
         </div>
         
@@ -290,49 +79,14 @@
                     </div>
                 </div>
                
-                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton2" type="button" data-toggle="collapse" data-target=".multi-collapse2"
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton" type="button" data-toggle="collapse" data-target=".multi-collapse2"
                         aria-expanded="false" aria-controls="686m2 110m2 m2 xm2">
                     <span class="infoText" style="font-size:1vw">Enter</span>
-                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
                 </button>
             </div>
         </div>
 
-        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1" id="m2">
-            Select location
-        </div>
-        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m2" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MXC-686
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexicali
-            </div>
-        </div>
-        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m2" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                PDM-110
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Nuevo Laredo
-            </div>
-        </div>
-        <div class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm2" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                CMP-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Centurion
-            </div>
-        </div>
-        <div id="xxm6565" class="collapse multi-collapse2 card card-body text-center mt-1 mb-1 p-1 hoverable" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MEX-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexico City
-            </div>
-        </div>
+       
 
 
  
@@ -349,50 +103,12 @@
                         <p class="text-muted" style="font-size:1vw"></p>
                     </div>
                 </div>
-                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton3" type="button" data-toggle="collapse" data-target=".multi-collapse3"
-                        aria-expanded="false" aria-controls="686m3 110m3 m3 xxm3 xm3">
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton" type="button" >
                     <span class="infoText" style="font-size:1vw">Enter</span>
-                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
                 </button>
             </div>
         </div>
-        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1" id="m3">
-            Select location
-        </div>
-        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m3" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MXC-686
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexicali
-            </div>
-        </div>
-        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m3" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                PDM-110
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Nuevo Laredo
-            </div>
-        </div>
-        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm3" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                CMP-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Centurion
-            </div>
-        </div>
-        <div class="collapse multi-collapse3 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm3" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MEX-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexico City
-            </div>
-        </div>
-
- 
+        
     </div>
     <div class="col-md-2 p-2">
         <div class="card">
@@ -406,50 +122,13 @@
                         <p class="text-muted" style="font-size:1vw"></p>
                     </div>
                 </div>
-                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton4" type="button" data-toggle="collapse" data-target=".multi-collapse4"
-                        aria-expanded="false" aria-controls="686m4 110m4 m4 xxm4 xm4">
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton" type="button">
                     <span class="infoText" style="font-size:1vw">Enter</span>
-                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
                 </button>
 
             </div>
         </div>
-        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1" id="m4">
-            Select location
-        </div>
-        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m4" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MXC-686
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexicali
-            </div>
-        </div>
-        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m4" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                PDM-110
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Nuevo Laredo
-            </div>
-        </div>
-        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm4" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                CMP-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Centurion
-            </div>
-        </div>
-        <div class="collapse multi-collapse4 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm4" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MEX-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexico City
-            </div>
-        </div>
-
+       
 
     </div>
     <div class="col-md-2 p-2">
@@ -464,51 +143,12 @@
                         <p class="text-muted" style="font-size:1vw"></p>
                     </div>
                 </div>
-                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton5" type="button" data-toggle="collapse" data-target=".multi-collapse5"
-                        aria-expanded="false" aria-controls="686m5 110m5 m5 xxm5 xm5">
+                <button class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton" type="button">
                     <span class="infoText" style="font-size:1vw">Enter</span>
-                    <span class="infoIcon"><i class="fas fa-chevron-down" style="font-size:1vw"></i></span>
                 </button>
             </div>
         </div>
-        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1" id="m5">
-            Select location
-        </div>
-        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="686m5" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MXC-686
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexicali
-            </div>
-        </div>
-        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="110m5" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                PDM-110
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Nuevo Laredo
-            </div>
-        </div>
-        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xm5" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                CMP-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Centurion
-            </div>
-        </div>
-        <div class="collapse multi-collapse5 card card-body text-center mt-1 mb-1 p-1 hoverable" id="xxm5" style="background-color:#f2f2f2">
-            <div style="font-size:1vw">
-                MEX-XXX
-            </div>
-            <div style="font-size:1vw" class="text-muted">
-                Mexico City
-            </div>
-        </div>
-
-
-
+        
     </div>
     <div class="col-1 p-0">
 
