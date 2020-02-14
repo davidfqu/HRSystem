@@ -321,6 +321,7 @@ namespace HR_System.Controllers
 
                         add = add.datosTress(numempleado.Substring(3, numempleado.Length - 3), numempleado.Substring(0, 3));
                         ViewBag.userJobPosition = add.puesto;
+                        ViewBag.userImage = "data:image/png;base64," + Convert.ToBase64String(add.btImagen, 0, add.btImagen.Length);
                     }
 
                     Session["EmployeeNo"] = empleado[0].empleado;
