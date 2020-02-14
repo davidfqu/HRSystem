@@ -44,12 +44,19 @@
     </style>
     }
 
-<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">MODULE 1</h6>
+<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">HR System</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Performance Review</h3>
 
 <div class="row rounded-pill pl-0" style="background-color:#f2f2f2">
     <div class="col-2 mt-0 mb-0 avatar d-flex align-items-center ">
-        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg" class="img-fluid rounded-circle z-depth-1" style="height:10vw" />
+        @if (ViewBag.userImage != null)
+        {
+            <img alt="" src="@ViewBag.userImage" class="img-fluid rounded-circle z-depth-1" style="height:10vw" id="imgMedline" />
+        }
+        else
+        {
+            <img src="~/Images/medline-logo.png" class="img-fluid rounded-circle z-depth-1" id="logoMedline" style="height:10vw"/>
+        }
     </div>
     <div class="col-3 mt-0 mb-0 my-auto" style="font-size:1.25vw">
         <label>
