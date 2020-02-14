@@ -33,7 +33,6 @@ namespace HR_System.Controllers
 
         public bool Login()
         {
-            string[] infoTressEmpleado;
             string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
             Session["userAccount"] = username;
             var t_usuarios = db.t_usuarios.Find(username);
@@ -51,11 +50,14 @@ namespace HR_System.Controllers
                 {
                     Session["userNo"] = empleado[0].empleado;
 
-                    string numempleado = empleado[0].empleado.Substring(3, 5);
+                    string numempleado = empleado[0].empleado;
                     if (empleado[0].planta == "686")
                     {
-                        infoTressEmpleado = datosTress686(numempleado);
-                        ViewBag.userJobPosition = infoTressEmpleado[2];
+
+                        empleadoTress add = new empleadoTress();
+
+                        add = add.datosTress(numempleado.Substring(3, numempleado.Length - 3), numempleado.Substring(0, 3));
+                        ViewBag.userJobPosition = add.puesto;
                     }
 
                     Session["EmployeeNo"] = empleado[0].empleado;
@@ -71,8 +73,6 @@ namespace HR_System.Controllers
 
         }
 
-        public string[] datosTress686(string id)
-        {
 
             TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
 
