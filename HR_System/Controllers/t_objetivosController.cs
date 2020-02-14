@@ -28,8 +28,6 @@ namespace HR_System.Controllers
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
 
-            decimal lastyearobj = 0;
-
             bool newobj = false;
 
             string empleado = Convert.ToString(Session["EmployeeNo"]);
@@ -37,9 +35,27 @@ namespace HR_System.Controllers
             ViewBag.empleado = empleado;
 
             var t_objetivos = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado).OrderByDescending(x => x.axo).ToList();
-
             var t_empleados = db.t_empleados.Include(t => t.t_plantas).Include(t => t.t_usuarios).Include(t => t.t_empleados2).Where(x => x.supervisor == empleado).ToList();
+            var t_empleado = db.t_empleados.Find(empleado);
 
+            ViewBag.Empoyee = t_empleado;
+            try
+            {
+                ViewBag.Manager = t_empleado.t_empleados2.nombre;
+            }
+            catch
+            {
+                ViewBag.Manager = null;
+            }
+
+            try
+            {
+                ViewBag.Manager2 = t_empleado.t_empleados2.t_empleados2.nombre;
+            }
+            catch
+            {
+                ViewBag.Manager2 = null;
+            }
             var t_config_m1 = db.t_config_m1.ToList().ElementAt(0);
 
             int i = 0;
@@ -71,6 +87,9 @@ namespace HR_System.Controllers
                 ViewBag.DReports = "1";
             }
 
+            empleadoTress add = new empleadoTress();
+            
+            ViewBag.DTRESS = add.datosTress(empleado.Substring(3, empleado.Length - 3), empleado.Substring(0,3));
 
             return View(t_objetivos);
         }
@@ -277,7 +296,6 @@ namespace HR_System.Controllers
 
         public bool Login()
         {
-            string[] infoTressEmpleado;
             string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
             Session["userAccount"] = username;
             var t_usuarios = db.t_usuarios.Find(username);
@@ -295,11 +313,14 @@ namespace HR_System.Controllers
                 {
                     Session["userNo"] = empleado[0].empleado;
 
-                    string numempleado = empleado[0].empleado.Substring(3, 5);
+                    string numempleado = empleado[0].empleado;
                     if (empleado[0].planta == "686")
                     {
-                        infoTressEmpleado = datosTress686(numempleado);
-                        ViewBag.userJobPosition = infoTressEmpleado[2];
+
+                        empleadoTress add = new empleadoTress();
+
+                        add = add.datosTress(numempleado.Substring(3, numempleado.Length - 3), numempleado.Substring(0, 3));
+                        ViewBag.userJobPosition = add.puesto;
                     }
 
                     Session["EmployeeNo"] = empleado[0].empleado;
@@ -314,46 +335,6 @@ namespace HR_System.Controllers
             }
 
         }
-
-        public string[] datosTress686(string id)
-        {
-
-            TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
-
-            var db = WebMatrix.Data.Database.Open("686TressConn");
-
-
-
-            var selectedQueryString = @"SELECT co.cb_nombres + ' ' +co.CB_APE_PAT + ' ' +co.CB_APE_MAT as NOMBRE
-                                        ,co.CB_TURNO,po.PU_DESCRIP AS PUESTO,
-                                        co.CB_NIVEL2,n3.TB_ELEMENT AS AREA,co2.CB_E_MAIL
-                                        from [Tress_MedlineMXL].[dbo].COLABORA co 
-                                        inner join [Tress_MedlineMXL].[dbo].PUESTO po on co.CB_PUESTO = po.PU_CODIGO 
-                                        inner join [Tress_MedlineMXL].[dbo].NIVEL2 n2 on co.CB_NIVEL2 = n2.TB_CODIGO 
-                                        inner join [Tress_MedlineMXL].[dbo].NIVEL3 n3 on co.CB_NIVEL3 = n3.TB_CODIGO 
-                                        inner join [Tress_MedlineMXL].[dbo].NIVEL4 n4 on co.CB_NIVEL4 = n4.TB_CODIGO 
-                                        inner join [Tress_MedlineMXL].[dbo].TURNO tu on co.CB_TURNO = tu.TU_CODIGO 
-										left join [Tress_MedlineMXL].[dbo].COLABORA co2 on co.CB_NIVEL4 = co2.CB_CODIGO
-
-                                        WHERE co.CB_CODIGO = " + id + @" and co.CB_ACTIVO = 'S' 
-                                        ORDER BY PU_DESCRIP,CB_TURNO";
-
-            var datos = db.Query(selectedQueryString);
-
-
-            string[] empleado = new string[6];
-
-            if (datos.Any())
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    empleado[i] = datos.ElementAt(0)[i];
-                }
-                empleado[0] = cultInfo.ToTitleCase(empleado[0].ToString().ToLower());
-            }
-
-
-            return empleado;
-        }
+        
     }
 }
