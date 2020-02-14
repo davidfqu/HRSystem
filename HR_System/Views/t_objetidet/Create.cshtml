@@ -111,7 +111,9 @@
                 </button>
                 @if (ViewBag.ObjectivesQty > 2 && ViewBag.TotalWeight == 100)
                 {
-                    <a href="@Url.Action("SendToFirstApproval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-primary rounded-pill" role="button" )>Send objectives for manager approval</a>
+                    <button type="button" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#SendObjModal">
+                        Send objectives for manager approval
+                    </button>
                 }
                 else
                 {
@@ -264,9 +266,35 @@
             }
 
         </div>
-        <!-- Editable table -->
     </div>
 </div>
+
+<div class="modal fade" id="SendObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Warning</h4>
+                                    <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="modal-body">
+                                            Are you sure you want to send your objectives?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <a href="@Url.Action("SendToFirstApproval","t_objetivos",new {empleado = ViewBag.Objective.empleado, ViewBag.Objective.axo })" class="btn btn-primary" role="button" )>Send</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                    </div>
+                </div>
 
 <div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
