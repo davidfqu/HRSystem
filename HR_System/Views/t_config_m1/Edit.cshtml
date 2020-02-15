@@ -1,0 +1,75 @@
+﻿@model HR_System.Models.t_config_m1
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Performance Review</h6>
+<h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Configurations </h3>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="row">
+
+        @Html.HiddenFor(model => model.clave)
+
+        <div class="col-3">
+            <h2>Creation</h2>
+            from
+            @Html.EditorFor(model => model.f_objini, new { htmlAttributes = new { @class = "form-control datepicker" } })
+            to
+            @Html.EditorFor(model => model.f_objfin, new { htmlAttributes = new { @class = "form-control datepicker " } })
+            Year:
+            @Html.EditorFor(model => model.axo_activo, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+
+        <div class="col-3">
+            <h2>1st Review</h2>
+            from
+            @Html.EditorFor(model => model.f_evalini1, new { htmlAttributes = new { @class = "form-control datepicker" } })
+            to
+            @Html.EditorFor(model => model.f_evalfin1, new { htmlAttributes = new { @class = "form-control datepicker" } })
+        </div>
+
+        <div class="col-3">
+            <h2>2nd Review</h2>
+            from
+            @Html.EditorFor(model => model.f_evalini2, new { htmlAttributes = new { @class = "form-control datepicker" } })
+            to
+            @Html.EditorFor(model => model.f_evalfin2, new { htmlAttributes = new { @class = "form-control datepicker" } })
+        </div>
+
+        <div class="col-3">
+            <h2>Results</h2>
+            from
+            @Html.EditorFor(model => model.f_califica, new { htmlAttributes = new { @class = "form-control datepicker" } })
+            to
+            @Html.EditorFor(model => model.f_calificafin, new { htmlAttributes = new { @class = "form-control datepicker" } })
+        </div>
+
+        <div class="form-group">
+            <div class="col-12">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts{
+    <script>
+        $('.datepicker').datetimepicker({
+            timepicker: true,
+            format: 'Y-m-d'
+        });
+    </script>
+
+}

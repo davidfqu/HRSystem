@@ -94,6 +94,12 @@ namespace HR_System.Controllers
             else
                 ViewBag.Rechazado = "0";
 
+            empleadoTress add = new empleadoTress();
+
+            add = add.datosTress(empleado.Substring(3, empleado.Length - 3), empleado.Substring(0, 3));
+
+            ViewBag.infoTress = add;
+
             ViewBag.folio = new SelectList(db.t_objetivos, "folio", "folio");
             ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip");
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "planta");
@@ -138,7 +144,13 @@ namespace HR_System.Controllers
             var ObjectivesDet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos).Where(x => x.empleado == objetivoHeader.empleado && x.axo == objetivoHeader.axo);
             
             ViewBag.ObjectivesDet = ObjectivesDet;
-           
+
+            empleadoTress add = new empleadoTress();
+
+            add = add.datosTress(empleado.Substring(3, empleado.Length - 3), empleado.Substring(0, 3));
+
+            ViewBag.infoTress = add;
+
             return View();
         }
 

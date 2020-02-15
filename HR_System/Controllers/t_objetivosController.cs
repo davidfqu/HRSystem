@@ -100,10 +100,30 @@ namespace HR_System.Controllers
                 return RedirectToAction("NoUser", "Home", null);
 
             string empleado = Convert.ToString(Session["EmployeeNo"]);
+            var t_empleados = db.t_empleados.Include(t => t.t_plantas).Include(t => t.t_usuarios).Include(t => t.t_empleados2).Where(x => x.supervisor == empleado).ToList();    
             var t_objetivos = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.t_empleados.t_empleados2.empleado == empleado && x.estatus != "CA").ToList();
 
+            var query = (from l1 in t_empleados
+                         join l2 in t_objetivos on l1.empleado equals l2.empleado into leftJ
+                         from lj in leftJ.DefaultIfEmpty()
+                         select new MyDirectsObjectives {empleado = l1.empleado, nombre = l1.nombre, axo = lj?.axo ?? Decimal.Zero, estatus = lj?.estatus ?? String.Empty }).ToList();
+            
+            
+            int i = 0;
+            foreach(var item in query)
+            {
+                empleadoTress add = new empleadoTress();
+                add = add.datosTress(item.empleado.Substring(3, item.empleado.Length - 3), item.empleado.Substring(0, 3));
+                query.ElementAt(i).puesto = add.puesto;
+                query.ElementAt(i).foto = add.btImagen;
+                i++;
+            }
 
-            return View(t_objetivos);
+
+            ViewBag.Directos = query;
+
+
+            return View();
         }
 
         // GET: t_objetivos/Details/5

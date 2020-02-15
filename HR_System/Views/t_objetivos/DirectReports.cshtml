@@ -1,5 +1,4 @@
-﻿@model IEnumerable<HR_System.Models.t_objetivos>
-
+﻿
 @{
     ViewBag.Title = "Direct Reports";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,7 +9,9 @@
 
 <table class="table">
     <tr>
-       
+        <th>
+            
+        </th>
         <th>
             Employee #
         </th>
@@ -20,36 +21,78 @@
         </th>
 
         <th>
-            
+            Job Position 
         </th>
-        <th></th>
+        <th>
+            Objectives Status
+        </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in ViewBag.Directos)
     {
-        <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.t_empleados.empleado)
+        string estado = "";
+        string estadoc = "";
+        estadoc = item.estatus;
+        switch (estadoc)
+        {
+            case "PE":
+                estado = "Creating Objectives";
+                break;
+
+            case "EN":
+                estado = "Waiting For Approval";
+                break;
+
+            case "AP":
+                estado = "Approve";
+                break;
+
+            case "RI":
+                estado = "First Review";
+                break;
+
+            case "RF":
+                estado = "Second Review";
+                break;
+
+            default:
+                estado = "No Objectives";
+                break;
+        }
+
+        <tr class="my-auto">
+            <td align="center">
+               <img src="@Html.Raw("data:image/png;base64," + Convert.ToBase64String(item.foto))"  class="img-fluid rounded-circle" style="height:4vw"/>
             </td>
            
             <td>
-                @Html.DisplayFor(modelItem => item.t_empleados.nombre)
+               @item.empleado
             </td>
 
             <td>
-                
+                @item.nombre
             </td>
 
             <td>
-                @Html.ActionLink("Objectives", "Approval","t_objetidet",new { empleado = item.empleado, axo = item.axo, ismanager = true },null) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @item.puesto
+            </td>
+
+            <td>
+                @if(item.axo == 0)
+                {
+                    <span>No Objectives</span>
+                }
+                else
+                {
+                    <span>@estado</span> <span class="badge badge-primary">@item.axo</span>
+                    <a href="@Url.Action("Approval", "t_objetidet", new {empleado = item.empleado, axo = item.axo, ismanager = true })"><i class="fas fa-search"></i></a>
+                }
             </td>
         </tr>
     }
 
 </table>
+
 
 <div>
     @Html.ActionLink("Back", "MenuModule1", "t_objetivos", null, null)

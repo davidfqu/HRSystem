@@ -1,0 +1,82 @@
+﻿@model IEnumerable<HR_System.Models.t_config_m1>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.f_objini)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_objfin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.axo_activo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_evalini1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_evalfin1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_evalini2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_evalfin2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_califica)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_calificafin)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_objini)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_objfin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.axo_activo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_evalini1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_evalfin1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_evalini2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_evalfin2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_califica)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_calificafin)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.clave }) |
+            @Html.ActionLink("Details", "Details", new { id=item.clave }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.clave })
+        </td>
+    </tr>
+}
+
+</table>

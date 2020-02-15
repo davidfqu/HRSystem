@@ -13,6 +13,7 @@ namespace HR_System.Models
         public Nullable<System.DateTime> fechaIngreso { get; set; }
         public Nullable<decimal> salario { get; set; }
         public Byte[] btImagen { get; set; }
+        
 
         public empleadoTress datosTress(string empleado, string planta)
         {

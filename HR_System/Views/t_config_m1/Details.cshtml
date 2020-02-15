@@ -1,0 +1,91 @@
+﻿@model HR_System.Models.t_config_m1
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>t_config_m1</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.f_objini)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_objini)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_objfin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_objfin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.axo_activo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.axo_activo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_evalini1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_evalini1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_evalfin1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_evalfin1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_evalini2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_evalini2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_evalfin2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_evalfin2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_califica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_califica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_calificafin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_calificafin)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.clave }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

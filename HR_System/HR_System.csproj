@@ -234,6 +234,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\t_config_m1Controller.cs" />
     <Compile Include="Controllers\t_empleadosController.cs" />
     <Compile Include="Controllers\t_objetidetController.cs" />
     <Compile Include="Controllers\t_objetivosController.cs" />
@@ -256,6 +257,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HRSystem.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyDirectsObjectives.cs" />
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
@@ -383,6 +385,11 @@
     <Content Include="Views\t_empleados\Edit.cshtml" />
     <Content Include="Views\t_empleados\Index.cshtml" />
     <Content Include="Views\t_objetivos\DirectReports.cshtml" />
+    <Content Include="Views\t_config_m1\Create.cshtml" />
+    <Content Include="Views\t_config_m1\Delete.cshtml" />
+    <Content Include="Views\t_config_m1\Details.cshtml" />
+    <Content Include="Views\t_config_m1\Edit.cshtml" />
+    <Content Include="Views\t_config_m1\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -74,29 +74,35 @@
 
 
         <div class="row">
-            <div class="col-4">
+            <div class="col-2 d-flex justify-content-center align-items-center">
+                <img src="@Html.Raw("data:image/png;base64," + Convert.ToBase64String(ViewBag.infoTress.btImagen))" class="img-fluid rounded-circle" style="height:80px" />
+            </div>
+
+            <div class="col-3 my-auto">
                 <label class="font-weight-bold">Employee #: </label>
                 <label>@ViewBag.Objective.empleado</label>
-            </div>
-            <div class="col-4">
+                <br />
                 <label class="font-weight-bold">Name: </label>
                 <label>@ViewBag.Objective.t_empleados.nombre</label>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
+
+            <div class="col-3 my-auto">
                 <label class="font-weight-bold">Department: </label>
-                <label>(Departamento de Tress)</label>
+                <label>@ViewBag.infoTress.depto</label>
+                <br />
+                <label class="font-weight-bold">Job Position: </label>
+                <label>@ViewBag.infoTress.puesto</label>
             </div>
-            <div class="col-4">
+
+            <div class="col-4 my-auto">
                 <label class="font-weight-bold">Manager: </label>
                 <label>@ViewBag.Manager</label>
-            </div>
-            <div class="col-4">
+                <br />
                 <label class="font-weight-bold">2nd Level Manager: </label>
                 <label>@ViewBag.Manager2</label>
             </div>
         </div>
+
         <hr />
         <div class="row">
             @if(ViewBag.Rechazado == "1")
