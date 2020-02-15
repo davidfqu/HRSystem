@@ -77,7 +77,7 @@ namespace HR_System.Controllers
                 newobj = true;
             }
             
-            if(System.DateTime.Now >= t_config_m1.f_objini && System.DateTime.Now <= t_config_m1.f_objfin && newobj)
+            if(System.DateTime.Now >= t_config_m1.f_objini && newobj)
             {
                 ViewBag.NewObjective = "1";
                 ViewBag.NewYear = t_config_m1.axo_activo;
@@ -176,6 +176,8 @@ namespace HR_System.Controllers
             t_objetivos.estatus = "PE";
             t_objetivos.fecha = System.DateTime.Now;
             t_objetivos.planta = empleado.Substring(0, 3);
+            t_objetivos.u_id = empleado;
+            t_objetivos.f_id = System.DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -216,6 +218,9 @@ namespace HR_System.Controllers
                 return HttpNotFound();
             }
             t_objetivos.estatus = "EN";
+            t_objetivos.f_enviado = System.DateTime.Now;
+            t_objetivos.u_id = empleado;
+            t_objetivos.f_id = System.DateTime.Now;
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Approval", "t_objetidet", new { empleado = empleado, axo = axo });
@@ -234,8 +239,12 @@ namespace HR_System.Controllers
                 return HttpNotFound();
             }
 
+            t_objetivos.u_id = Convert.ToString(Session["EmployeeNo"]);
+            t_objetivos.f_id = System.DateTime.Now;
+
             t_objetivos.aprobado = Convert.ToString(Session["EmployeeNo"]);
             t_objetivos.estatus = "AP";
+            t_objetivos.f_aprobado = System.DateTime.Now;
 
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
@@ -256,6 +265,9 @@ namespace HR_System.Controllers
             }
             t_objetivos.estatus = "PE";
             t_objetivos.n_aprobado = n_aprobado;
+            t_objetivos.u_id = Convert.ToString(Session["EmployeeNo"]);
+            t_objetivos.f_id = System.DateTime.Now;
+
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Approval", "t_objetidet", new {empleado= empleado, axo = axo, ismanager = true });
