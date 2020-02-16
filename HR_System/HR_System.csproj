@@ -391,6 +391,7 @@
     <Content Include="Views\t_config_m1\Edit.cshtml" />
     <Content Include="Views\t_config_m1\Index.cshtml" />
     <Content Include="Views\Home\IndexModule4.cshtml" />
+    <Content Include="Views\Home\MeritProcess.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

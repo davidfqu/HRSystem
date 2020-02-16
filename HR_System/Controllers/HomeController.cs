@@ -27,6 +27,11 @@ namespace HR_System.Controllers
             return View();
         }
 
+        public ActionResult MeritProcess()
+        {
+            return View();
+        }
+
         public ActionResult NoUser()
         {
             return View();

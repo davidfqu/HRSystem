@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "MeritProcess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section style{
+    <style>
+        .selectButton {
+            left: 70%;
+            top: 90%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            transition: all ease 0.35s;
+            width: 35px;
+            height: 35px;
+            overflow: hidden;
+        }
+
+
+           
+    </style>
+}
+
+<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Annual Merit Salary Plannnig</h6>
+<h3 class="font-weight-bold text-center  pb-1" style="font-size:3.5vw">Merit Process</h3>
+
+<div class="col-12">
+    <div class="row">
+        <div class="col-2 my-auto">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg" class="img-fluid rounded-circle" style="height:100px" />
+                <div class="warning-color p-0 position-absolute rounded-pill d-flex justify-content-center selectButton align-items-md-center">
+                    <span class="infoText white-text" style="font-size:18px"><i class="fas fa-medal"></i></span>
+                </div>
+            </div>
+            <div class="col-12 mt-2 mb-0 text-center" style="font-size:13px">
+                Exceeded Expectations
+            </div>
+
+        </div>
+                <div class="col-3 mt-3 my-auto">
+                    <label class="font-weight-bold">Employee #: </label>
+                    <label>68690145</label>
+                    <br />
+                    <label class="font-weight-bold">Name: </label>
+                    <label>David Quinonex Uirbe</label>
+                </div>
+                <div class="col-3 mt-3 my-auto">
+                    <label class="font-weight-bold">Department: </label>
+                    <label>IT</label>
+                    <br />
+                    <label class="font-weight-bold">Job Position: </label>
+                    <label>IT Developer</label>
+                </div>
+                <div class="col-3 mt-3 my-auto">
+                    <label class="font-weight-bold">Manager: </label>
+                    <label>Eduardo Villa</label>
+                    <br />
+                    <label class="font-weight-bold">2nd Level Manager: </label>
+                    <label>Mario Chavez</label>
+                </div>
+                <div class="col-1 mt-3 my-auto text-center ">
+                    <i class="fas fa-check success-ic" style="font-size:30px"></i>
+                    <p style="font-size:12px">Elegible</p>
+                </div>
+        </div>
+        
+    </div>
+<hr />
+
+<div class="row" >
+    <div class="col-3"></div>
+    <div class="col-6 rounded-pill text-center p-0" style="background-color:#f2f2f2">
+        <h4 class="mb-0">Merit Guideline: 5% - 10%</h4>    
+    </div>
+    <div class="col-3 text-right">Plant Budget: 5%</div>
+</div>
+
+    <div class="row mt-4">
+        <div class="col-2 my-auto  d-flex justify-content-center align-items-center">
+            <canvas id="ChartProgresso" height="120" width="120"></canvas>
+        </div>
+
+        <div class="col-3 my-auto">
+            <h5> Annual Base Salary</h5>
+            <p> $100,000</p>
+            <h5> Budget Amount</h5>
+            <p> $100,000</p>
+        </div>
+
+        <div class="col-3 rounded my-auto" >
+            <h5> Merit Recommendation</h5>
+            <div class="row">
+                <div class="col-8">
+                    <input type="number" class="form-control"> 
+                </div>
+                <div class="col-3">
+                    <input type="number" class="form-control">
+                </div>
+                </div>
+            <h5> Lump Sum</h5>
+            <div class="row">
+                <div class="col-8">
+                    <input type="number" class="form-control" readonly>
+                </div>
+                <div class="col-3">
+                    <input type="number" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 my-auto">
+            <h5> New Annual Base Salary</h5>
+            <p> $105,000</p>
+            <h5> Market Mid CR% after merit</h5>
+            <p> 120%</p>
+        </div>
+
+    </div>
+
+
+@section scripts{
+    <script>
+        var data = {
+            labels: [
+              "Available",
+              "Spent"
+            ],
+            datasets: [
+              {
+                  data: [60, 40],
+                  backgroundColor: [
+                    "#B3DDA8",
+                    "#F4F4F4"
+                  ],
+                  hoverBackgroundColor: [
+                    "#B3DDA8",
+                    "#F4F4F4"
+                  ]
+              }]
+        };
+
+        var promisedDeliveryChart = new Chart(document.getElementById('ChartProgresso'), {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutoutPercentage: 80,
+                animation: {
+                    animationRotate: true,
+                    duration: 2000
+                },
+                legend: {
+                    display: false
+                },
+                plugins: {
+                    datalabels: {
+                        display: false,
+                    }
+                }
+            },
+            plugins: [{
+                beforeDraw: function (chart) {
+                    var width = chart.chart.width,
+                        height = chart.chart.height,
+                        ctx = chart.chart.ctx;
+
+                    ctx.restore();
+                    var fontSize = (height / 50).toFixed(2);
+                    ctx.font = fontSize + "em sans-serif";
+
+                    ctx.textBaseline = "middle";
+
+                    var text = "60%",
+                        textX = Math.round((width - ctx.measureText(text).width) / 2),
+                        textY = height / 2;
+
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }]
+        });
+    </script>
+}

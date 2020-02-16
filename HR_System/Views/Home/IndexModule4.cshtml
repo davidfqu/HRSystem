@@ -16,38 +16,18 @@
             overflow: hidden;
         }
 
-            .selectButton .infoIcon {
-                display: none;
-            }
-
-            .selectButton[aria-expanded=true] {
-                left: 5%;
-                transform: translate(-80%,-10%);
-                width: 3.5vw;
-                height: 3.5vw;
-            }
-
-                .selectButton[aria-expanded=true] .infoText {
-                    display: none;
-                }
-
-                .selectButton[aria-expanded=true] .infoIcon {
-                    order: 1;
-                    display: inline-flex;
-                    justify-content: center;
-                    align-items: center;
-                }
+           
     </style>
 }
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Module 4</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Annual Merit Salary Plannnig</h3>
 
-<div class="row my-auto">
-    <div class="col-1 "></div>
+<div class="row mt-2 my-auto">
+  
     <div class="col-3 my-auto mr-0">
         <canvas id="ChartProgresso"></canvas>
     </div>
-    <div class="ml-0 col-5 my-auto">
+    <div class="ml-0 col-6 my-auto">
         <div class="row rounded-pill pl-0 pt-2" style="background-color:#f2f2f2">
             <div class="col-6 mt-3 mb-0 my-auto text-right" style="font-size:1.5vw">
                 <label>
@@ -79,8 +59,27 @@
         </div>
 
     </div>
-    <div class="col-1"></div>
+    <div class="col-1 ml-0 mr-0 p-0"></div>
+    <div class="col-2 ml-n4">
+        <div class="card rounded-pill">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <i class="fas fa-users fa-3x primary-ic"></i>
+                        <p class="font-weight-bold my-3" style="font-size:1.5vw">Direct Reports</p>
+                    </div>
+                </div>
+                <a href='@Url.Action("DirectReports","t_objetivos", null)' class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton align-items-md-center" type="button">
+                    <span class="infoText" style="font-size:1vw">Enter</span>
+                </a>
+            </div>
+        </div>
+    </div>
+   
 </div>
+
+<br />
+
 
 
 
@@ -88,8 +87,8 @@
     <script>
         var data = {
             labels: [
-              "Completado",
-              "No completado"
+              "Available",
+              "Spent"
             ],
             datasets: [
               {
