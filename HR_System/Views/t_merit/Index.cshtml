@@ -1,0 +1,112 @@
+﻿@model IEnumerable<HR_System.Models.t_merit>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.depto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.budget_imp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.budget_porc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.budget_spen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.notas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.u_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ind_autoriza)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_autoriza)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.n_autoriza)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_empleados.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_empleados1.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.depto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.budget_imp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.budget_porc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.budget_spen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.notas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.u_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ind_autoriza)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_autoriza)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.n_autoriza)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_empleados.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_empleados1.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

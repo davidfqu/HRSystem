@@ -19,6 +19,9 @@ namespace HR_System.Models
         {
             this.t_objetivos = new HashSet<t_objetivos>();
             this.t_empleados1 = new HashSet<t_empleados>();
+            this.t_merit = new HashSet<t_merit>();
+            this.t_meridet = new HashSet<t_meridet>();
+            this.t_merit1 = new HashSet<t_merit>();
         }
     
         public string empleado { get; set; }
@@ -35,5 +38,11 @@ namespace HR_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<t_empleados> t_empleados1 { get; set; }
         public virtual t_empleados t_empleados2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<t_merit> t_merit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<t_meridet> t_meridet { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<t_merit> t_merit1 { get; set; }
     }
 }

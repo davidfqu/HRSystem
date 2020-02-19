@@ -106,7 +106,7 @@ namespace HR_System.Controllers
             var query = (from l1 in t_empleados
                          join l2 in t_objetivos on l1.empleado equals l2.empleado into leftJ
                          from lj in leftJ.DefaultIfEmpty()
-                         select new MyDirectsObjectives {empleado = l1.empleado, nombre = l1.nombre, axo = lj?.axo ?? Decimal.Zero, estatus = lj?.estatus ?? String.Empty }).ToList();
+                         select new MyDirects {empleado = l1.empleado, nombre = l1.nombre, axo = lj?.axo ?? Decimal.Zero, estatus = lj?.estatus ?? String.Empty }).ToList();
             
             
             int i = 0;

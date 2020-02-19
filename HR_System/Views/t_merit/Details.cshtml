@@ -1,0 +1,131 @@
+﻿@model HR_System.Models.t_merit
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>t_merit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.depto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.depto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.budget_imp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.budget_imp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.budget_porc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.budget_porc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.budget_spen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.budget_spen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.notas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.notas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.u_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.u_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ind_autoriza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ind_autoriza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_autoriza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_autoriza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.n_autoriza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.n_autoriza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.t_empleados.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.t_empleados.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.t_empleados1.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.t_empleados1.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

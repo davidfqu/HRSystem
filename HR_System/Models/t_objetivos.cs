@@ -44,5 +44,6 @@ namespace HR_System.Models
         public virtual t_plantas t_plantas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<t_objetidet> t_objetidet { get; set; }
+        public virtual t_califica t_califica { get; set; }
     }
 }

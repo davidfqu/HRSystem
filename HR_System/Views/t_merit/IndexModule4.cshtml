@@ -3,6 +3,7 @@
     ViewBag.Title = "IndexModule4";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section style{
     <style>
         .selectButton {
@@ -15,15 +16,13 @@
             height: 3vw;
             overflow: hidden;
         }
-
-           
     </style>
 }
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Module 4</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Annual Merit Salary Plannnig</h3>
-
+<h3 class="text-center  pb-2" style="font-size:2.5vw">@ViewBag.merit.depto</h3>
 <div class="row mt-2 my-auto">
-  
+
     <div class="col-3 my-auto mr-0">
         <canvas id="ChartProgresso"></canvas>
     </div>
@@ -35,26 +34,27 @@
                 </label>
                 <br />
                 <label>
-                    <span class="font-weight-bold">Total Spend:</span>
+                    <span class="font-weight-bold">Spent:</span>
                 </label>
                 <br />
                 <label>
-                    <span class="font-weight-bold">Difference:</span>
+                    <span class="font-weight-bold">Available:</span>
                 </label>
             </div>
-            <div class="col-6 mt-3 mb-0 my-auto text-left" style="font-size:1.5vw">
+            <div class="col-4 mt-3 pl-0 mb-0 my-auto text-right" style="font-size:1.5vw">
                 <label>
-                    <span class="">$ 100,000.00 MXN</span>
+                    <span class="">$ <span>@ViewBag.merit.budget_imp </span> MXN</span>
                 </label>
                 <br />
                 <label>
-                    <span class="">$ 5,000.00 MXN</span>
+                    <span class="">$ <span>@ViewBag.merit.budget_spen </span> MXN</span>
                 </label>
                 <br />
                 <label>
-                    <span class="">$ 95,000.00 MXN</span>
+                    <span class="">$ <span>@ViewBag.available  </span>  MXN</span>
                 </label>
             </div>
+            <div class="col-2"></div>
 
         </div>
 
@@ -69,13 +69,13 @@
                         <p class="font-weight-bold my-3" style="font-size:1.5vw">Direct Reports</p>
                     </div>
                 </div>
-                <a href='@Url.Action("DirectReports","t_objetivos", null)' class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton align-items-md-center" type="button">
+                <a href='@Url.Action("DirectReports","t_meridet", null)' class="btn btn-primary p-0 position-absolute rounded-pill d-flex justify-content-center selectButton align-items-md-center" type="button">
                     <span class="infoText" style="font-size:1vw">Enter</span>
                 </a>
             </div>
         </div>
     </div>
-   
+
 </div>
 
 <br />
@@ -92,7 +92,7 @@
             ],
             datasets: [
               {
-                  data: [60, 40],
+                  data: [@ViewBag.available, @ViewBag.merit.budget_spen],
                   backgroundColor: [
                     "#B3DDA8",
                     "#F4F4F4"
@@ -135,7 +135,7 @@
 
                     ctx.textBaseline = "middle";
 
-                    var text = "60%",
+                    var text = @ViewBag.percent + "%",
                         textX = Math.round((width - ctx.measureText(text).width) / 2),
                         textY = height / 2;
 
@@ -145,4 +145,4 @@
             }]
         });
     </script>
-    }
+}

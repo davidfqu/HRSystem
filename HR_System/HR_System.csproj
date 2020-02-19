@@ -236,6 +236,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\t_config_m1Controller.cs" />
     <Compile Include="Controllers\t_empleadosController.cs" />
+    <Compile Include="Controllers\t_meridetController.cs" />
+    <Compile Include="Controllers\t_meritController.cs" />
     <Compile Include="Controllers\t_objetidetController.cs" />
     <Compile Include="Controllers\t_objetivosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -257,8 +259,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HRSystem.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\MyDirectsObjectives.cs" />
+    <Compile Include="Models\MyDirects.cs" />
     <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_budget_pta.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_califica.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_config.cs">
@@ -267,7 +275,19 @@
     <Compile Include="Models\t_config_m1.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\t_config_m4.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\t_empleados.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_jobcode.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_meridet.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_merit.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\t_metricos.cs">
@@ -390,8 +410,19 @@
     <Content Include="Views\t_config_m1\Details.cshtml" />
     <Content Include="Views\t_config_m1\Edit.cshtml" />
     <Content Include="Views\t_config_m1\Index.cshtml" />
-    <Content Include="Views\Home\IndexModule4.cshtml" />
-    <Content Include="Views\Home\MeritProcess.cshtml" />
+    <Content Include="Views\t_merit\Create.cshtml" />
+    <Content Include="Views\t_merit\Delete.cshtml" />
+    <Content Include="Views\t_merit\Details.cshtml" />
+    <Content Include="Views\t_merit\Edit.cshtml" />
+    <Content Include="Views\t_merit\Index.cshtml" />
+    <Content Include="Views\t_meridet\Create.cshtml" />
+    <Content Include="Views\t_meridet\Delete.cshtml" />
+    <Content Include="Views\t_meridet\Details.cshtml" />
+    <Content Include="Views\t_meridet\Edit.cshtml" />
+    <Content Include="Views\t_meridet\Index.cshtml" />
+    <Content Include="Views\t_merit\IndexModule4.cshtml" />
+    <Content Include="Views\t_meridet\DirectReports.cshtml" />
+    <Content Include="Views\t_meridet\MeritProcess.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

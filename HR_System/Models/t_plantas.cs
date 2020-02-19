@@ -21,6 +21,7 @@ namespace HR_System.Models
             this.t_usuarios = new HashSet<t_usuarios>();
             this.t_objetidet = new HashSet<t_objetidet>();
             this.t_objetivos = new HashSet<t_objetivos>();
+            this.t_budget_pta = new HashSet<t_budget_pta>();
         }
     
         public string planta { get; set; }
@@ -43,5 +44,7 @@ namespace HR_System.Models
         public virtual ICollection<t_objetidet> t_objetidet { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<t_objetivos> t_objetivos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<t_budget_pta> t_budget_pta { get; set; }
     }
 }

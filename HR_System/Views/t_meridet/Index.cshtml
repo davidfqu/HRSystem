@@ -1,0 +1,154 @@
+﻿@model IEnumerable<HR_System.Models.t_meridet>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ind_elegible)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.puesto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.salario_axo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.budget_porc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sugerido_imp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sugerido_porc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lump_imp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lump_porc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.salario_nuevo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.market_mcr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.merit_guide)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nota)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.out_guide)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.u_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_califica.descrip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_empleados.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_jobcode.descrip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_merit.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ind_elegible)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.puesto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.salario_axo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.budget_porc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sugerido_imp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sugerido_porc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lump_imp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lump_porc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.salario_nuevo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.market_mcr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.merit_guide)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.estatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nota)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.out_guide)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.u_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_califica.descrip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_empleados.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_jobcode.descrip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_merit.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

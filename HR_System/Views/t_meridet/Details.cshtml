@@ -1,0 +1,187 @@
+﻿@model HR_System.Models.t_meridet
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>t_meridet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ind_elegible)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ind_elegible)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.puesto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.puesto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.salario_axo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.salario_axo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.budget_porc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.budget_porc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sugerido_imp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sugerido_imp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sugerido_porc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sugerido_porc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lump_imp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lump_imp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lump_porc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lump_porc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.salario_nuevo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.salario_nuevo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.market_mcr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.market_mcr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.merit_guide)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.merit_guide)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nota)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nota)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.out_guide)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.out_guide)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.u_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.u_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.t_califica.descrip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.t_califica.descrip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.t_empleados.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.t_empleados.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.t_jobcode.descrip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.t_jobcode.descrip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.t_merit.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.t_merit.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

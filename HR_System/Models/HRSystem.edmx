@@ -15,6 +15,28 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="t_budget_pta">
+          <Key>
+            <PropertyRef Name="planta" />
+            <PropertyRef Name="axo" />
+          </Key>
+          <Property Name="planta" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="axo" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="budget" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="u_id" Type="varchar" MaxLength="20" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_califica">
+          <Key>
+            <PropertyRef Name="califica" />
+          </Key>
+          <Property Name="califica" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="descrip" Type="varchar" MaxLength="100" />
+          <Property Name="rango_ini" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="rango_fin" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="u_id" Type="varchar" MaxLength="20" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
         <EntityType Name="t_config">
           <Key>
             <PropertyRef Name="clave" />
@@ -51,6 +73,16 @@
           <Property Name="f_califica" Type="date" />
           <Property Name="f_calificafin" Type="date" />
         </EntityType>
+        <EntityType Name="t_config_m4">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="f_inicio" Type="date" />
+          <Property Name="f_final" Type="date" />
+          <Property Name="cap_mrp" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="ind_alerta1" Type="varchar" MaxLength="1" />
+        </EntityType>
         <EntityType Name="t_empleados">
           <Key>
             <PropertyRef Name="empleado" />
@@ -61,6 +93,66 @@
           <Property Name="usuario" Type="varchar" MaxLength="20" />
           <Property Name="f_id" Type="datetime" />
           <Property Name="planta" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="t_jobcode">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="descrip" Type="varchar" MaxLength="100" />
+          <Property Name="mrp" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="u_id" Type="varchar" MaxLength="20" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_meridet">
+          <Key>
+            <PropertyRef Name="supervisor" />
+            <PropertyRef Name="axo" />
+            <PropertyRef Name="empleado" />
+          </Key>
+          <Property Name="supervisor" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="axo" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="empleado" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="ind_elegible" Type="varchar" MaxLength="1" />
+          <Property Name="jobcode" Type="varchar" MaxLength="10" />
+          <Property Name="puesto" Type="varchar" MaxLength="100" />
+          <Property Name="calificacion" Type="varchar" MaxLength="10" />
+          <Property Name="salario_axo" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="budget_porc" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="sugerido_imp" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="sugerido_porc" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="lump_imp" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="lump_porc" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="salario_nuevo" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="market_mcr" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="merit_guide" Type="varchar" MaxLength="10" />
+          <Property Name="estatus" Type="varchar" MaxLength="2" />
+          <Property Name="nota" Type="varchar" MaxLength="500" />
+          <Property Name="out_guide" Type="varchar" MaxLength="1" />
+          <Property Name="u_id" Type="varchar" MaxLength="20" />
+          <Property Name="f_id" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_merit">
+          <Key>
+            <PropertyRef Name="supervisor" />
+            <PropertyRef Name="axo" />
+          </Key>
+          <Property Name="supervisor" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="axo" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="depto" Type="varchar" MaxLength="100" />
+          <Property Name="budget_imp" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="budget_porc" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="budget_spen" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="estatus" Type="varchar" MaxLength="2" />
+          <Property Name="notas" Type="varchar" MaxLength="200" />
+          <Property Name="u_id" Type="varchar" MaxLength="20" />
+          <Property Name="f_id" Type="datetime" />
+          <Property Name="autoriza" Type="varchar" MaxLength="20" />
+          <Property Name="ind_autoriza" Type="varchar" MaxLength="1" />
+          <Property Name="f_autoriza" Type="datetime" />
+          <Property Name="n_autoriza" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="t_metricos">
           <Key>
@@ -83,7 +175,7 @@
           <Property Name="objetivo" Type="varchar" MaxLength="100" />
           <Property Name="descrip" Type="varchar" MaxLength="500" />
           <Property Name="peso" Type="numeric" Precision="3" Scale="0" />
-          <Property Name="metrico" Type="varchar" MaxLength="10" />
+          <Property Name="metrico" Type="varchar" MaxLength="50" />
           <Property Name="cancelado" Type="varchar" MaxLength="1" />
           <Property Name="nota_cancel" Type="varchar" MaxLength="100" />
           <Property Name="f_cancel" Type="datetime" />
@@ -149,6 +241,18 @@
           <Property Name="rol" Type="varchar" MaxLength="10" />
           <Property Name="f_id" Type="datetime" />
         </EntityType>
+        <Association Name="fk_budget_planta">
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="1" />
+          <End Role="t_budget_pta" Type="Self.t_budget_pta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_budget_pta">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_emp_pta">
           <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
           <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="*" />
@@ -173,6 +277,92 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_meridet_enc">
+          <End Role="t_merit" Type="Self.t_merit" Multiplicity="1" />
+          <End Role="t_meridet" Type="Self.t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_merit">
+              <PropertyRef Name="supervisor" />
+              <PropertyRef Name="axo" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="supervisor" />
+              <PropertyRef Name="axo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_meridet_job">
+          <End Role="t_jobcode" Type="Self.t_jobcode" Multiplicity="0..1" />
+          <End Role="t_meridet" Type="Self.t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_jobcode">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="jobcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_aut">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_merit" Type="Self.t_merit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_merit">
+              <PropertyRef Name="autoriza" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_calif">
+          <End Role="t_califica" Type="Self.t_califica" Multiplicity="0..1" />
+          <End Role="t_meridet" Type="Self.t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_califica">
+              <PropertyRef Name="califica" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="calificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_emp">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="1" />
+          <End Role="t_meridet" Type="Self.t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_sup">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="1" />
+          <End Role="t_merit" Type="Self.t_merit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_merit">
+              <PropertyRef Name="supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_obj_cali">
+          <End Role="t_califica" Type="Self.t_califica" Multiplicity="0..1" />
+          <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_califica">
+              <PropertyRef Name="califica" />
+            </Principal>
+            <Dependent Role="t_objetivos">
+              <PropertyRef Name="calificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_obj_emp">
           <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="1" />
           <End Role="t_objetivos" Type="Self.t_objetivos" Multiplicity="*" />
@@ -194,18 +384,6 @@
             </Principal>
             <Dependent Role="t_objetivos">
               <PropertyRef Name="planta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_objd_met">
-          <End Role="t_metricos" Type="Self.t_metricos" Multiplicity="0..1" />
-          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="t_metricos">
-              <PropertyRef Name="metrico" />
-            </Principal>
-            <Dependent Role="t_objetidet">
-              <PropertyRef Name="metrico" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -261,14 +439,24 @@
         </Association>
         <EntityContainer Name="HRSystemModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_budget_pta" EntityType="Self.t_budget_pta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_califica" EntityType="Self.t_califica" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_config" EntityType="Self.t_config" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_config_m1" EntityType="Self.t_config_m1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_config_m4" EntityType="Self.t_config_m4" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_empleados" EntityType="Self.t_empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_jobcode" EntityType="Self.t_jobcode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_meridet" EntityType="Self.t_meridet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_merit" EntityType="Self.t_merit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_metricos" EntityType="Self.t_metricos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_objetidet" EntityType="Self.t_objetidet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_objetivos" EntityType="Self.t_objetivos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_plantas" EntityType="Self.t_plantas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_usuarios" EntityType="Self.t_usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_budget_planta" Association="Self.fk_budget_planta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_budget_pta" EntitySet="t_budget_pta" />
+          </AssociationSet>
           <AssociationSet Name="fk_emp_pta" Association="Self.fk_emp_pta">
             <End Role="t_plantas" EntitySet="t_plantas" />
             <End Role="t_empleados" EntitySet="t_empleados" />
@@ -277,6 +465,34 @@
             <End Role="t_usuarios" EntitySet="t_usuarios" />
             <End Role="t_empleados" EntitySet="t_empleados" />
           </AssociationSet>
+          <AssociationSet Name="fk_meridet_enc" Association="Self.fk_meridet_enc">
+            <End Role="t_merit" EntitySet="t_merit" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_meridet_job" Association="Self.fk_meridet_job">
+            <End Role="t_jobcode" EntitySet="t_jobcode" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_aut" Association="Self.fk_merit_aut">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_merit" EntitySet="t_merit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_calif" Association="Self.fk_merit_calif">
+            <End Role="t_califica" EntitySet="t_califica" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_emp" Association="Self.fk_merit_emp">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_sup" Association="Self.fk_merit_sup">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_merit" EntitySet="t_merit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_obj_cali" Association="Self.fk_obj_cali">
+            <End Role="t_califica" EntitySet="t_califica" />
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+          </AssociationSet>
           <AssociationSet Name="fk_obj_emp" Association="Self.fk_obj_emp">
             <End Role="t_empleados" EntitySet="t_empleados" />
             <End Role="t_objetivos" EntitySet="t_objetivos" />
@@ -284,10 +500,6 @@
           <AssociationSet Name="fk_obj_pta" Association="Self.fk_obj_pta">
             <End Role="t_plantas" EntitySet="t_plantas" />
             <End Role="t_objetivos" EntitySet="t_objetivos" />
-          </AssociationSet>
-          <AssociationSet Name="fk_objd_met" Association="Self.fk_objd_met">
-            <End Role="t_metricos" EntitySet="t_metricos" />
-            <End Role="t_objetidet" EntitySet="t_objetidet" />
           </AssociationSet>
           <AssociationSet Name="fk_objd_pta" Association="Self.fk_objd_pta">
             <End Role="t_plantas" EntitySet="t_plantas" />
@@ -356,6 +568,9 @@
           <NavigationProperty Name="t_objetivos" Relationship="Self.fk_obj_emp" FromRole="t_empleados" ToRole="t_objetivos" />
           <NavigationProperty Name="t_empleados1" Relationship="Self.FK_t_empleados_supervisor" FromRole="t_empleados" ToRole="t_empleados1" />
           <NavigationProperty Name="t_empleados2" Relationship="Self.FK_t_empleados_supervisor" FromRole="t_empleados1" ToRole="t_empleados" />
+          <NavigationProperty Name="t_merit" Relationship="HRSystemModel.fk_merit_aut" FromRole="t_empleados" ToRole="t_merit" />
+          <NavigationProperty Name="t_meridet" Relationship="HRSystemModel.fk_merit_emp" FromRole="t_empleados" ToRole="t_meridet" />
+          <NavigationProperty Name="t_merit1" Relationship="HRSystemModel.fk_merit_sup" FromRole="t_empleados" ToRole="t_merit" />
         </EntityType>
         <EntityType Name="t_metricos">
           <Key>
@@ -379,7 +594,7 @@
           <Property Name="objetivo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="descrip" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="peso" Type="Decimal" Precision="3" Scale="0" />
-          <Property Name="metrico" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="metrico" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="cancelado" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="nota_cancel" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="f_cancel" Type="DateTime" Precision="3" />
@@ -422,6 +637,7 @@
           <NavigationProperty Name="t_plantas" Relationship="HRSystemModel.fk_obj_pta" FromRole="t_objetivos" ToRole="t_plantas" />
           <NavigationProperty Name="t_objetidet" Relationship="HRSystemModel.fk_objetivodet" FromRole="t_objetivos" ToRole="t_objetidet" />
           <Property Name="n_aprobado" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="t_califica" Relationship="HRSystemModel.fk_obj_cali" FromRole="t_objetivos" ToRole="t_califica" />
         </EntityType>
         <EntityType Name="t_plantas">
           <Key>
@@ -442,6 +658,7 @@
           <NavigationProperty Name="t_usuarios" Relationship="Self.fk_planta" FromRole="t_plantas" ToRole="t_usuarios" />
           <NavigationProperty Name="t_objetidet" Relationship="HRSystemModel.fk_objd_pta" FromRole="t_plantas" ToRole="t_objetidet" />
           <NavigationProperty Name="t_objetivos" Relationship="HRSystemModel.fk_obj_pta" FromRole="t_plantas" ToRole="t_objetivos" />
+          <NavigationProperty Name="t_budget_pta" Relationship="HRSystemModel.fk_budget_planta" FromRole="t_plantas" ToRole="t_budget_pta" />
         </EntityType>
         <EntityType Name="t_usuarios">
           <Key>
@@ -575,6 +792,44 @@
             <End Role="t_objetidet" EntitySet="t_objetidet" />
           </AssociationSet>
           <EntitySet Name="t_config_m1" EntityType="HRSystemModel.t_config_m1" />
+          <EntitySet Name="t_budget_pta" EntityType="HRSystemModel.t_budget_pta" />
+          <EntitySet Name="t_califica" EntityType="HRSystemModel.t_califica" />
+          <EntitySet Name="t_config_m4" EntityType="HRSystemModel.t_config_m4" />
+          <EntitySet Name="t_jobcode" EntityType="HRSystemModel.t_jobcode" />
+          <EntitySet Name="t_meridet" EntityType="HRSystemModel.t_meridet" />
+          <EntitySet Name="t_merit" EntityType="HRSystemModel.t_merit" />
+          <AssociationSet Name="fk_budget_planta" Association="HRSystemModel.fk_budget_planta">
+            <End Role="t_plantas" EntitySet="t_plantas" />
+            <End Role="t_budget_pta" EntitySet="t_budget_pta" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_calif" Association="HRSystemModel.fk_merit_calif">
+            <End Role="t_califica" EntitySet="t_califica" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_obj_cali" Association="HRSystemModel.fk_obj_cali">
+            <End Role="t_califica" EntitySet="t_califica" />
+            <End Role="t_objetivos" EntitySet="t_objetivos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_aut" Association="HRSystemModel.fk_merit_aut">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_merit" EntitySet="t_merit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_emp" Association="HRSystemModel.fk_merit_emp">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_merit_sup" Association="HRSystemModel.fk_merit_sup">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_merit" EntitySet="t_merit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_meridet_job" Association="HRSystemModel.fk_meridet_job">
+            <End Role="t_jobcode" EntitySet="t_jobcode" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
+          <AssociationSet Name="fk_meridet_enc" Association="HRSystemModel.fk_meridet_enc">
+            <End Role="t_merit" EntitySet="t_merit" />
+            <End Role="t_meridet" EntitySet="t_meridet" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="fk_objd_pta">
           <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="0..1" />
@@ -629,6 +884,207 @@
           <Property Name="f_califica" Type="DateTime" Precision="0" />
           <Property Name="f_calificafin" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="t_budget_pta">
+          <Key>
+            <PropertyRef Name="planta" />
+            <PropertyRef Name="axo" />
+          </Key>
+          <Property Name="planta" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="axo" Type="Decimal" Nullable="false" Precision="4" Scale="0" />
+          <Property Name="budget" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="u_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_plantas" Relationship="HRSystemModel.fk_budget_planta" FromRole="t_budget_pta" ToRole="t_plantas" />
+        </EntityType>
+        <EntityType Name="t_califica">
+          <Key>
+            <PropertyRef Name="califica" />
+          </Key>
+          <Property Name="califica" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="descrip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="rango_ini" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="rango_fin" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="u_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_meridet" Relationship="HRSystemModel.fk_merit_calif" FromRole="t_califica" ToRole="t_meridet" />
+          <NavigationProperty Name="t_objetivos" Relationship="HRSystemModel.fk_obj_cali" FromRole="t_califica" ToRole="t_objetivos" />
+        </EntityType>
+        <EntityType Name="t_config_m4">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="f_inicio" Type="DateTime" Precision="0" />
+          <Property Name="f_final" Type="DateTime" Precision="0" />
+          <Property Name="cap_mrp" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="ind_alerta1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="t_jobcode">
+          <Key>
+            <PropertyRef Name="clave" />
+          </Key>
+          <Property Name="clave" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="descrip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mrp" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="u_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_meridet" Relationship="HRSystemModel.fk_meridet_job" FromRole="t_jobcode" ToRole="t_meridet" />
+        </EntityType>
+        <EntityType Name="t_meridet">
+          <Key>
+            <PropertyRef Name="supervisor" />
+            <PropertyRef Name="axo" />
+            <PropertyRef Name="empleado" />
+          </Key>
+          <Property Name="supervisor" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="axo" Type="Decimal" Nullable="false" Precision="4" Scale="0" />
+          <Property Name="empleado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ind_elegible" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="jobcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="puesto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="calificacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="salario_axo" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="budget_porc" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="sugerido_imp" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="sugerido_porc" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="lump_imp" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="lump_porc" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="salario_nuevo" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="market_mcr" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="merit_guide" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="estatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="nota" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="out_guide" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="u_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="t_califica" Relationship="HRSystemModel.fk_merit_calif" FromRole="t_meridet" ToRole="t_califica" />
+          <NavigationProperty Name="t_empleados" Relationship="HRSystemModel.fk_merit_emp" FromRole="t_meridet" ToRole="t_empleados" />
+          <NavigationProperty Name="t_jobcode" Relationship="HRSystemModel.fk_meridet_job" FromRole="t_meridet" ToRole="t_jobcode" />
+          <NavigationProperty Name="t_merit" Relationship="HRSystemModel.fk_meridet_enc" FromRole="t_meridet" ToRole="t_merit" />
+        </EntityType>
+        <EntityType Name="t_merit">
+          <Key>
+            <PropertyRef Name="supervisor" />
+            <PropertyRef Name="axo" />
+          </Key>
+          <Property Name="supervisor" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="axo" Type="Decimal" Nullable="false" Precision="4" Scale="0" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="depto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="budget_imp" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="budget_porc" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="budget_spen" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="estatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="notas" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="u_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="f_id" Type="DateTime" Precision="3" />
+          <Property Name="autoriza" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ind_autoriza" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="f_autoriza" Type="DateTime" Precision="3" />
+          <Property Name="n_autoriza" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="t_empleados" Relationship="HRSystemModel.fk_merit_aut" FromRole="t_merit" ToRole="t_empleados" />
+          <NavigationProperty Name="t_empleados1" Relationship="HRSystemModel.fk_merit_sup" FromRole="t_merit" ToRole="t_empleados" />
+          <NavigationProperty Name="t_meridet" Relationship="HRSystemModel.fk_meridet_enc" FromRole="t_merit" ToRole="t_meridet" />
+        </EntityType>
+        <Association Name="fk_budget_planta">
+          <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="1" />
+          <End Type="HRSystemModel.t_budget_pta" Role="t_budget_pta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_plantas">
+              <PropertyRef Name="planta" />
+            </Principal>
+            <Dependent Role="t_budget_pta">
+              <PropertyRef Name="planta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_calif">
+          <End Type="HRSystemModel.t_califica" Role="t_califica" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_meridet" Role="t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_califica">
+              <PropertyRef Name="califica" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="calificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_obj_cali">
+          <End Type="HRSystemModel.t_califica" Role="t_califica" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_objetivos" Role="t_objetivos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_califica">
+              <PropertyRef Name="califica" />
+            </Principal>
+            <Dependent Role="t_objetivos">
+              <PropertyRef Name="calificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_aut">
+          <End Type="HRSystemModel.t_empleados" Role="t_empleados" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_merit" Role="t_merit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_merit">
+              <PropertyRef Name="autoriza" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_emp">
+          <End Type="HRSystemModel.t_empleados" Role="t_empleados" Multiplicity="1" />
+          <End Type="HRSystemModel.t_meridet" Role="t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_merit_sup">
+          <End Type="HRSystemModel.t_empleados" Role="t_empleados" Multiplicity="1" />
+          <End Type="HRSystemModel.t_merit" Role="t_merit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_merit">
+              <PropertyRef Name="supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_meridet_job">
+          <End Type="HRSystemModel.t_jobcode" Role="t_jobcode" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_meridet" Role="t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_jobcode">
+              <PropertyRef Name="clave" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="jobcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_meridet_enc">
+          <End Type="HRSystemModel.t_merit" Role="t_merit" Multiplicity="1" />
+          <End Type="HRSystemModel.t_meridet" Role="t_meridet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_merit">
+              <PropertyRef Name="supervisor" />
+              <PropertyRef Name="axo" />
+            </Principal>
+            <Dependent Role="t_meridet">
+              <PropertyRef Name="supervisor" />
+              <PropertyRef Name="axo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -782,6 +1238,100 @@
                 <ScalarProperty Name="f_objfin" ColumnName="f_objfin" />
                 <ScalarProperty Name="f_objini" ColumnName="f_objini" />
                 <ScalarProperty Name="clave" ColumnName="clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_budget_pta">
+            <EntityTypeMapping TypeName="HRSystemModel.t_budget_pta">
+              <MappingFragment StoreEntitySet="t_budget_pta">
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="budget" ColumnName="budget" />
+                <ScalarProperty Name="axo" ColumnName="axo" />
+                <ScalarProperty Name="planta" ColumnName="planta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_califica">
+            <EntityTypeMapping TypeName="HRSystemModel.t_califica">
+              <MappingFragment StoreEntitySet="t_califica">
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="rango_fin" ColumnName="rango_fin" />
+                <ScalarProperty Name="rango_ini" ColumnName="rango_ini" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+                <ScalarProperty Name="califica" ColumnName="califica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_config_m4">
+            <EntityTypeMapping TypeName="HRSystemModel.t_config_m4">
+              <MappingFragment StoreEntitySet="t_config_m4">
+                <ScalarProperty Name="ind_alerta1" ColumnName="ind_alerta1" />
+                <ScalarProperty Name="cap_mrp" ColumnName="cap_mrp" />
+                <ScalarProperty Name="f_final" ColumnName="f_final" />
+                <ScalarProperty Name="f_inicio" ColumnName="f_inicio" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_jobcode">
+            <EntityTypeMapping TypeName="HRSystemModel.t_jobcode">
+              <MappingFragment StoreEntitySet="t_jobcode">
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="mrp" ColumnName="mrp" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_meridet">
+            <EntityTypeMapping TypeName="HRSystemModel.t_meridet">
+              <MappingFragment StoreEntitySet="t_meridet">
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="out_guide" ColumnName="out_guide" />
+                <ScalarProperty Name="nota" ColumnName="nota" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="merit_guide" ColumnName="merit_guide" />
+                <ScalarProperty Name="market_mcr" ColumnName="market_mcr" />
+                <ScalarProperty Name="salario_nuevo" ColumnName="salario_nuevo" />
+                <ScalarProperty Name="lump_porc" ColumnName="lump_porc" />
+                <ScalarProperty Name="lump_imp" ColumnName="lump_imp" />
+                <ScalarProperty Name="sugerido_porc" ColumnName="sugerido_porc" />
+                <ScalarProperty Name="sugerido_imp" ColumnName="sugerido_imp" />
+                <ScalarProperty Name="budget_porc" ColumnName="budget_porc" />
+                <ScalarProperty Name="salario_axo" ColumnName="salario_axo" />
+                <ScalarProperty Name="calificacion" ColumnName="calificacion" />
+                <ScalarProperty Name="puesto" ColumnName="puesto" />
+                <ScalarProperty Name="jobcode" ColumnName="jobcode" />
+                <ScalarProperty Name="ind_elegible" ColumnName="ind_elegible" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="empleado" ColumnName="empleado" />
+                <ScalarProperty Name="axo" ColumnName="axo" />
+                <ScalarProperty Name="supervisor" ColumnName="supervisor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="t_merit">
+            <EntityTypeMapping TypeName="HRSystemModel.t_merit">
+              <MappingFragment StoreEntitySet="t_merit">
+                <ScalarProperty Name="n_autoriza" ColumnName="n_autoriza" />
+                <ScalarProperty Name="f_autoriza" ColumnName="f_autoriza" />
+                <ScalarProperty Name="ind_autoriza" ColumnName="ind_autoriza" />
+                <ScalarProperty Name="autoriza" ColumnName="autoriza" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="budget_spen" ColumnName="budget_spen" />
+                <ScalarProperty Name="budget_porc" ColumnName="budget_porc" />
+                <ScalarProperty Name="budget_imp" ColumnName="budget_imp" />
+                <ScalarProperty Name="depto" ColumnName="depto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="axo" ColumnName="axo" />
+                <ScalarProperty Name="supervisor" ColumnName="supervisor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -34,5 +34,11 @@ namespace HR_System.Models
         public virtual DbSet<t_plantas> t_plantas { get; set; }
         public virtual DbSet<t_usuarios> t_usuarios { get; set; }
         public virtual DbSet<t_config_m1> t_config_m1 { get; set; }
+        public virtual DbSet<t_budget_pta> t_budget_pta { get; set; }
+        public virtual DbSet<t_califica> t_califica { get; set; }
+        public virtual DbSet<t_config_m4> t_config_m4 { get; set; }
+        public virtual DbSet<t_jobcode> t_jobcode { get; set; }
+        public virtual DbSet<t_meridet> t_meridet { get; set; }
+        public virtual DbSet<t_merit> t_merit { get; set; }
     }
 }
