@@ -16,5 +16,9 @@ namespace HR_System.Models
         public Byte[] foto { get; set; }
         public decimal axom4 { get; set; }
         public string estatusm4 { get; set; }
+        public string manager1 { get; set; }
+        public string manager2 { get; set; }
+        public string depto { get; set; }
+
     }
 }

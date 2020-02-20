@@ -23,7 +23,7 @@ namespace HR_System.Models
                 var db = WebMatrix.Data.Database.Open("686TressConn");
                 var selectedQueryString = @"SELECT co.cb_nombres + ' ' +co.CB_APE_PAT + ' ' +co.CB_APE_MAT as NOMBRE
                                         ,co.CB_TURNO,po.PU_DESCRIP AS PUESTO,
-                                        co.CB_NIVEL2,n3.TB_ELEMENT AS AREA,co2.CB_E_MAIL,im.IM_BLOB, co.CB_SALARIO salario, co.CB_FEC_ANT f_anti, co.CB_FEC_SAL f_sal
+                                         n2.TB_ELEMENT as DEPTO, n3.TB_ELEMENT AS AREA,co2.CB_E_MAIL,im.IM_BLOB, co.CB_SALARIO salario, co.CB_FEC_ANT f_anti, co.CB_FEC_SAL f_sal
                                         from [Tress_MedlineMXL].[dbo].COLABORA co 
                                         inner join [Tress_MedlineMXL].[dbo].PUESTO po on co.CB_PUESTO = po.PU_CODIGO 
                                         inner join [Tress_MedlineMXL].[dbo].NIVEL2 n2 on co.CB_NIVEL2 = n2.TB_CODIGO 
@@ -39,7 +39,7 @@ namespace HR_System.Models
                 if (datos.Any())
                 {
                     empleadodatos.puesto = datos.ElementAt(0).PUESTO;
-                    empleadodatos.depto = datos.ElementAt(0).CB_NIVEL2;
+                    empleadodatos.depto = datos.ElementAt(0).DEPTO;
                     empleadodatos.btImagen = (Byte[])datos.ElementAt(0)[6];
                     empleadodatos.salario = datos.ElementAt(0)[7];
                     empleadodatos.fechaIngreso = datos.ElementAt(0)[8];
