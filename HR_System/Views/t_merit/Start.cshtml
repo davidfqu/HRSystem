@@ -1,0 +1,118 @@
+﻿@model HR_System.Models.t_merit
+@{
+    ViewBag.Title = "Start";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Merit Planning</h6>
+<h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Planners for Merit @ViewBag.Axo</h3>
+
+<hr />
+<div class="row">
+    <hr />
+    <div class="col-12">
+        <div class="row">
+            <div class="col-2 d-flex justify-content-center align-items-center">
+                <img src="@Html.Raw("data:image/png;base64," + Convert.ToBase64String(ViewBag.infoTress.btImagen))" class="img-fluid rounded-circle" style="height:80px" />
+            </div>
+            <div class="col-5 my-auto">
+                <label class="font-weight-bold">Merit Process Admin :</label>
+                <label>@ViewBag.infoTress.nombre</label>
+            </div>
+            <div class="col-3 my-auto">
+                <label class="font-weight-bold">Plant Budget :</label>
+                <label>% @ViewBag.Budget</label>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-4">
+                @if (ViewBag.craeteMerit == true)
+                {
+                    <a href="@Url.Action("CreateAll", "t_merit", new { sparamx = ViewBag.Axo })" class="btn btn-danger rounded-pill" role="button" )>Start Merit @ViewBag.Axo</a>
+                }
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in ViewBag.Merit)
+            {
+                <div class="col-4 mt-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <img src="@Html.Raw("data:image/png;base64," + Convert.ToBase64String(@item.IM_BLOB))" class="img-fluid rounded-circle" style="height:30px" />
+                                </div>@item.nombre
+                                <div class="col-4 text-right ml-0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Depto
+                                        </dt>
+
+                                        <dd>
+                                            @item.depto
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+
+                                        <dt>
+                                            Status
+                                        </dt>
+
+
+                                        @if (@item.estatus == "PE")
+                                        {
+                                            <dd>
+                                                Waitting for Planner
+                                            </dd>
+                                        }
+                                        else
+                                        {
+                                            <dd>
+                                                @item.estatus
+                                            </dd>
+                                        }
+                                    </dl>
+                                </div>
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Budget
+                                        </dt>
+
+                                        <dd>
+                                            @string.Format("{0:C}", @item.budget_imp) MN
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-6">
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Spent
+                                        </dt>
+
+                                        <dd>
+                                            @string.Format("{0:C}", @item.budget_spen) MN
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+            }
+        </div>
+    </div>
+</div> 
+
+

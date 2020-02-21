@@ -45,11 +45,16 @@ namespace HR_System.Controllers
             {
                 var nombreusuario = t_usuarios.nombre.Split(' ');
                 ViewBag.userFirstName = nombreusuario[0];
+                ViewBag.userRol = t_usuarios.rol.ToString();
+                
                 var empleado = db.t_empleados.Where(x => x.usuario == username).ToList();
                 if (empleado.Any())
                 {
-                    Session["userNo"] = empleado[0].empleado;
+                    var config1 = db.t_config_m1.Where(x => x.clave == "01").ToList();
+                    ViewBag.Axo = config1[0].axo_activo;
 
+                    Session["userNo"] = empleado[0].empleado;
+                    ViewBag.userNo = empleado[0].empleado;
                     string numempleado = empleado[0].empleado;
                     if (empleado[0].planta == "686")
                     {

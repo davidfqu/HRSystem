@@ -61,10 +61,157 @@ namespace HR_System.Controllers
             return View();
         }
 
+        public ActionResult Start(string sparame, int sparamx)
+        {
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
+
+            var budgetAxo = db.t_budget_pta.Where(x => x.axo == sparamx).ToList();
+            decimal dBudget = 0;
+            if (budgetAxo.Any())
+            {
+                if (decimal.TryParse(budgetAxo[0].budget.ToString(), out dBudget))
+                    ViewBag.Budget = dBudget;
+            }
+
+
+            ViewBag.userNo = sparame;
+            ViewBag.Axo = sparamx;
+            var meritList = db.sp_view_merit_year(sparamx).ToList();
+            ViewBag.Merit = meritList;
+            
+            ViewBag.craeteMerit = true;
+            if (meritList.ToList().Count > 0)
+                ViewBag.craeteMerit = false;
+
+            empleadoTress add = new empleadoTress();
+
+            add = add.datosTress(sparame.Substring(3, sparame.Length - 3), sparame.Substring(0, 3));
+            ViewBag.infoTress = add;
+
+            return View();
+        }
+        private bool Elegible(DateTime adIngreso,DateTime adSalario)
+        {
+            bool bReturn = false;
+            //fecha de ingreso
+            int iYear1 = adIngreso.Year;
+            int iYearA = DateTime.Today.Year;
+
+            if (iYearA > iYear1)
+                bReturn = true;
+
+            //fecha del ultimo ajuste salarial
+            int iYear2 = adSalario.Year;
+            if (iYearA > iYear1)
+                bReturn = true;
+
+            return bReturn;
+        }
+        public ActionResult CreateAll(decimal sparamx)
+        {
+            //list of employees / local & tress store procedure query
+            
+            var budgetAxo = db.t_budget_pta.Where(x => x.axo == sparamx).ToList();
+            decimal dBudget = 0;
+            if (budgetAxo.Any())
+            {
+                if (!decimal.TryParse(budgetAxo[0].budget.ToString(), out dBudget))
+                    return HttpNotFound();
+            }
+            
+            var spPlanners = db.sp_view_merit_planners().ToList();
+            if (spPlanners.ToList().Count() > 0)
+            {
+                for (int x = 0; x < spPlanners.ToList().Count(); x++)
+                {
+                    var sSuper = spPlanners[x].empleado.ToString();
+                    var sName = spPlanners[x].nombre.ToString();
+                    var sDepto = spPlanners[x].TB_ELEMENT.ToString();
+                    var sManager = string.Empty;
+                    if (spPlanners[x].gerente != null)
+                        sManager = spPlanners[x].gerente.ToString();
+                    else
+                        sManager = null;
+                    decimal dSalary = 0;
+                    decimal dSalaryBudget = 0;
+                    if (!decimal.TryParse(spPlanners[x].salary.ToString(), out dSalary)) dSalary = 0;
+
+                    if (dSalary > 0)
+                        dSalaryBudget = dSalary * (dBudget / 100);
+                    else
+                        continue;
+                    
+                    var spDirect = db.sp_view_merit_dreport(sSuper).ToList();
+                    if (spPlanners.ToList().Count() > 0)
+                    {
+                        //saver t_merit
+                        t_merit dbMerit = new t_merit();
+                        dbMerit.supervisor = sSuper;
+                        dbMerit.axo = sparamx;
+                        dbMerit.nombre = sName;
+                        dbMerit.depto = sDepto;
+                        dbMerit.budget_imp = dSalaryBudget;
+                        dbMerit.budget_porc = dBudget;
+                        dbMerit.budget_spen = 0;
+                        dbMerit.autoriza = sManager;
+                        dbMerit.estatus = "PE";
+                        dbMerit.u_id = Convert.ToString(Session["userAccount"]);
+                        dbMerit.f_id = System.DateTime.Now;
+                        
+                        db.Entry(dbMerit).State = EntityState.Added;
+                        if(db.SaveChanges() > 0)
+                        {    
+                            //save t_meridet
+                            for (int i = 0; i < spDirect.ToList().Count(); i++)
+                            {
+                                t_meridet dbMeridet = new t_meridet();
+                                dbMeridet.supervisor = sSuper;
+                                dbMeridet.axo = sparamx;
+                                dbMeridet.empleado = spDirect[i].empleado.ToString();
+                                dbMeridet.nombre = spDirect[i].nombre.ToString();
+                                dbMeridet.jobcode = spDirect[i].jobcode.ToString();
+                                decimal dMRP = 0;
+                                if (!decimal.TryParse(spDirect[i].mrp.ToString(), out dMRP)) dMRP = 0;
+                                dbMeridet.market_mcr = dMRP;
+                                dbMeridet.puesto = spDirect[i].PU_DESCRIP.ToString();
+                                dbMeridet.calificacion = spDirect[i].califica.ToString();
+                                decimal dSalaryD = 0;
+                                if (!decimal.TryParse(spDirect[i].salary.ToString(), out dSalaryD)) dSalaryD = 0;
+                                dbMeridet.salario_axo = dSalaryD;
+                                dbMeridet.budget_porc = dBudget;
+                                dbMeridet.estatus = "PE";
+                                dbMeridet.sugerido_imp = 0;
+                                dbMeridet.sugerido_porc = 0;
+                                dbMeridet.lump_imp = 0;
+                                dbMeridet.lump_porc = 0;
+                                dbMeridet.market_mcr = 0;//get mrc from job
+                                dbMeridet.out_guide = "0";
+                                dbMeridet.salario_nuevo = 0;
+                                DateTime dtSalario = DateTime.Parse(spDirect[i].CB_FEC_ANT.ToString());
+                                DateTime dtIngreso = DateTime.Parse(spDirect[i].CB_FEC_ING.ToString());
+                                if (Elegible(dtSalario, dtSalario))
+                                    dbMeridet.ind_elegible = "1";
+                                else
+                                    dbMeridet.ind_elegible = "0";
+                                dbMeridet.u_id = Convert.ToString(Session["userAccount"]);
+                                dbMeridet.f_id = DateTime.Now;
+
+                                db.Entry(dbMeridet).State = EntityState.Added;
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }    
+            }
+            
+            return RedirectToAction("Start","t_merit",new { sparame = Session["userNo"], sparamx= sparamx});
+
+        }
         // POST: t_merit/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost]  
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "supervisor,axo,nombre,depto,budget_imp,budget_porc,budget_spen,estatus,notas,u_id,f_id,autoriza,ind_autoriza,f_autoriza,n_autoriza")] t_merit t_merit)
         {

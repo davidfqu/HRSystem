@@ -12,6 +12,8 @@ namespace HR_System.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class HRSystemEntities : DbContext
     {
@@ -40,5 +42,28 @@ namespace HR_System.Models
         public virtual DbSet<t_jobcode> t_jobcode { get; set; }
         public virtual DbSet<t_meridet> t_meridet { get; set; }
         public virtual DbSet<t_merit> t_merit { get; set; }
+    
+        public virtual ObjectResult<sp_view_merit_year_Result> sp_view_merit_year(Nullable<decimal> year)
+        {
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("Year", year) :
+                new ObjectParameter("Year", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_view_merit_year_Result>("sp_view_merit_year", yearParameter);
+        }
+    
+        public virtual ObjectResult<sp_view_merit_dreport_Result> sp_view_merit_dreport(string supervisor)
+        {
+            var supervisorParameter = supervisor != null ?
+                new ObjectParameter("Supervisor", supervisor) :
+                new ObjectParameter("Supervisor", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_view_merit_dreport_Result>("sp_view_merit_dreport", supervisorParameter);
+        }
+    
+        public virtual ObjectResult<sp_view_merit_planners_Result> sp_view_merit_planners()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_view_merit_planners_Result>("sp_view_merit_planners");
+        }
     }
 }

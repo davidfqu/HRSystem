@@ -8,6 +8,7 @@ namespace HR_System.Models
     public class empleadoTress
     {
         public string empleado { get; set; }
+        public string nombre { get; set; }
         public string depto { get; set; }
         public string puesto{ get; set; }
         public Nullable<System.DateTime> fechaIngreso { get; set; }
@@ -15,6 +16,28 @@ namespace HR_System.Models
         public Byte[] btImagen { get; set; }
         public Nullable<System.DateTime> fechaSalario { get; set; }
 
+        public empleadoTress MeritYear(int Year)
+        {
+            empleadoTress empleadodatos = new empleadoTress();
+            var db = WebMatrix.Data.Database.Open("HRSystemEntities");
+            var selectedQueryString = "sp_view_merit_year(@Year)";
+            
+            var datos = db.Query(selectedQueryString,Year).ToList();
+            if (datos.Any())
+            {
+                empleadodatos.nombre = datos.ElementAt(0).NOMBRE;
+                empleadodatos.puesto = datos.ElementAt(0).PUESTO;
+                empleadodatos.depto = datos.ElementAt(0).CB_NIVEL2;
+                empleadodatos.btImagen = (Byte[])datos.ElementAt(0)[6];
+                empleadodatos.salario = datos.ElementAt(0)[7];
+                empleadodatos.fechaIngreso = datos.ElementAt(0)[8];
+                empleadodatos.fechaSalario = datos.ElementAt(0)[9];
+                return empleadodatos;
+            }
+            
+
+            return empleadodatos;
+        }
         public empleadoTress datosTress(string empleado, string planta)
         {
             empleadoTress empleadodatos = new empleadoTress();
@@ -38,6 +61,7 @@ namespace HR_System.Models
                 var datos = db.Query(selectedQueryString).ToList();
                 if (datos.Any())
                 {
+                    empleadodatos.nombre = datos.ElementAt(0).NOMBRE;
                     empleadodatos.puesto = datos.ElementAt(0).PUESTO;
                     empleadodatos.depto = datos.ElementAt(0).CB_NIVEL2;
                     empleadodatos.btImagen = (Byte[])datos.ElementAt(0)[6];

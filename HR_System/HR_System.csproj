@@ -260,6 +260,15 @@
       <DependentUpon>HRSystem.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\MyDirects.cs" />
+    <Compile Include="Models\sp_view_merit_dreport_Result.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_view_merit_planners_Result.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_view_merit_year_Result.cs">
+      <DependentUpon>HRSystem.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
@@ -423,6 +432,7 @@
     <Content Include="Views\t_merit\IndexModule4.cshtml" />
     <Content Include="Views\t_meridet\DirectReports.cshtml" />
     <Content Include="Views\t_meridet\MeritProcess.cshtml" />
+    <Content Include="Views\t_merit\Start.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

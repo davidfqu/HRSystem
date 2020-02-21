@@ -93,6 +93,9 @@
           <Property Name="usuario" Type="varchar" MaxLength="20" />
           <Property Name="f_id" Type="datetime" />
           <Property Name="planta" Type="varchar" MaxLength="10" />
+          <Property Name="jobcode" Type="varchar" MaxLength="10" />
+          <Property Name="gerente" Type="varchar" MaxLength="20" />
+          <Property Name="califica" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="t_jobcode">
           <Key>
@@ -437,6 +440,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_view_merit_dreport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Supervisor" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_view_merit_planners" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_view_merit_year" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="numeric" Mode="In" />
+        </Function>
         <EntityContainer Name="HRSystemModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_budget_pta" EntityType="Self.t_budget_pta" Schema="dbo" store:Type="Tables" />
@@ -571,6 +581,9 @@
           <NavigationProperty Name="t_merit" Relationship="HRSystemModel.fk_merit_aut" FromRole="t_empleados" ToRole="t_merit" />
           <NavigationProperty Name="t_meridet" Relationship="HRSystemModel.fk_merit_emp" FromRole="t_empleados" ToRole="t_meridet" />
           <NavigationProperty Name="t_merit1" Relationship="HRSystemModel.fk_merit_sup" FromRole="t_empleados" ToRole="t_merit" />
+          <Property Name="jobcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="gerente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="califica" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="t_metricos">
           <Key>
@@ -830,6 +843,13 @@
             <End Role="t_merit" EntitySet="t_merit" />
             <End Role="t_meridet" EntitySet="t_meridet" />
           </AssociationSet>
+          <FunctionImport Name="sp_view_merit_year" ReturnType="Collection(HRSystemModel.sp_view_merit_year_Result)">
+          <Parameter Name="Year" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="sp_view_merit_dreport" ReturnType="Collection(HRSystemModel.sp_view_merit_dreport_Result)">
+          <Parameter Name="Supervisor" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_view_merit_planners" ReturnType="Collection(HRSystemModel.sp_view_merit_planners_Result)" />
         </EntityContainer>
         <Association Name="fk_objd_pta">
           <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="0..1" />
@@ -1085,6 +1105,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_view_merit_year_Result">
+          <Property Type="String" Name="supervisor" Nullable="false" MaxLength="20" />
+          <Property Type="Decimal" Name="axo" Nullable="false" Precision="4" Scale="0" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="depto" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="budget_imp" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="budget_spen" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="estatus" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="notas" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="f_id" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CB_CODIGO" Nullable="false" />
+          <Property Type="Binary" Name="IM_BLOB" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="sp_view_merit_dreport_Result">
+          <Property Type="String" Name="empleado" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PU_DESCRIP" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="TB_ELEMENT" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="CB_FEC_ANT" Nullable="false" Precision="23" />
+          <Property Type="String" Name="gerente" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="jobcode" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="mrp" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="califica" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="salary" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="DateTime" Name="CB_FEC_ING" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_view_merit_planners_Result">
+          <Property Type="String" Name="empleado" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="PU_DESCRIP" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="TB_ELEMENT" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="gerente" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="salary" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1127,6 +1181,9 @@
           <EntitySetMapping Name="t_empleados">
             <EntityTypeMapping TypeName="HRSystemModel.t_empleados">
               <MappingFragment StoreEntitySet="t_empleados">
+                <ScalarProperty Name="califica" ColumnName="califica" />
+                <ScalarProperty Name="gerente" ColumnName="gerente" />
+                <ScalarProperty Name="jobcode" ColumnName="jobcode" />
                 <ScalarProperty Name="empleado" ColumnName="empleado" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="supervisor" ColumnName="supervisor" />
@@ -1335,6 +1392,52 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_view_merit_year" FunctionName="HRSystemModel.Store.sp_view_merit_year">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HRSystemModel.sp_view_merit_year_Result">
+                <ScalarProperty Name="supervisor" ColumnName="supervisor" />
+                <ScalarProperty Name="axo" ColumnName="axo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="depto" ColumnName="depto" />
+                <ScalarProperty Name="budget_imp" ColumnName="budget_imp" />
+                <ScalarProperty Name="budget_spen" ColumnName="budget_spen" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="notas" ColumnName="notas" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="CB_CODIGO" ColumnName="CB_CODIGO" />
+                <ScalarProperty Name="IM_BLOB" ColumnName="IM_BLOB" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_view_merit_dreport" FunctionName="HRSystemModel.Store.sp_view_merit_dreport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HRSystemModel.sp_view_merit_dreport_Result">
+                <ScalarProperty Name="empleado" ColumnName="empleado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="PU_DESCRIP" ColumnName="PU_DESCRIP" />
+                <ScalarProperty Name="TB_ELEMENT" ColumnName="TB_ELEMENT" />
+                <ScalarProperty Name="CB_FEC_ANT" ColumnName="CB_FEC_ANT" />
+                <ScalarProperty Name="gerente" ColumnName="gerente" />
+                <ScalarProperty Name="jobcode" ColumnName="jobcode" />
+                <ScalarProperty Name="mrp" ColumnName="mrp" />
+                <ScalarProperty Name="califica" ColumnName="califica" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="CB_FEC_ING" ColumnName="CB_FEC_ING" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_view_merit_planners" FunctionName="HRSystemModel.Store.sp_view_merit_planners">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HRSystemModel.sp_view_merit_planners_Result">
+                <ScalarProperty Name="empleado" ColumnName="empleado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="PU_DESCRIP" ColumnName="PU_DESCRIP" />
+                <ScalarProperty Name="TB_ELEMENT" ColumnName="TB_ELEMENT" />
+                <ScalarProperty Name="gerente" ColumnName="gerente" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
