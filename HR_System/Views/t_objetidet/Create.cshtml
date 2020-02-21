@@ -15,7 +15,7 @@
 </div>
 
 
-<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">MODULE 1</h6>
+<h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Performance Review</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">My Objectives @ViewBag.Objective.axo</h3>
 
 <div class="row">
@@ -146,7 +146,7 @@
                                     <div class="badge primary-color pt-1 m-0 text-center" style="border-radius: 50%; height: 25px; width:25px;font-size:17px">@item.consec</div> @item.objetivo
                                 </div>
                                 <div class="col-3 text-right ml-0">
-                                    <a class="fas fa-trash-alt danger-ic mr-1" href="@Url.Action("DeleteObjective","t_objetidet",new {empleado = item.empleado, axo = item.axo, consec = item.consec })"></a>
+                                    <a class="fas fa-trash-alt danger-ic mr-1" data-toggle="modal" data-target="@Html.Raw("#" + "DeleteObjModal" + numitem)"></a>
                                     <a class="fas fa-edit" data-toggle="modal" data-target="@Html.Raw("#" + "AddObjModal" + numitem)"></a>
                                 </div>
                             </div>
@@ -173,7 +173,7 @@
                                         </dt>
 
                                         <dd>
-                                            @item.t_metricos.descrip
+                                            @item.metrico
                                         </dd>
                                     </dl>
                                 </div>
@@ -246,12 +246,11 @@
                                                 </div>
 
                                                 <div class="form-group">
-
-                                                    <div class="col-md-12">
-                                                        <label for="metrico" class="text-muted">Metric : </label>
-                                                        @Html.DropDownList("metrico", null, htmlAttributes: new { @class = "form-control", @Value = item.t_metricos.descrip })
-                                                        @Html.ValidationMessageFor(model => model.metrico, "", new { @class = "text-danger"})
+                                                    <div class="md-form md-outline ">
+                                                        @Html.EditorFor(model => model.metrico, new { htmlAttributes = new { @class = "form-control", @maxlenght = "50", @Value = item.metrico } })
+                                                        <label for="objetivo">Metric</label>
                                                     </div>
+
                                                 </div>
 
                                             </div>
@@ -266,6 +265,62 @@
 
                             </div>
                         }
+                    </div>
+                </div>
+
+                <div class="modal fade" id="@Html.Raw("DeleteObjModal" + numitem)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4>Warning</h4>
+                                <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="modal-body">
+                                        <h6>Are you sure you want to delete this objective?</h6>
+                                        <div class="col-12">
+                                            <dl class="dl-horizontal">
+                                                <dt>
+                                                   Title:
+                                                </dt>
+
+                                                <dd>
+                                                    @item.objetivo
+                                                </dd>
+
+                                                <dt>
+                                                    Description:
+                                                </dt>
+
+                                                <dd>
+                                                    @item.descrip
+                                                </dd>
+
+                                                <dt>
+                                                    Weight:
+                                                </dt>
+
+                                                <dd>
+                                                    @item.peso
+                                                </dd>
+                                            </dl>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a  href="@Url.Action("DeleteObjective","t_objetidet",new {empleado = item.empleado, axo = item.axo, consec = item.consec })" class="btn btn-primary" role="button">Delete </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
@@ -352,12 +407,11 @@
                                 </div>
 
                                 <div class="form-group">
-
-                                    <div class="col-md-12">
-                                        <label for="metrico" class="text-muted">Metric : </label>
-                                        @Html.DropDownList("metrico", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.metrico, "", new { @class = "text-danger" })
+                                    <div class="md-form md-outline ">
+                                        @Html.EditorFor(model => model.metrico, new { htmlAttributes = new { @class = "form-control", @maxlenght = "50" } })
+                                        <label for="objetivo">Metric</label>
                                     </div>
+
                                 </div>
 
                             </div>

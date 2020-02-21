@@ -35,7 +35,6 @@ namespace HR_System.Models
         public Nullable<System.DateTime> f_r2 { get; set; }
         public Nullable<System.DateTime> f_id { get; set; }
     
-        public virtual t_metricos t_metricos { get; set; }
         public virtual t_plantas t_plantas { get; set; }
         public virtual t_objetivos t_objetivos { get; set; }
     }

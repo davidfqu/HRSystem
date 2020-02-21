@@ -33,23 +33,40 @@ namespace HR_System.Controllers
 
             if (!t_merit.Any())
                 return RedirectToAction("Index", "Home", null);
-
             
-            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.t_empleados.t_empleados2.empleado == empleado && x.axo == System.DateTime.Today.Year).ToList();
+            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Today.Year).ToList();
 
             var directs = new List<MyDirects>();
 
+            string estado = "";
+
             foreach (var item in t_meridet)
             {
+                switch (item.estatus)
+                {
+                    case "PE":
+                        estado = "Waiting For Aproval";
+                        break;
+
+                    case "AP":
+                        estado = "Approved";
+                        break;
+
+                    default:
+                        estado = "No Merit";
+                        break;
+                }
+
                 MyDirects ndirect = new MyDirects();
                 empleadoTress add = new empleadoTress();
                 add = add.datosTress(item.empleado.Substring(3, item.empleado.Length - 3), item.empleado.Substring(0, 3));
                 ndirect.empleado = item.empleado;
                 ndirect.nombre = item.nombre;
-                ndirect.estatusm4 = item.estatus;
+                ndirect.estatusm4 = estado;
                 ndirect.axom4 = item.axo;
                 ndirect.puesto = add.puesto;
                 ndirect.foto = add.btImagen;
+                ndirect.meritrec = Convert.ToDecimal(item.sugerido_porc);
                 directs.Add(ndirect);
              
             }
@@ -66,12 +83,116 @@ namespace HR_System.Controllers
             
             string supervisor = Convert.ToString(Session["EmployeeNo"]);
 
-            var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Now.Year).ToList();
+            var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x => x.supervisor == supervisor && x.axo == System.DateTime.Now.Year).ToList();
+
+            if (!t_merit.Any())
+                return RedirectToAction("Index", "Home", null);
+
+            
+            ViewBag.spent = t_merit.ElementAt(0).budget_spen;
+            ViewBag.available = t_merit.ElementAt(0).budget_imp - t_merit.ElementAt(0).budget_spen;
+            ViewBag.percent = Convert.ToString(Math.Round((ViewBag.available / t_merit.ElementAt(0).budget_imp) * 100));
 
             var t_meridet = db.t_meridet.Find(supervisor,axo,empleado);
+     
+            MyDirects ndirect = new MyDirects();
+            empleadoTress add = new empleadoTress();
+            add = add.datosTress(empleado.Substring(3, empleado.Length - 3), empleado.Substring(0, 3));
+            ndirect.empleado = empleado;
+            ndirect.nombre = t_meridet.t_empleados.nombre;
+            ndirect.depto = add.depto;
+            ndirect.puesto = add.puesto;
+            ndirect.foto = add.btImagen;
+            string iconocal = "";
+            string colorcal = "";
+            switch(t_meridet.calificacion)
+            {
+                case "EE":
+                    iconocal = "<i class='fas fa-medal'></i>";
+                    colorcal = "warning-color-dark";
+                    break;
+                case "ME":
+                    iconocal = "<i class='fas fa-thumbs-up'></i>";
+                    colorcal = "success-color";
+                    break;
+                case "NI":
+                    iconocal = "<i class='fas fa-exclamation'></i>";
+                    colorcal = "warning-color";
+                    break;
+                case "FE":
+                    iconocal = "<i class='fas fa-thumbs-down'></i>";
+                    colorcal = "danger-color";
+                    break;
+                default:
+                    iconocal = "<i class='fas fa-minus'></i>";
+                    colorcal = "stylish-color";
+                    break;
+            }
 
+            ViewBag.colorcal = colorcal;
+            ViewBag.iconocal = iconocal;
+
+            try
+            {
+                ndirect.manager1 = t_meridet.t_empleados.t_empleados2.nombre;
+            }
+            catch
+            {
+                ndirect.manager1 = null;
+            }
+            try
+            {
+                ndirect.manager2 = t_meridet.t_empleados.t_empleados2.t_empleados2.nombre;
+            }
+            catch
+            {
+                ndirect.manager2 = null;
+            }
+
+            ViewBag.direct = ndirect;
+            ViewBag.merit = t_meridet;
+            ViewBag.bamount = (t_meridet.salario_axo * t_meridet.budget_porc) / 100;
+            ViewBag.maxmerit = ViewBag.bamount * 2;
+
+
+            decimal meritg1 = Convert.ToDecimal((t_meridet.t_califica.rango_ini * t_merit.ElementAt(0).budget_porc)) / 100;
+            decimal meritg2 = Convert.ToDecimal((t_meridet.t_califica.rango_fin * t_merit.ElementAt(0).budget_porc)) / 100;
+
+            
+            ViewBag.meritg1 = meritg1;
+            ViewBag.meritg2 = meritg2;
             return View();
         }
+
+        public ActionResult Approve(String empleado, decimal merit = 0, decimal lump = 0, string comments = "", decimal meritper = 0, decimal lumpper = 0)
+        {
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
+
+            String supervisor = Convert.ToString(Session["EmployeeNo"]);
+
+            var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x => x.supervisor == supervisor && x.axo == System.DateTime.Now.Year).ToList();
+
+            if (!t_merit.Any())
+                return RedirectToAction("Index", "Home", null);
+
+            t_meridet t_meridet = db.t_meridet.Find(supervisor,System.DateTime.Now.Year,empleado);
+
+            t_meridet.salario_nuevo = t_meridet.salario_axo + merit;
+            t_meridet.sugerido_imp = merit;
+            t_meridet.sugerido_porc = meritper;
+            t_meridet.lump_porc = lumpper;
+            t_meridet.lump_imp = lump;
+            t_meridet.estatus = "AP";
+            t_meridet.nota = comments;
+            t_meridet.u_id = supervisor;
+            t_meridet.f_id = System.DateTime.Now;
+            db.Entry(t_meridet).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("IndexModule4", "t_merit", null);
+        }
+
         // GET: t_meridet/Details/5
         public ActionResult Details(string id)
         {
