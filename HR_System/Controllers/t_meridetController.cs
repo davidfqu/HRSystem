@@ -34,7 +34,7 @@ namespace HR_System.Controllers
             if (!t_merit.Any())
                 return RedirectToAction("Index", "Home", null);
             
-            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.t_empleados.t_empleados2.empleado == empleado && x.axo == System.DateTime.Today.Year).ToList();
+            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Today.Year).ToList();
 
             var directs = new List<MyDirects>();
 
@@ -190,7 +190,7 @@ namespace HR_System.Controllers
             db.Entry(t_meridet).State = EntityState.Modified;
             db.SaveChanges();
 
-            return RedirectToAction("DirectReports", "t_meridet", null);
+            return RedirectToAction("IndexModule4", "t_merit", null);
         }
 
         // GET: t_meridet/Details/5

@@ -21,6 +21,12 @@ namespace HR_System.Controllers
             return View(t_merit.ToList());
         }
 
+        public ActionResult IndexModule4D()
+        {
+            return View();
+        }
+
+
         public ActionResult IndexModule4()
         {
             if (!Login())
@@ -32,10 +38,12 @@ namespace HR_System.Controllers
             if(!t_merit.Any())
                 return RedirectToAction("Index", "Home", null);
 
-            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.t_empleados.t_empleados2.empleado == empleado && x.axo == System.DateTime.Today.Year).ToList();
+            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Today.Year).ToList();
             var directs = new List<MyDirects>();
 
             string estado = "";
+            string iconocal = "";
+            string colorcal = "";
 
             foreach (var item in t_meridet)
             {
@@ -54,6 +62,30 @@ namespace HR_System.Controllers
                         break;
                 }
 
+                switch (item.calificacion)
+                {
+                    case "EE":
+                        iconocal = "<i class='fas fa-medal'></i>";
+                        colorcal = "warning-color-dark";
+                        break;
+                    case "ME":
+                        iconocal = "<i class='fas fa-thumbs-up'></i>";
+                        colorcal = "success-color";
+                        break;
+                    case "NI":
+                        iconocal = "<i class='fas fa-exclamation'></i>";
+                        colorcal = "warning-color";
+                        break;
+                    case "FE":
+                        iconocal = "<i class='fas fa-thumbs-down'></i>";
+                        colorcal = "danger-color";
+                        break;
+                    default:
+                        iconocal = "<i class='fas fa-minus'></i>";
+                        colorcal = "stylish-color";
+                        break;
+                }
+
                 MyDirects ndirect = new MyDirects();
                 empleadoTress add = new empleadoTress();
                 add = add.datosTress(item.empleado.Substring(3, item.empleado.Length - 3), item.empleado.Substring(0, 3));
@@ -61,9 +93,11 @@ namespace HR_System.Controllers
                 ndirect.nombre = item.nombre;
                 ndirect.estatusm4 = estado;
                 ndirect.axom4 = item.axo;
-                ndirect.puesto = add.puesto;
+                ndirect.puesto = item.puesto;
                 ndirect.foto = add.btImagen;
                 ndirect.meritrec = Convert.ToDecimal(item.sugerido_porc);
+                ndirect.iconoresult = iconocal;
+                ndirect.coloriconoresult = colorcal;
                 directs.Add(ndirect);
 
             }
@@ -74,6 +108,7 @@ namespace HR_System.Controllers
             ViewBag.merit = t_merit.ElementAt(0);
             ViewBag.available = t_merit.ElementAt(0).budget_imp - t_merit.ElementAt(0).budget_spen;
             ViewBag.percent = Convert.ToString(Math.Round((Convert.ToDouble(t_merit.ElementAt(0).budget_spen / t_merit.ElementAt(0).budget_imp)) * 100));
+
             return View();
         }
 
