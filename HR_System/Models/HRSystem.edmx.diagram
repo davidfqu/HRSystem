@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="HRSystemModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HRSystemModel.t_config" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HRSystemModel.t_empleados" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HRSystemModel.t_metricos" Width="1.5" PointX="9.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HRSystemModel.t_objetidet" Width="1.5" PointX="12" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HRSystemModel.t_objetivos" Width="1.5" PointX="7.5" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HRSystemModel.t_plantas" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
@@ -17,7 +16,6 @@
         <AssociationConnector Association="HRSystemModel.fk_empleado" ManuallyRouted="false" />
         <AssociationConnector Association="HRSystemModel.fk_obj_emp" ManuallyRouted="false" />
         <AssociationConnector Association="HRSystemModel.FK_t_empleados_supervisor" ManuallyRouted="false" />
-        <AssociationConnector Association="HRSystemModel.fk_objd_met" ManuallyRouted="false" />
         <AssociationConnector Association="HRSystemModel.fk_planta" ManuallyRouted="false" />
         <AssociationConnector Association="HRSystemModel.fk_objd_pta" />
         <AssociationConnector Association="HRSystemModel.fk_obj_pta" />

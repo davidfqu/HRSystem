@@ -32,9 +32,48 @@ namespace HR_System.Controllers
             if(!t_merit.Any())
                 return RedirectToAction("Index", "Home", null);
 
+            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.t_empleados.t_empleados2.empleado == empleado && x.axo == System.DateTime.Today.Year).ToList();
+            var directs = new List<MyDirects>();
+
+            string estado = "";
+
+            foreach (var item in t_meridet)
+            {
+                switch (item.estatus)
+                {
+                    case "PE":
+                        estado = "Waiting For Aproval";
+                        break;
+
+                    case "AP":
+                        estado = "Approved";
+                        break;
+
+                    default:
+                        estado = "No Merit";
+                        break;
+                }
+
+                MyDirects ndirect = new MyDirects();
+                empleadoTress add = new empleadoTress();
+                add = add.datosTress(item.empleado.Substring(3, item.empleado.Length - 3), item.empleado.Substring(0, 3));
+                ndirect.empleado = item.empleado;
+                ndirect.nombre = item.nombre;
+                ndirect.estatusm4 = estado;
+                ndirect.axom4 = item.axo;
+                ndirect.puesto = add.puesto;
+                ndirect.foto = add.btImagen;
+                ndirect.meritrec = Convert.ToDecimal(item.sugerido_porc);
+                directs.Add(ndirect);
+
+            }
+
+
+            ViewBag.Directos = directs;
+
             ViewBag.merit = t_merit.ElementAt(0);
             ViewBag.available = t_merit.ElementAt(0).budget_imp - t_merit.ElementAt(0).budget_spen;
-            ViewBag.percent = Convert.ToString(Math.Round((ViewBag.available / t_merit.ElementAt(0).budget_imp) * 100));
+            ViewBag.percent = Convert.ToString(Math.Round((Convert.ToDouble(t_merit.ElementAt(0).budget_spen / t_merit.ElementAt(0).budget_imp)) * 100));
             return View();
         }
 

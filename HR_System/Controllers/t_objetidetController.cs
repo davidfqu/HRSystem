@@ -18,7 +18,7 @@ namespace HR_System.Controllers
         // GET: t_objetidet
         public ActionResult Index()
         {
-            var t_objetidet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_plantas);
+            var t_objetidet = db.t_objetidet.Include(t => t.t_plantas);
             return View(t_objetidet.ToList());
         }
 
@@ -70,7 +70,7 @@ namespace HR_System.Controllers
                 ViewBag.Manager2 = null;
             }
             
-            var ObjectivesDet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos).Where(x => x.empleado == objetivoHeader.empleado && x.axo == objetivoHeader.axo);
+            var ObjectivesDet = db.t_objetidet.Include(t => t.t_objetivos).Where(x => x.empleado == objetivoHeader.empleado && x.axo == objetivoHeader.axo);
             foreach( var item in ObjectivesDet){
                 totalweight = totalweight + Convert.ToInt16(item.peso);
             }
@@ -101,7 +101,6 @@ namespace HR_System.Controllers
             ViewBag.infoTress = add;
 
             ViewBag.folio = new SelectList(db.t_objetivos, "folio", "folio");
-            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip");
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "planta");
             return View();
         }
@@ -141,7 +140,7 @@ namespace HR_System.Controllers
                 ViewBag.Manager2 = null;
             }
 
-            var ObjectivesDet = db.t_objetidet.Include(t => t.t_metricos).Include(t => t.t_objetivos).Where(x => x.empleado == objetivoHeader.empleado && x.axo == objetivoHeader.axo);
+            var ObjectivesDet = db.t_objetidet.Include(t => t.t_objetivos).Where(x => x.empleado == objetivoHeader.empleado && x.axo == objetivoHeader.axo);
             
             ViewBag.ObjectivesDet = ObjectivesDet;
 
@@ -170,7 +169,6 @@ namespace HR_System.Controllers
                 return RedirectToAction("Create", new {emplado = t_objetidet.axo, axo = t_objetidet.axo});
             }
 
-            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
             return View(t_objetidet);
         }
@@ -187,7 +185,6 @@ namespace HR_System.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
             return View(t_objetidet);
         }
@@ -206,7 +203,7 @@ namespace HR_System.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Create", new { emplado = t_objetidet.axo, axo = t_objetidet.axo });
             }
-            ViewBag.metrico = new SelectList(db.t_metricos, "metrico", "descrip", t_objetidet.metrico);
+
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_objetidet.planta);
             return View(t_objetidet);
         }

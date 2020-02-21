@@ -19,6 +19,7 @@ namespace HR_System.Models
         public string manager1 { get; set; }
         public string manager2 { get; set; }
         public string depto { get; set; }
+        public decimal meritrec { get; set; }
 
     }
 }

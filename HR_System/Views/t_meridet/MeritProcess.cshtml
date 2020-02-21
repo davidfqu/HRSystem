@@ -28,6 +28,11 @@
 <div id="snackbar2">
     Merit Recommendation out of range, please justify in commments section
 </div>
+
+<div id="snackbar3">
+    Market Mid CR % is bigger than 120%, please adjust it
+</div>
+
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Annual Merit Salary Plannnig</h6>
 <h3 class="font-weight-bold text-center  pb-1" style="font-size:3.5vw">Merit Process</h3>
 
@@ -120,11 +125,16 @@
                     $
                 </div>
                 <div class="col-5 pl-0 ml-0">
-                    <input type="number" name="merit" class="form-control" style="font-size:18px" id="merit" placeholder="0.00" min="0" max="@ViewBag.meritmax">
+                    <input type="number" name="merit" class="form-control" style="font-size:18px" id="merit" value="@ViewBag.merit.sugerido_imp" min="0" max="@ViewBag.meritmax" step=".01">
                 </div>
-                <div id="meritcolor" class="col-5 my-auto" style="font-size:18px">
-                    <span id="meritper">0.00</span>%
-                </div>
+               
+                    <div class="col-4 pr-0 mr-0 meritcolor">
+                        <input id="meritper" name="meritper" type="number" class="form-control meritcolor" style="font-size:18px" value="@ViewBag.merit.sugerido_porc" step=".01">
+                    </div>
+                    <div class="ml-0 pl-1 col-1 my-auto text-left meritcolor" style="font-size:18px">
+                       %
+                    </div>
+               
             </div>
             <h5 class="font-weight-bold"> Lump Sum</h5>
             <div class="row">
@@ -132,19 +142,22 @@
                     $
                 </div>
                 <div class="col-5 pl-0 ml-0">
-                    <input type="number" name="lump" class="form-control" style="font-size:18px" id="lump"  placeholder="0.00" readonly>
+                    <input type="number" name="lump" class="form-control" style="font-size:18px" id="lump"  value="@ViewBag.merit.lump_imp"  step=".01" readonly>
                 </div>
-                <div class="col-5 my-auto" style="font-size:18px">
-                    <span id="lumpper">0.00</span>%
+                <div class="col-4 pr-0 mr-0">
+                    <input id="lumpper" name="lumpper" type="number" class="form-control " style="font-size:18px" value="@ViewBag.merit.lump_porc" step=".01" readonly>
+                </div>
+                <div class="ml-0 pl-1 col-1 my-auto text-left" style="font-size:18px">
+                    %
                 </div>
             </div>
         </div>
 
         <div class="col-3 my-auto">
             <h5 class="font-weight-bold"> New Annual Base Salary</h5>
-            <p style="font-size:18px"> $ <span id="newsalary">@ViewBag.merit.salario_axo</span></p>
+            <p style="font-size:18px"> $ <span id="newsalary">@ViewBag.merit.salario_nuevo</span></p>
             <h5 class="font-weight-bold"> Market Mid CR% After Merit</h5>
-            <p id="marketcolor" style="font-size:18px"> <span id="marketmid"></span>%</p>
+            <p id="marketcolor" style="font-size:18px"><span id="marketmid"></span>%</p>
         </div>
 
         <div class="col-1 mt-3 my-auto text-center ">
@@ -165,7 +178,7 @@
         <div class="col-2"></div>
         <div class="col-6">
             <h5 class="font-weight-bold"> Comments</h5>
-            <textarea class="form-control" id="comments" rows="3" name="comments" maxlength="500"></textarea>
+            <textarea class="form-control" id="comments" rows="3" name="comments" maxlength="500">@ViewBag.merit.nota</textarea>
         </div>
         <div class="col-4 my-auto d-flex justify-content-center">
             <input type="submit" id="approve" class="btn btn-success btn-lg rounded-pill" value="Approve" role="button">
@@ -207,6 +220,7 @@
         var newavailable = available;
         var newspent = spent;
         var meritperc = 0;
+        var meritn = 0;
         var meritper = document.getElementById("meritper");
         var newsalary = document.getElementById("newsalary");
         var marketmidas = document.getElementById("marketmid");
@@ -237,8 +251,9 @@
 
             blur: function () {
                 newavailable = available - newmerit - newlump;
-                newspent = spent + newmerit + newlump;
-                promisedDeliveryChart.data.datasets[0].data = [newavailable, newspent];
+                newspent = spent*1 + newmerit*1 + newlump*1;
+
+                promisedDeliveryChart.data.datasets[0].data = [newspent, newavailable];
                 promisedDeliveryChart.update();
                 if(newavailable < 0)
                 {
@@ -256,84 +271,134 @@
                 meritperc = (((this.value) / absalary) * 100).toFixed(2);
                 if(meritperc > meritg2 || meritperc < meritg1)
                 {
-                    $("#meritcolor").addClass("text-danger");
+                    $(".meritcolor").addClass("text-danger");
                 }
                 else
                 {
-                    $("#meritcolor").removeClass("text-danger");
+                    $(".meritcolor").removeClass("text-danger");
                 }
-                meritper.innerHTML = meritperc
+                meritper.value = meritperc
                 newsalarycur = (absalary + absalary * ((this.value) / absalary));
                 newmerit = absalary * ((this.value) / absalary);
                 newsalary.innerHTML = newsalarycur.toFixed(2);
                 marketmidas.innerHTML = ((newsalarycur / marketmid) * 100).toFixed(2);
                 if (((newsalarycur / marketmid) * 100) > 120) {
                     $("#marketcolor").addClass("text-danger");
+                    $("#lumpper").attr("readonly", false);
                     $("#lump").attr("readonly", false);
-                    marketmidas
+                    
                 }
                 else
                 {
                     $("#marketcolor").removeClass("text-danger");
-                    $("#lump").attr("readonly", true);
+                  //  $("#lumpper").attr("readonly", true);
+                 //   $("#lump").attr("readonly", true);
                 }
         }
 
         });
 
-        $("#lump").on({
+        $("#meritper").on({
+
             blur: function () {
-                newavailable = available - newmerit - newlump;
-                newspent = spent + newmerit + newlump;
-                promisedDeliveryChart.data.datasets[0].data = [newavailable, newspent];
+                newavailable = (available - newmerit - newlump);
+                newspent = spent*1 + newmerit*1 + newlump*1;
+
+
+                promisedDeliveryChart.data.datasets[0].data = [newspent, newavailable];
                 promisedDeliveryChart.update();
+                if(newavailable < 0)
+                {
+                    $("#approval").hide();
+                    $("#approvalfalso").show();
+                }
+                else
+                {
+                    $("#approval").show();
+                    $("#approvalfalso").hide();
+                }
 
             },
-            input: function () {
-                newlump = this.value;
-               lumpper.innerHTML = (((this.value) / absalary) * 100).toFixed(2);
+            input: function(){
+                meritperc = this.value;
+                meritn = ((this.value * absalary) / 100).toFixed(2);
 
+                if(this.value > meritg2 || this.value < meritg1)
+                {
+                    $(".meritcolor").addClass("text-danger");
+                }
+                else
+                {
+                    $(".meritcolor").removeClass("text-danger");
+                }
+                merit.value = meritn;
+                newsalarycur = (absalary + ((this.value * absalary) / 100));
+                newmerit = ((this.value * absalary) / 100).toFixed(2);
+                newsalary.innerHTML = newsalarycur.toFixed(2);
+                marketmidas.innerHTML = ((newsalarycur / marketmid) * 100).toFixed(2);
+                if (((newsalarycur / marketmid) * 100) > 120) {
+                    $("#marketcolor").addClass("text-danger");
+                    $("#lump").attr("readonly", false);
+                    $("#lumpper").attr("readonly", false);
+                    
+                }
+                else
+                {
+                    $("#marketcolor").removeClass("text-danger");
+                   // $("#lump").attr("readonly", true);
+                 //   $("#lumpper").attr("readonly", true);
+                }
             }
 
         });
 
 
-        var data = {
-            labels: [
-              "Available",
-              "Spent"
-            ],
-            datasets: [
-              {
-                  data: [available, spent],
-                  backgroundColor: [
-                    "#B3DDA8",
-                    "#F4F4F4"
-                  ],
-                  hoverBackgroundColor: [
-                    "#B3DDA8",
-                    "#F4F4F4"
-                  ]
-              }]
-        };
+
+        $("#lump").on({
+            blur: function () {
+                newavailable = available - newmerit - newlump;
+                newspent = spent*1 + newmerit*1 + newlump*1;
+                promisedDeliveryChart.data.datasets[0].data = [newspent, newavailable];
+                promisedDeliveryChart.update();
+
+            },
+            input: function () {
+                newlump = this.value;
+               lumpper.value = (((this.value) / absalary) * 100).toFixed(2);
+            }
+        });
+
+        $("#lumpper").on({
+            blur: function () {
+                newavailable = available - newmerit - newlump;
+                newspent = spent*1 + newmerit*1 + newlump*1;
+                promisedDeliveryChart.data.datasets[0].data = [newspent, newavailable];
+                promisedDeliveryChart.update();
+
+            },
+            input: function () {
+                newlump = ((this.value * absalary)/100).toFixed(2);
+                lump.value = newlump;
+            }
+        });
 
         var promisedDeliveryChart = new Chart(document.getElementById('ChartProgresso'), {
             type: 'doughnut',
             data: {
                 labels: [
-              "Available",
-              "Spent"
+              "Spent",
+              "Available"
                 ],
                 datasets: [
                   {
-                      data: [available, spent],
+                      data: [spent, available],
                       backgroundColor: [
-                        "#B3DDA8",
-                        "#F4F4F4"
+                        "#de0000",
+                        "#00b006"
                       ],
                       hoverBackgroundColor: [
-                        "#B3DDA8",
-                        "#F4F4F4"
+                       "#ad0202",
+                       "#018506"
                       ]
                   }]
             },
@@ -366,7 +431,7 @@
 
                     ctx.textBaseline = "middle";
 
-                    var text = Math.round((newavailable/(newavailable+newspent))*100).toString() + '%' ,
+                    var text = Math.round((newspent/(newavailable+newspent))*100).toString() + '%' ,
                         textX = Math.round((width - ctx.measureText(text).width) / 2),
                         textY = height / 2;
 
@@ -381,17 +446,24 @@
                 alert1();
                 event.preventDefault();
             }else
-                if(meritperc > meritg2 || meritperc < meritg1 && $('#comments').val() == "" && elegible == "1")
-            {
+                if(((meritperc > meritg2 || meritperc < meritg1) && $('#comments').val() == "") && elegible == "1")
+                {
+                   
                     alert2();
                     event.preventDefault();
                 }
                 else
-                {
-                    return;
-                }
+                    if(((newsalarycur / marketmid) * 100) > 120)
+                    {
+                        alert3();
+                        event.preventDefault();
+                    }
+                    else
+                    {
+                        return;
+                    }
 
-        })
+        });
 
         function alert1() {
             // Get the snackbar DIV
@@ -402,7 +474,7 @@
 
             // After 3 seconds, remove the show class from DIV
             setTimeout(function () { x.className = x.className.replace("show", ""); }, 10000);
-        }
+        };
 
         function alert2() {
             // Get the snackbar DIV
@@ -413,6 +485,17 @@
 
             // After 3 seconds, remove the show class from DIV
             setTimeout(function () { x.className = x.className.replace("show", ""); }, 10000);
-        }
+        };
+
+        function alert3() {
+            // Get the snackbar DIV
+            var x = document.getElementById("snackbar3");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 10000);
+        };
     </script>
 }

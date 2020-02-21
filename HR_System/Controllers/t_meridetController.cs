@@ -38,17 +38,35 @@ namespace HR_System.Controllers
 
             var directs = new List<MyDirects>();
 
+            string estado = "";
+
             foreach (var item in t_meridet)
             {
+                switch (item.estatus)
+                {
+                    case "PE":
+                        estado = "Waiting For Aproval";
+                        break;
+
+                    case "AP":
+                        estado = "Approved";
+                        break;
+
+                    default:
+                        estado = "No Merit";
+                        break;
+                }
+
                 MyDirects ndirect = new MyDirects();
                 empleadoTress add = new empleadoTress();
                 add = add.datosTress(item.empleado.Substring(3, item.empleado.Length - 3), item.empleado.Substring(0, 3));
                 ndirect.empleado = item.empleado;
                 ndirect.nombre = item.nombre;
-                ndirect.estatusm4 = item.estatus;
+                ndirect.estatusm4 = estado;
                 ndirect.axom4 = item.axo;
                 ndirect.puesto = add.puesto;
                 ndirect.foto = add.btImagen;
+                ndirect.meritrec = Convert.ToDecimal(item.sugerido_porc);
                 directs.Add(ndirect);
              
             }
@@ -146,7 +164,7 @@ namespace HR_System.Controllers
             return View();
         }
 
-        public ActionResult Approve(String empleado, decimal merit = 0, decimal lump = 0, string comments = "")
+        public ActionResult Approve(String empleado, decimal merit = 0, decimal lump = 0, string comments = "", decimal meritper = 0, decimal lumpper = 0)
         {
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
@@ -159,10 +177,16 @@ namespace HR_System.Controllers
                 return RedirectToAction("Index", "Home", null);
 
             t_meridet t_meridet = db.t_meridet.Find(supervisor,System.DateTime.Now.Year,empleado);
+
+            t_meridet.salario_nuevo = t_meridet.salario_axo + merit;
             t_meridet.sugerido_imp = merit;
+            t_meridet.sugerido_porc = meritper;
+            t_meridet.lump_porc = lumpper;
             t_meridet.lump_imp = lump;
             t_meridet.estatus = "AP";
             t_meridet.nota = comments;
+            t_meridet.u_id = supervisor;
+            t_meridet.f_id = System.DateTime.Now;
             db.Entry(t_meridet).State = EntityState.Modified;
             db.SaveChanges();
 

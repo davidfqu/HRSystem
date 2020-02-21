@@ -154,13 +154,6 @@
           <Property Name="f_autoriza" Type="datetime" />
           <Property Name="n_autoriza" Type="varchar" MaxLength="200" />
         </EntityType>
-        <EntityType Name="t_metricos">
-          <Key>
-            <PropertyRef Name="metrico" />
-          </Key>
-          <Property Name="metrico" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="descrip" Type="varchar" MaxLength="100" />
-        </EntityType>
         <EntityType Name="t_objetidet">
           <Key>
             <PropertyRef Name="empleado" />
@@ -448,7 +441,6 @@
           <EntitySet Name="t_jobcode" EntityType="Self.t_jobcode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_meridet" EntityType="Self.t_meridet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_merit" EntityType="Self.t_merit" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="t_metricos" EntityType="Self.t_metricos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_objetidet" EntityType="Self.t_objetidet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_objetivos" EntityType="Self.t_objetivos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_plantas" EntityType="Self.t_plantas" Schema="dbo" store:Type="Tables" />
@@ -572,14 +564,6 @@
           <NavigationProperty Name="t_meridet" Relationship="HRSystemModel.fk_merit_emp" FromRole="t_empleados" ToRole="t_meridet" />
           <NavigationProperty Name="t_merit1" Relationship="HRSystemModel.fk_merit_sup" FromRole="t_empleados" ToRole="t_merit" />
         </EntityType>
-        <EntityType Name="t_metricos">
-          <Key>
-            <PropertyRef Name="metrico" />
-          </Key>
-          <Property Name="metrico" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="descrip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="t_objetidet" Relationship="Self.fk_objd_met" FromRole="t_metricos" ToRole="t_objetidet" />
-        </EntityType>
         <EntityType Name="t_objetidet">
           <Key>
             <PropertyRef Name="empleado" />
@@ -606,7 +590,6 @@
           <Property Name="nota_r2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="f_r2" Type="DateTime" Precision="3" />
           <Property Name="f_id" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="t_metricos" Relationship="Self.fk_objd_met" FromRole="t_objetidet" ToRole="t_metricos" />
           <NavigationProperty Name="t_plantas" Relationship="HRSystemModel.fk_objd_pta" FromRole="t_objetidet" ToRole="t_plantas" />
           <NavigationProperty Name="t_objetivos" Relationship="HRSystemModel.fk_objetivodet" FromRole="t_objetidet" ToRole="t_objetivos" />
         </EntityType>
@@ -722,18 +705,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_objd_met">
-          <End Role="t_metricos" Type="Self.t_metricos" Multiplicity="0..1" />
-          <End Role="t_objetidet" Type="Self.t_objetidet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="t_metricos">
-              <PropertyRef Name="metrico" />
-            </Principal>
-            <Dependent Role="t_objetidet">
-              <PropertyRef Name="metrico" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_planta">
           <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
           <End Role="t_usuarios" Type="Self.t_usuarios" Multiplicity="*" />
@@ -750,7 +721,6 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="t_config" EntityType="Self.t_config" />
           <EntitySet Name="t_empleados" EntityType="Self.t_empleados" />
-          <EntitySet Name="t_metricos" EntityType="Self.t_metricos" />
           <EntitySet Name="t_objetidet" EntityType="Self.t_objetidet" />
           <EntitySet Name="t_objetivos" EntityType="Self.t_objetivos" />
           <EntitySet Name="t_plantas" EntityType="Self.t_plantas" />
@@ -770,10 +740,6 @@
           <AssociationSet Name="FK_t_empleados_supervisor" Association="Self.FK_t_empleados_supervisor">
             <End Role="t_empleados" EntitySet="t_empleados" />
             <End Role="t_empleados1" EntitySet="t_empleados" />
-          </AssociationSet>
-          <AssociationSet Name="fk_objd_met" Association="Self.fk_objd_met">
-            <End Role="t_metricos" EntitySet="t_metricos" />
-            <End Role="t_objetidet" EntitySet="t_objetidet" />
           </AssociationSet>
           <AssociationSet Name="fk_planta" Association="Self.fk_planta">
             <End Role="t_plantas" EntitySet="t_plantas" />
@@ -1133,14 +1099,6 @@
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="f_id" ColumnName="f_id" />
                 <ScalarProperty Name="planta" ColumnName="planta" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="t_metricos">
-            <EntityTypeMapping TypeName="HRSystemModel.t_metricos">
-              <MappingFragment StoreEntitySet="t_metricos">
-                <ScalarProperty Name="metrico" ColumnName="metrico" />
-                <ScalarProperty Name="descrip" ColumnName="descrip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

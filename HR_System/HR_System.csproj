@@ -290,9 +290,6 @@
     <Compile Include="Models\t_merit.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\t_metricos.cs">
-      <DependentUpon>HRSystem.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\t_objetidet.cs">
       <DependentUpon>HRSystem.tt</DependentUpon>
     </Compile>

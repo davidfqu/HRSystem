@@ -28,7 +28,6 @@ namespace HR_System.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<t_config> t_config { get; set; }
         public virtual DbSet<t_empleados> t_empleados { get; set; }
-        public virtual DbSet<t_metricos> t_metricos { get; set; }
         public virtual DbSet<t_objetidet> t_objetidet { get; set; }
         public virtual DbSet<t_objetivos> t_objetivos { get; set; }
         public virtual DbSet<t_plantas> t_plantas { get; set; }
