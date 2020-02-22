@@ -50,7 +50,7 @@ namespace HR_System.Controllers
                 switch (item.estatus)
                 {
                     case "PE":
-                        estado = "Waiting For Aproval";
+                        estado = "Waiting For Approval";
                         break;
 
                     case "AP":
@@ -100,6 +100,7 @@ namespace HR_System.Controllers
                 ndirect.coloriconoresult = colorcal;
                 directs.Add(ndirect);
 
+
             }
 
 
@@ -108,6 +109,25 @@ namespace HR_System.Controllers
             ViewBag.merit = t_merit.ElementAt(0);
             ViewBag.available = t_merit.ElementAt(0).budget_imp - t_merit.ElementAt(0).budget_spen;
             ViewBag.percent = Convert.ToString(Math.Round((Convert.ToDouble(t_merit.ElementAt(0).budget_spen / t_merit.ElementAt(0).budget_imp)) * 100));
+
+            string statusmerit = "";
+
+            switch (t_merit.ElementAt(0).estatus)
+            {
+                case "PE":
+                    statusmerit = "Not Approved";
+                    break;
+
+                case "AP":
+                    statusmerit = "Approved";
+                    break;
+
+                default:
+                    statusmerit = "No Merit";
+                    break;
+            }
+
+            ViewBag.statusmerit = statusmerit;
 
             return View();
         }
