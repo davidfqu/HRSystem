@@ -76,36 +76,34 @@ namespace HR_System.Controllers
             return View();
         }
 
-        public ActionResult MeritProcess(string empleado, decimal axo)
+        public ActionResult MeritProcess(string empleado, decimal axo, string supervisor)
         {
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
             
-            string supervisor = Convert.ToString(Session["EmployeeNo"]);
-
             var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x => x.supervisor == supervisor && x.axo == System.DateTime.Now.Year).ToList();
 
             if (!t_merit.Any())
                 return RedirectToAction("Index", "Home", null);
 
-            
+
             ViewBag.spent = t_merit.ElementAt(0).budget_spen;
             ViewBag.available = t_merit.ElementAt(0).budget_imp - t_merit.ElementAt(0).budget_spen;
             ViewBag.percent = Convert.ToString(Math.Round((ViewBag.available / t_merit.ElementAt(0).budget_imp) * 100));
 
-            var t_meridet = db.t_meridet.Find(supervisor,axo,empleado);
-     
+            var t_meridet = db.t_meridet.Find(supervisor, axo, empleado);
+
             MyDirects ndirect = new MyDirects();
             empleadoTress add = new empleadoTress();
             add = add.datosTress(empleado.Substring(3, empleado.Length - 3), empleado.Substring(0, 3));
             ndirect.empleado = empleado;
-            ndirect.nombre = t_meridet.t_empleados.nombre;
+            ndirect.nombre = t_meridet.nombre;
             ndirect.depto = add.depto;
             ndirect.puesto = add.puesto;
             ndirect.foto = add.btImagen;
             string iconocal = "";
             string colorcal = "";
-            switch(t_meridet.calificacion)
+            switch (t_meridet.calificacion)
             {
                 case "EE":
                     iconocal = "<i class='fas fa-medal'></i>";
@@ -151,7 +149,7 @@ namespace HR_System.Controllers
 
             ViewBag.direct = ndirect;
             ViewBag.merit = t_meridet;
-            ViewBag.bamount = (t_meridet.salario_axo * t_meridet.budget_porc) / 100;
+            ViewBag.bamount = Math.Truncate(100*(Convert.ToDouble((t_meridet.salario_axo * t_meridet.budget_porc) / 100)))/100 ;
             ViewBag.maxmerit = ViewBag.bamount * 2;
 
 

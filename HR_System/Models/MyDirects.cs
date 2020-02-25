@@ -9,7 +9,6 @@ namespace HR_System.Models
     {
         public string empleado { get; set; }
         public string nombre { get; set; }
-
         public decimal axo { get; set; }
         public string estatus { get; set; }
         public string puesto { get; set; }
@@ -22,6 +21,10 @@ namespace HR_System.Models
         public decimal meritrec { get; set; }
         public string iconoresult { get; set; }
         public string coloriconoresult { get; set; }
+        public decimal lump { get; set; }
+        public string sextra1 { get; set; }
+        public decimal dextra1 { get; set; }
+        public decimal dextra2 { get; set; }
 
     }
 }

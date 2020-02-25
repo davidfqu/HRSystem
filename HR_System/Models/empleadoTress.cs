@@ -70,7 +70,10 @@ namespace HR_System.Models
                     empleadodatos.fechaSalario = datos.ElementAt(0)[9];
                     return empleadodatos;
                 }
+
+                db.Close();
             }
+            
             
             return empleadodatos;
         }

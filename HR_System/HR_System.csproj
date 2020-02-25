@@ -430,6 +430,7 @@
     <Content Include="Views\t_meridet\DirectReports.cshtml" />
     <Content Include="Views\t_meridet\MeritProcess.cshtml" />
     <Content Include="Views\t_merit\Start.cshtml" />
+    <Content Include="Views\t_merit\IndexModule4D.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

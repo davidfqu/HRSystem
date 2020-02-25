@@ -23,16 +23,144 @@ namespace HR_System.Controllers
 
         public ActionResult IndexModule4D()
         {
-            return View();
-        }
-
-
-        public ActionResult IndexModule4()
-        {
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
 
             string empleado = Convert.ToString(Session["EmployeeNo"]);
+
+            var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x=> x.axo == System.DateTime.Now.Year).OrderBy(x => x.supervisor).ToList();
+            var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Today.Year).OrderBy(x => x.supervisor).ToList();
+
+            decimal totalbudget = 0;
+            decimal totalspent = 0;
+            decimal totalavailable = 0;
+            bool mstatus = true;
+            string smstatus = "";
+            string istatus = "";
+            string estado = "";
+            string iconocal = "";
+            string colorcal = "";
+            var departments = new List<MyDirects>();
+            var directs = new List<MyDirects>();
+
+            foreach (var item in t_merit)
+            {
+                totalbudget = Convert.ToDecimal(totalbudget + item.budget_imp);
+                totalspent = Convert.ToDecimal(totalspent + item.budget_spen);
+                if(item.estatus != "AP")
+                {
+                    mstatus = false;
+                    istatus = "Approved";
+                }
+                else
+                {
+                    istatus = "Not Approved";
+                }
+                
+                MyDirects ndirect = new MyDirects();
+                empleadoTress add = new empleadoTress();
+                add = add.datosTress(item.supervisor.Substring(3, item.supervisor.Length - 3), item.supervisor.Substring(0, 3));
+
+                ndirect.empleado = item.supervisor;
+                ndirect.depto = item.depto;
+                ndirect.nombre = item.nombre;
+                ndirect.foto = add.btImagen;
+                ndirect.dextra1 = Convert.ToDecimal(item.budget_imp);
+                ndirect.dextra2 = Convert.ToDecimal(item.budget_spen);
+                ndirect.estatusm4 = istatus;
+                ndirect.sextra1 = (Math.Round((ndirect.dextra2 / ndirect.dextra1)*100)).ToString() + "%";
+                departments.Add(ndirect);
+
+            }
+
+            if (mstatus)
+                smstatus = "Approved";
+            else
+                smstatus = "Not Approved";
+
+            foreach (var item in t_meridet)
+            {
+                switch (item.estatus)
+                {
+                    case "PE":
+                        estado = "Waiting For Approval";
+                        break;
+
+                    case "AP":
+                        estado = "Approved";
+                        break;
+
+                    default:
+                        estado = "No Merit";
+                        break;
+                }
+
+                switch (item.calificacion)
+                {
+                    case "EE":
+                        iconocal = "<i class='fas fa-medal'></i>";
+                        colorcal = "warning-color-dark";
+                        break;
+                    case "ME":
+                        iconocal = "<i class='fas fa-thumbs-up'></i>";
+                        colorcal = "success-color";
+                        break;
+                    case "NI":
+                        iconocal = "<i class='fas fa-exclamation'></i>";
+                        colorcal = "warning-color";
+                        break;
+                    case "FE":
+                        iconocal = "<i class='fas fa-thumbs-down'></i>";
+                        colorcal = "danger-color";
+                        break;
+                    default:
+                        iconocal = "<i class='fas fa-minus'></i>";
+                        colorcal = "stylish-color";
+                        break;
+                }
+
+                MyDirects ndirect = new MyDirects();
+                empleadoTress add = new empleadoTress();
+                add = add.datosTress(item.empleado.Substring(3, item.empleado.Length - 3), item.empleado.Substring(0, 3));
+                ndirect.manager1 = item.supervisor;
+                ndirect.empleado = item.empleado;
+                ndirect.nombre = item.nombre;
+                ndirect.estatusm4 = estado;
+                ndirect.axom4 = item.axo;
+                ndirect.puesto = item.puesto;
+                ndirect.foto = add.btImagen;
+                ndirect.meritrec = Convert.ToDecimal(item.sugerido_porc);
+                ndirect.iconoresult = iconocal;
+                ndirect.coloriconoresult = colorcal;
+                ndirect.lump = Convert.ToDecimal(item.lump_imp);
+                directs.Add(ndirect);
+
+
+            }
+
+            totalavailable = totalbudget - totalspent;
+            ViewBag.budgetper = t_merit.ElementAt(0).budget_porc;
+            ViewBag.tbudget = totalbudget;
+            ViewBag.tspent = totalspent;
+            ViewBag.tavailable = totalavailable;
+            ViewBag.statusmerit = smstatus;
+
+            ViewBag.percent = Math.Round((ViewBag.tspent / ViewBag.tbudget) * 100);
+            ViewBag.departments = departments;
+            ViewBag.directs = directs;
+
+
+            return View();
+        }
+
+
+        public ActionResult IndexModule4(string empleado = "")
+        {
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
+            if(empleado == "")
+            empleado = Convert.ToString(Session["EmployeeNo"]);
+            
             var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Now.Year).ToList();
             
             if(!t_merit.Any())
@@ -89,6 +217,7 @@ namespace HR_System.Controllers
                 MyDirects ndirect = new MyDirects();
                 empleadoTress add = new empleadoTress();
                 add = add.datosTress(item.empleado.Substring(3, item.empleado.Length - 3), item.empleado.Substring(0, 3));
+                ndirect.manager1 = item.supervisor;
                 ndirect.empleado = item.empleado;
                 ndirect.nombre = item.nombre;
                 ndirect.estatusm4 = estado;
@@ -98,6 +227,7 @@ namespace HR_System.Controllers
                 ndirect.meritrec = Convert.ToDecimal(item.sugerido_porc);
                 ndirect.iconoresult = iconocal;
                 ndirect.coloriconoresult = colorcal;
+                ndirect.lump = Convert.ToDecimal(item.lump_imp);
                 directs.Add(ndirect);
 
 

@@ -22,11 +22,11 @@
 }
 
 <div id="snackbar">
-    You dont have enough budget! Ajust merit recommendation
+    You don't have enough budget on your department! Ajust merit recommendation
 </div>
 
 <div id="snackbar2">
-    Merit Recommendation out of range, please justify in commments section
+    Merit Recommendation out of Guideline, please justify in the commments section
 </div>
 
 <div id="snackbar3">
@@ -99,10 +99,15 @@
     </a>
 </div>
 
+
 @using (Html.BeginForm("Approve", "t_meridet", FormMethod.Post))
 {    
     <input name="empleado" value="@ViewBag.merit.empleado" hidden />
 <div class="mt-3" id="MeritPlan">
+    <div class="row text-center d-flex align-content-center justify-content-center" >
+        <h5 class="mb-0" style="font-size:18px">Available Department Budget: <span class="font-weight-bold">$</span> <span id="dabudget" class="font-weight-bold"> @ViewBag.available</span></h5>
+    </div>
+
     <div class="row">
 
         <div class="col-2 my-auto  text-center">
@@ -111,7 +116,7 @@
             <div class="d-flex justify-content-center align-items-center">
                 <canvas id="ChartProgresso" height="120" width="120"></canvas>
             </div>
-            <div class="text-primary font-weight-bold" style="font-size:18px">$ @ViewBag.merit.sugerido_imp</div>
+            <div class="text-primary font-weight-bold" style="font-size:18px">$ <span id="spentgraph"></span></div>
             <div>of $ @ViewBag.bamount</div>
             
         </div>
@@ -146,7 +151,7 @@
             <div class="row">
                 
                 <div class="col-4 pr-0 mr-0">
-                    <input id="lumpper" name="lumpper" type="number" class="form-control " style="font-size:18px" value="@ViewBag.merit.lump_porc" step=".01" readonly>
+                    <input id="lumpper" name="lumpper" type="number" class="form-control " style="font-size:18px" value="@ViewBag.merit.lump_porc" step=".01" @(ViewBag.merit.lump_imp > 0 ? "": "readonly")>
                 </div>
                 <div class="ml-0 pl-1 col-1 my-auto text-left" style="font-size:18px">
                     %
@@ -155,7 +160,7 @@
                     $
                 </div>
                 <div class="col-5 pl-0 ml-0">
-                    <input type="number" name="lump" class="form-control" style="font-size:18px" id="lump" value="@ViewBag.merit.lump_imp" step=".01" readonly>
+                    <input type="number" name="lump" class="form-control" style="font-size:18px" id="lump" value="@ViewBag.merit.lump_imp" step=".01" @(ViewBag.merit.lump_imp > 0 ? "": "readonly")>
                 </div>
             </div>
         </div>
@@ -189,12 +194,19 @@
             <h5 class="font-weight-bold"> Comments</h5>
             <textarea class="form-control" id="comments" rows="3" name="comments" maxlength="500">@ViewBag.merit.nota</textarea>
         </div>
-        <div class="col-4 my-auto d-flex justify-content-center">
-            <input type="submit" id="approve" class="btn btn-success btn-lg rounded-pill" value="Approve" role="button">
-        </div>
+        @if (Convert.ToString(ViewBag.merit.supervisor) == Convert.ToString(Session["EmployeeNo"]))
+        {
+            <div class="col-4 my-auto d-flex justify-content-center">
+                <input type="submit" id="approve" class="btn btn-success btn-lg rounded-pill" value="Approve" role="button">
+            </div>
+        }
     </div>
 </div>
 }
+
+<div>
+    @Html.ActionLink("Back", "IndexModule4", "t_merit",null,null)
+</div>
 
 
 
@@ -219,7 +231,6 @@
 
         var salaxo = @ViewBag.merit.salario_axo
         var marketmid = @ViewBag.merit.t_jobcode.mrp;
-        var available = @ViewBag.available;
         var spent = @ViewBag.spent;
         var meritg1 = @ViewBag.meritg1;
         var meritg2 = @ViewBag.meritg2;
@@ -227,22 +238,28 @@
         var budgetper = @ViewBag.merit.budget_porc;
         var meritn = @ViewBag.merit.sugerido_imp;
         var newlump = @ViewBag.merit.lump_imp;
-
+        var available = @ViewBag.available + newlump +meritn ;
+        
         var bamaount = ((salaxo * budgetper) / 100).toFixed(2);
         var difbudg = (bamaount - meritn - newlump).toFixed(2);
 
+        
         var newmarketmid = 0;
         var newavailable = available;
         var newspent = spent;
         var meritperc = 0;
 
+        var spentgraph = document.getElementById("spentgraph");
         var meritper = document.getElementById("meritper");
         var newsalary = document.getElementById("newsalary");
         var marketmidas = document.getElementById("marketmid");
+        var dabudget = document.getElementById("dabudget");
         var newmerit = 0;
       
         var absalary = @ViewBag.merit.salario_axo;
         var newsalarycur = 0;
+
+        spentgraph.innerHTML = meritn + newlump;
 
         if(elegible == "0")
         {
@@ -253,23 +270,22 @@
         marketmidas.innerHTML = ((salaxo / marketmid) * 100).toFixed(2);
         if (((salaxo / marketmid) * 100) > 120) {
             $("#marketcolor").addClass("text-danger");
-            $("#lump").attr("readonly", false);
-            marketmidas
         }
         else
         {
             $("#marketcolor").removeClass("text-danger");
-            $("#lump").attr("readonly", true);
         }
 
         $("#merit").on({
 
             blur: function () {
                 newavailable = available - newmerit - newlump;
+                dabudget.innerHTML = newavailable.toFixed(2);
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
                 promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg];
                 promisedDeliveryChart.update();
+                spentgraph.innerHTML = meritn*1 + newlump*1;
                 if(newavailable < 0)
                 {
                     $("#approval").hide();
@@ -319,10 +335,13 @@
 
             blur: function () {
                 newavailable = (available - newmerit - newlump);
+                dabudget.innerHTML = newavailable.toFixed(2);
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
-                promisedDeliveryChart.data.datasets[0].data = [meritn + newlump, difbudg];
+              //  alert(meritn);
+                promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg*1];
                 promisedDeliveryChart.update();
+                spentgraph.innerHTML = meritn*1 + newlump*1;
                 if(newavailable < 0)
                 {
                     $("#approval").hide();
@@ -337,7 +356,7 @@
             },
             input: function(){
                 meritperc = this.value;
-                meritn = ((this.value * absalary) / 100).toFixed(2);
+                meritn =  Math.trunc(((this.value * absalary) / 100) *100) / 100;
 
                 if(this.value > meritg2 || this.value < meritg1)
                 {
@@ -373,10 +392,13 @@
         $("#lump").on({
             blur: function () {
                 newavailable = available - newmerit - newlump;
+                dabudget.innerHTML = newavailable.toFixed(2);
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
-                promisedDeliveryChart.data.datasets[0].data = [meritn + newlump, difbudg];
+
+                promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg*1];
                 promisedDeliveryChart.update();
+               spentgraph.innerHTML = meritn*1 + newlump*1;
 
             },
             input: function () {
@@ -388,14 +410,16 @@
         $("#lumpper").on({
             blur: function () {
                 newavailable = available - newmerit - newlump;
+                dabudget.innerHTML = newavailable.toFixed(2);
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
-                promisedDeliveryChart.data.datasets[0].data = [meritn + newlump, difbudg];
+                promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg*1];
                 promisedDeliveryChart.update();
+                spentgraph.innerHTML = meritn*1 + newlump*1;
 
             },
             input: function () {
-                newlump = ((this.value * absalary)/100).toFixed(2);
+                newlump = Math.trunc(((this.value * absalary)/100) * 100)  / 100;
                 lump.value = newlump;
             }
         });
@@ -451,7 +475,7 @@
 
                     ctx.textBaseline = "middle";
 
-                    var text = Math.round((meritn + newlump /(bamaount))*100).toString() + '%' ,
+                    var text = Math.round(((meritn*1 + newlump*1) /(bamaount*1))*100).toString() + '%' ,
                         textX = Math.round((width - ctx.measureText(text).width) / 2),
                         textY = height / 2;
 
@@ -464,6 +488,7 @@
 
         $("form").submit(function(event){
             if (newavailable < 0){
+                alert(newavailable)
                 alert1();
                 event.preventDefault();
             }else
