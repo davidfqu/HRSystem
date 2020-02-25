@@ -61,15 +61,15 @@
             </div>
             <div class="col-4 mt-3 pl-0 mb-0 my-auto text-right" style="font-size:1.5vw">
                 <label>
-                    <span class="">$ <span>@ViewBag.merit.budget_imp </span> MXN</span>
+                    <span class=""><span>@string.Format("{0:C}",ViewBag.merit.budget_imp) </span> MXN</span>
                 </label>
                 <br />
                 <label>
-                    <span class="">$ <span>@ViewBag.merit.budget_spen </span> MXN</span>
+                    <span class=""><span>@string.Format("{0:C}",ViewBag.merit.budget_spen) </span> MXN</span>
                 </label>
                 <br />
                 <label>
-                    <span class="">$ <span>@ViewBag.available  </span>  MXN</span>
+                    <span class=""><span>@string.Format("{0:C}", ViewBag.available)  </span>  MXN</span>
                 </label>
             </div>
             <div class="col-2"></div>
@@ -89,6 +89,32 @@
         </div>
 
 </div>
+
+@if (Convert.ToString(ViewBag.merit.autoriza) == Convert.ToString(Session["EmployeeNo"]))
+{
+    <div class="row mb-0">
+        <div class="col-12 d-flex justify-content-center align-content-center">
+            <a href="@Url.Action("AutorizeMP","t_merit",new {supervisor = ViewBag.merit.supervisor, axo = ViewBag.merit.axo})" class="btn btn-success rounded-pill" role="button" )>Autorize Merit Plan</a>
+
+            <button type="button" class="btn btn-primary rounded-pill p-0" data-toggle="tooltip" data-placement="right" title="Add/Edit Comments" style="height:46.08px; width:46.08px">
+               <span data-toggle="modal" data-target="#AddObjModal"><i class="far fa-comment" style="font-size:25px"></i></span> 
+            </button>
+        </div>
+    </div>
+}
+
+@if (Convert.ToString(ViewBag.merit.supervisor) == Convert.ToString(Session["EmployeeNo"]) && ViewBag.merit.n_autoriza != null)
+{
+    <div class="row mb-0">
+        <div class="col-12 d-flex justify-content-center align-content-center">
+           <div class="my-auto">Director Plant Comments:</div> 
+            <button type="button" class="btn btn-primary rounded-pill p-0" data-toggle="tooltip" data-placement="right" title="@ViewBag.merit.n_autoriza" style="height:46.08px; width:46.08px">
+                <i class="far fa-comment" style="font-size:25px"></i>
+            </button>
+        </div>
+    </div>
+}
+
 
 <br />
 
@@ -163,10 +189,57 @@
 
 </div>
 
+<div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        @using (Html.BeginForm("AddComments", "t_merit"))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Comments</h4>
+                    <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="modal-body">
 
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+                                <input id="empleado" name="supervisor" type="hidden" value=@ViewBag.merit.supervisor />
+                                <input id="axo" name="axo" type="hidden" value=@ViewBag.merit.axo />
+
+                                <div class="form-group">
+                                    <div class="md-form md-outline">
+                                        <textarea id="comments" name="comments" class="md-textarea form-control" rows="5" maxlength="200">@ViewBag.merit.n_autoriza</textarea>
+                                        <label for="comments">Add/Edit Observations</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" value="Update" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
 
 @section scripts{
     <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
         var data = {
             labels: [
               "Spent",

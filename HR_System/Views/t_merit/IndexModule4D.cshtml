@@ -61,15 +61,15 @@
             </div>
             <div class="col-4 mt-3 pl-0 mb-0 my-auto text-right" style="font-size:1.5vw">
                 <label>
-                    <span class="">$ <span>@ViewBag.tbudget </span> MXN</span>
+                    <span class=""><span>@string.Format("{0:C}", ViewBag.tbudget) </span> MXN</span>
                 </label>
                 <br />
                 <label>
-                    <span class="">$ <span>@ViewBag.tspent </span> MXN</span>
+                    <span class=""><span>@string.Format("{0:C}", ViewBag.tspent) </span> MXN</span>
                 </label>
                 <br />
                 <label>
-                    <span class="">$ <span>@ViewBag.tavailable  </span>  MXN</span>
+                    <span class=""><span>@string.Format("{0:C}", ViewBag.tavailable)  </span>  MXN</span>
                 </label>
             </div>
             <div class="col-2"></div>

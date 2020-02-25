@@ -105,7 +105,7 @@
     <input name="empleado" value="@ViewBag.merit.empleado" hidden />
 <div class="mt-3" id="MeritPlan">
     <div class="row text-center d-flex align-content-center justify-content-center" >
-        <h5 class="mb-0" style="font-size:18px">Available Department Budget: <span class="font-weight-bold">$</span> <span id="dabudget" class="font-weight-bold"> @ViewBag.available</span></h5>
+        <h5 class="mb-0" style="font-size:18px">Available Department Budget: <span class="font-weight-bold"></span> <span id="dabudget" class="font-weight-bold"> @string.Format("{0:C}",ViewBag.available)</span></h5>
     </div>
 
     <div class="row">
@@ -116,14 +116,14 @@
             <div class="d-flex justify-content-center align-items-center">
                 <canvas id="ChartProgresso" height="120" width="120"></canvas>
             </div>
-            <div class="text-primary font-weight-bold" style="font-size:18px">$ <span id="spentgraph"></span></div>
-            <div>of $ @ViewBag.bamount</div>
+            <div class="text-primary font-weight-bold" style="font-size:18px"> <span id="spentgraph"></span></div>
+            <div>of @string.Format("{0:C}",ViewBag.bamount)</div>
             
         </div>
 
         <div class="col-3 my-auto">
             <h5 class="font-weight-bold"> Annual Base Salary</h5>
-            <p style="font-size:18px"> $ @ViewBag.merit.salario_axo</p>
+            <p style="font-size:18px">  @string.Format("{0:C}",ViewBag.merit.salario_axo)</p>
             <h5 class="font-weight-bold"> Medline Merit Guideline</h5>
             <p style="font-size:18px"> @ViewBag.meritg1 % - @ViewBag.meritg2 %</p>
         </div>
@@ -167,7 +167,7 @@
 
         <div class="col-3 my-auto">
             <h5 class="font-weight-bold"> New Annual Base Salary</h5>
-            <p style="font-size:18px"> $ <span id="newsalary">@ViewBag.merit.salario_nuevo</span></p>
+            <p style="font-size:18px"> <span id="newsalary">@string.Format("{0:C}",ViewBag.merit.salario_nuevo)</span></p>
             <h5 class="font-weight-bold"> Market Mid CR% After Merit</h5>
             <p id="marketcolor" style="font-size:18px"><span id="marketmid"></span>%</p>
         </div>
@@ -212,6 +212,10 @@
 
 @section scripts{
     <script>
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
 
         var i = 0;
 
@@ -259,7 +263,7 @@
         var absalary = @ViewBag.merit.salario_axo;
         var newsalarycur = 0;
 
-        spentgraph.innerHTML = meritn + newlump;
+        spentgraph.innerHTML = formatter.format(meritn + newlump);
 
         if(elegible == "0")
         {
@@ -280,12 +284,12 @@
 
             blur: function () {
                 newavailable = available - newmerit - newlump;
-                dabudget.innerHTML = newavailable.toFixed(2);
+                dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
                 promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg];
                 promisedDeliveryChart.update();
-                spentgraph.innerHTML = meritn*1 + newlump*1;
+                spentgraph.innerHTML = formatter.format(meritn*1 + newlump*1);
                 if(newavailable < 0)
                 {
                     $("#approval").hide();
@@ -313,7 +317,7 @@
                 meritper.value = meritperc
                 newsalarycur = (absalary + absalary * ((this.value) / absalary));
                 newmerit = absalary * ((this.value) / absalary);
-                newsalary.innerHTML = newsalarycur.toFixed(2);
+                newsalary.innerHTML = formatter.format(newsalarycur.toFixed(2));
                 marketmidas.innerHTML = ((newsalarycur / marketmid) * 100).toFixed(2);
                 if (((newsalarycur / marketmid) * 100) > 120) {
                     $("#marketcolor").addClass("text-danger");
@@ -335,13 +339,13 @@
 
             blur: function () {
                 newavailable = (available - newmerit - newlump);
-                dabudget.innerHTML = newavailable.toFixed(2);
+                dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
               //  alert(meritn);
                 promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg*1];
                 promisedDeliveryChart.update();
-                spentgraph.innerHTML = meritn*1 + newlump*1;
+                spentgraph.innerHTML = formatter.format(meritn*1 + newlump*1);
                 if(newavailable < 0)
                 {
                     $("#approval").hide();
@@ -369,7 +373,7 @@
                 merit.value = meritn;
                 newsalarycur = (absalary + ((this.value * absalary) / 100));
                 newmerit = ((this.value * absalary) / 100).toFixed(2);
-                newsalary.innerHTML = newsalarycur.toFixed(2);
+                newsalary.innerHTML = formatter.format(newsalarycur.toFixed(2));
                 marketmidas.innerHTML = ((newsalarycur / marketmid) * 100).toFixed(2);
                 if (((newsalarycur / marketmid) * 100) > 120) {
                     $("#marketcolor").addClass("text-danger");
@@ -392,13 +396,13 @@
         $("#lump").on({
             blur: function () {
                 newavailable = available - newmerit - newlump;
-                dabudget.innerHTML = newavailable.toFixed(2);
+                dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
 
                 promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg*1];
                 promisedDeliveryChart.update();
-               spentgraph.innerHTML = meritn*1 + newlump*1;
+               spentgraph.innerHTML = formatter.format(meritn*1 + newlump*1);
 
             },
             input: function () {
@@ -410,12 +414,12 @@
         $("#lumpper").on({
             blur: function () {
                 newavailable = available - newmerit - newlump;
-                dabudget.innerHTML = newavailable.toFixed(2);
+                dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
                 promisedDeliveryChart.data.datasets[0].data = [meritn*1 + newlump*1, difbudg*1];
                 promisedDeliveryChart.update();
-                spentgraph.innerHTML = meritn*1 + newlump*1;
+                spentgraph.innerHTML = formatter.format(meritn*1 + newlump*1);
 
             },
             input: function () {

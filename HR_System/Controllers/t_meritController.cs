@@ -21,6 +21,35 @@ namespace HR_System.Controllers
             return View(t_merit.ToList());
         }
 
+        public ActionResult AutorizeMP(string supervisor, decimal axo)
+        {
+            if(!Login())
+                return RedirectToAction("NoUser", "Home", null);
+
+            t_merit t_merit = db.t_merit.Find(supervisor, axo);
+            t_merit.estatus = "AU";
+            t_merit.ind_autoriza = "1";
+            t_merit.f_autoriza = System.DateTime.Now;
+            db.Entry(t_merit).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("IndexModule4", "t_merit", new {empleado = t_merit.supervisor });
+        }
+
+        public ActionResult AddComments(string supervisor, decimal axo, string comments)
+        {
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
+
+            t_merit t_merit = db.t_merit.Find(supervisor, axo);
+            t_merit.n_autoriza = comments;
+            t_merit.f_autoriza = System.DateTime.Now;
+            db.Entry(t_merit).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("IndexModule4", "t_merit", new { empleado = t_merit.supervisor });
+        }
+
         public ActionResult IndexModule4D()
         {
             if (!Login())
@@ -47,14 +76,20 @@ namespace HR_System.Controllers
             {
                 totalbudget = Convert.ToDecimal(totalbudget + item.budget_imp);
                 totalspent = Convert.ToDecimal(totalspent + item.budget_spen);
-                if(item.estatus != "AP")
+
+                switch (item.estatus)
                 {
-                    mstatus = false;
-                    istatus = "Approved";
-                }
-                else
-                {
-                    istatus = "Not Approved";
+                    case "PE":
+                        istatus = "In Process";
+                        mstatus = false;
+                        break;
+                    case "AP":
+                        istatus = "Completed";
+                        mstatus = false;
+                        break;
+                    default:
+                        istatus = "Autorized";
+                        break;
                 }
                 
                 MyDirects ndirect = new MyDirects();
@@ -74,16 +109,16 @@ namespace HR_System.Controllers
             }
 
             if (mstatus)
-                smstatus = "Approved";
+                smstatus = "Completed";
             else
-                smstatus = "Not Approved";
+                smstatus = "In Process";
 
             foreach (var item in t_meridet)
             {
                 switch (item.estatus)
                 {
                     case "PE":
-                        estado = "Waiting For Approval";
+                        estado = "Pending";
                         break;
 
                     case "AP":
@@ -178,7 +213,7 @@ namespace HR_System.Controllers
                 switch (item.estatus)
                 {
                     case "PE":
-                        estado = "Waiting For Approval";
+                        estado = "Pending";
                         break;
 
                     case "AP":
@@ -245,11 +280,19 @@ namespace HR_System.Controllers
             switch (t_merit.ElementAt(0).estatus)
             {
                 case "PE":
-                    statusmerit = "Not Approved";
+                    statusmerit = "In Process";
                     break;
 
                 case "AP":
-                    statusmerit = "Approved";
+                    statusmerit = "Completed";
+                    break;
+
+                case "AU":
+                    statusmerit = "Autorized";
+                    break;
+
+                case "AA":
+                    statusmerit = "Aplied";
                     break;
 
                 default:
