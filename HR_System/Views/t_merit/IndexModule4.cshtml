@@ -234,6 +234,16 @@
     </div>
 </div>
 
+@if (Convert.ToString(ViewBag.merit.autoriza) == Convert.ToString(Session["EmployeeNo"]))
+{
+    <div>
+        <a href="@Url.Action("IndexModule4", "t_merit",null)"><i class="fas fa-chevron-left"></i>  Back</a>
+    </div>
+}
+
+
+
+
 @section scripts{
     <script>
         $(function () {

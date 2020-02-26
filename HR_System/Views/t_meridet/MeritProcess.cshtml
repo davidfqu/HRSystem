@@ -194,7 +194,7 @@
             <h5 class="font-weight-bold"> Comments</h5>
             <textarea class="form-control" id="comments" rows="3" name="comments" maxlength="500">@ViewBag.merit.nota</textarea>
         </div>
-        @if (Convert.ToString(ViewBag.merit.supervisor) == Convert.ToString(Session["EmployeeNo"]))
+        @if ((Convert.ToString(ViewBag.merit.supervisor) == Convert.ToString(Session["EmployeeNo"])) && ((ViewBag.merithstatus == "PE") || (ViewBag.merithstatus == "AP")))
         {
             <div class="col-4 my-auto d-flex justify-content-center">
                 <input type="submit" id="approve" class="btn btn-success btn-lg rounded-pill" value="Approve" role="button">
@@ -204,9 +204,17 @@
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back", "IndexModule4", "t_merit",null,null)
-</div>
+@if (Convert.ToString(ViewBag.merit.supervisor) == Convert.ToString(Session["EmployeeNo"]))
+{
+    <div>
+        <a href="@Url.Action("IndexModule4", "t_merit",null)"><i class="fas fa-chevron-left"></i>  Back</a>
+    </div>
+}
+else
+{
+    <a href="@Url.Action("IndexModule4", "t_merit", new {empleado = ViewBag.merit.supervisor})"><i class="fas fa-chevron-left"></i>  Back</a>
+}
+
 
 
 

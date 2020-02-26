@@ -176,7 +176,7 @@ namespace HR_System.Controllers
             t_objetivos.estatus = "PE";
             t_objetivos.fecha = System.DateTime.Now;
             t_objetivos.planta = empleado.Substring(0, 3);
-            t_objetivos.u_id = empleado;
+            t_objetivos.u_id =  Convert.ToString(Session["userAccount"]);
             t_objetivos.f_id = System.DateTime.Now;
 
             if (ModelState.IsValid)
@@ -219,7 +219,7 @@ namespace HR_System.Controllers
             }
             t_objetivos.estatus = "EN";
             t_objetivos.f_enviado = System.DateTime.Now;
-            t_objetivos.u_id = empleado;
+            t_objetivos.u_id = Convert.ToString(Session["userAccount"]);
             t_objetivos.f_id = System.DateTime.Now;
             db.Entry(t_objetivos).State = EntityState.Modified;
             db.SaveChanges();

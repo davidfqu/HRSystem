@@ -55,9 +55,14 @@ namespace HR_System.Controllers
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
 
+            var configplanta = db.t_plantas.Find(Convert.ToString(Session["Plant"]));
+
+            if (Convert.ToString(Session["userAccount"]) != configplanta.gte_email)
+                return RedirectToAction("Index", "Home", null);
+
             string empleado = Convert.ToString(Session["EmployeeNo"]);
 
-            var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x=> x.axo == System.DateTime.Now.Year).OrderBy(x => x.supervisor).ToList();
+            var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x=> x.axo == System.DateTime.Now.Year && (x.autoriza == empleado || x.supervisor == empleado)).OrderBy(x => x.supervisor).ToList();
             var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Today.Year).OrderBy(x => x.supervisor).ToList();
 
             decimal totalbudget = 0;
@@ -193,8 +198,17 @@ namespace HR_System.Controllers
         {
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
-            if(empleado == "")
-            empleado = Convert.ToString(Session["EmployeeNo"]);
+            
+            if (empleado == "")
+            {
+                empleado = Convert.ToString(Session["EmployeeNo"]);
+
+                var configplanta = db.t_plantas.Find(Convert.ToString(Session["Plant"]));
+
+                if (Convert.ToString(Session["userAccount"]) == configplanta.gte_email)
+                    return RedirectToAction("IndexModule4D", "t_merit", null);
+            }
+            
             
             var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Now.Year).ToList();
             
@@ -593,7 +607,7 @@ namespace HR_System.Controllers
                         ViewBag.userJobPosition = add.puesto;
                         ViewBag.userImage = "data:image/png;base64," + Convert.ToBase64String(add.btImagen, 0, add.btImagen.Length);
                     }
-
+                    Session["Plant"] = t_usuarios.planta;
                     Session["EmployeeNo"] = empleado[0].empleado;
                     return true;
                 }

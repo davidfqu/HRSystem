@@ -18,6 +18,7 @@ namespace HR_System.Models
         public t_usuarios()
         {
             this.t_empleados = new HashSet<t_empleados>();
+            this.t_plantas1 = new HashSet<t_plantas>();
         }
     
         public string usuario { get; set; }
@@ -31,5 +32,7 @@ namespace HR_System.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<t_empleados> t_empleados { get; set; }
         public virtual t_plantas t_plantas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<t_plantas> t_plantas1 { get; set; }
     }
 }

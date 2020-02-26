@@ -33,6 +33,7 @@ namespace HR_System.Models
         public string jobcode { get; set; }
         public string gerente { get; set; }
         public string califica { get; set; }
+        public byte[] mkt_med { get; set; }
     
         public virtual t_plantas t_plantas { get; set; }
         public virtual t_usuarios t_usuarios { get; set; }

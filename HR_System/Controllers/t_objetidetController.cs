@@ -161,7 +161,7 @@ namespace HR_System.Controllers
         public ActionResult Create([Bind(Include = "empleado,axo,consec,planta,fecha,objetivo,descrip,peso,metrico,cancelado,nota_cancel,f_cancel,u_cancel,resultado1,nota_r1,f_r1,resultado2,nota_r2,f_r2,f_id")] t_objetidet t_objetidet)
         {
             t_objetidet.fecha = System.DateTime.Now;
-            t_objetidet.f_id = System.DateTime.Now;
+            t_objetidet.f_id = System.DateTime.Now; 
             if (ModelState.IsValid)
             {
                 db.t_objetidet.Add(t_objetidet);

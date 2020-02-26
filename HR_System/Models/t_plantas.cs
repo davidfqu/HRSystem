@@ -46,5 +46,6 @@ namespace HR_System.Models
         public virtual ICollection<t_objetivos> t_objetivos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<t_budget_pta> t_budget_pta { get; set; }
+        public virtual t_usuarios t_usuarios1 { get; set; }
     }
 }

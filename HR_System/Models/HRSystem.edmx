@@ -36,6 +36,8 @@
           <Property Name="rango_fin" Type="numeric" Precision="3" Scale="0" />
           <Property Name="u_id" Type="varchar" MaxLength="20" />
           <Property Name="f_id" Type="datetime" />
+          <Property Name="score_ini" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="score_fin" Type="numeric" Precision="3" Scale="0" />
         </EntityType>
         <EntityType Name="t_config">
           <Key>
@@ -96,6 +98,7 @@
           <Property Name="jobcode" Type="varchar" MaxLength="10" />
           <Property Name="gerente" Type="varchar" MaxLength="20" />
           <Property Name="califica" Type="varchar" MaxLength="10" />
+          <Property Name="mkt_med" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="t_jobcode">
           <Key>
@@ -128,7 +131,7 @@
           <Property Name="lump_imp" Type="numeric" Precision="18" Scale="2" />
           <Property Name="lump_porc" Type="numeric" Precision="5" Scale="2" />
           <Property Name="salario_nuevo" Type="numeric" Precision="18" Scale="2" />
-          <Property Name="market_mcr" Type="numeric" Precision="5" Scale="2" />
+          <Property Name="market_mcr" Type="numeric" Precision="18" Scale="2" />
           <Property Name="merit_guide" Type="varchar" MaxLength="10" />
           <Property Name="estatus" Type="varchar" MaxLength="2" />
           <Property Name="nota" Type="varchar" MaxLength="500" />
@@ -221,7 +224,7 @@
           <Property Name="usuario_bd" Type="varchar" MaxLength="20" />
           <Property Name="password_bd" Type="varchar" MaxLength="20" />
           <Property Name="direct_email" Type="varchar" MaxLength="50" />
-          <Property Name="gte_email" Type="varchar" MaxLength="50" />
+          <Property Name="gte_email" Type="varchar" MaxLength="20" />
           <Property Name="gte_email2" Type="varchar" MaxLength="50" />
           <Property Name="f_id" Type="datetime" />
         </EntityType>
@@ -433,6 +436,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_t_plantas_t_usuarios">
+          <End Role="t_usuarios" Type="Self.t_usuarios" Multiplicity="0..1" />
+          <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_usuarios">
+              <PropertyRef Name="usuario" />
+            </Principal>
+            <Dependent Role="t_plantas">
+              <PropertyRef Name="gte_email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sp_view_merit_dreport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Supervisor" Type="varchar" Mode="In" />
         </Function>
@@ -519,6 +534,10 @@
             <End Role="t_empleados" EntitySet="t_empleados" />
             <End Role="t_empleados1" EntitySet="t_empleados" />
           </AssociationSet>
+          <AssociationSet Name="FK_t_plantas_t_usuarios" Association="Self.FK_t_plantas_t_usuarios">
+            <End Role="t_usuarios" EntitySet="t_usuarios" />
+            <End Role="t_plantas" EntitySet="t_plantas" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -576,6 +595,7 @@
           <Property Name="jobcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="gerente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="califica" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="mkt_med" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="t_objetidet">
           <Key>
@@ -647,7 +667,7 @@
           <Property Name="usuario_bd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="password_bd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="direct_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="gte_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="gte_email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="gte_email2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="f_id" Type="DateTime" Precision="3" />
           <NavigationProperty Name="t_empleados" Relationship="Self.fk_emp_pta" FromRole="t_plantas" ToRole="t_empleados" />
@@ -655,6 +675,7 @@
           <NavigationProperty Name="t_objetidet" Relationship="HRSystemModel.fk_objd_pta" FromRole="t_plantas" ToRole="t_objetidet" />
           <NavigationProperty Name="t_objetivos" Relationship="HRSystemModel.fk_obj_pta" FromRole="t_plantas" ToRole="t_objetivos" />
           <NavigationProperty Name="t_budget_pta" Relationship="HRSystemModel.fk_budget_planta" FromRole="t_plantas" ToRole="t_budget_pta" />
+          <NavigationProperty Name="t_usuarios1" Relationship="HRSystemModel.FK_t_plantas_t_usuarios" FromRole="t_plantas" ToRole="t_usuarios" />
         </EntityType>
         <EntityType Name="t_usuarios">
           <Key>
@@ -669,6 +690,7 @@
           <Property Name="f_id" Type="DateTime" Precision="3" />
           <NavigationProperty Name="t_empleados" Relationship="Self.fk_empleado" FromRole="t_usuarios" ToRole="t_empleados" />
           <NavigationProperty Name="t_plantas" Relationship="Self.fk_planta" FromRole="t_usuarios" ToRole="t_plantas" />
+          <NavigationProperty Name="t_plantas1" Relationship="HRSystemModel.FK_t_plantas_t_usuarios" FromRole="t_usuarios" ToRole="t_plantas" />
         </EntityType>
         <Association Name="fk_emp_pta">
           <End Role="t_plantas" Type="Self.t_plantas" Multiplicity="0..1" />
@@ -816,6 +838,10 @@
           <Parameter Name="Supervisor" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_view_merit_planners" ReturnType="Collection(HRSystemModel.sp_view_merit_planners_Result)" />
+          <AssociationSet Name="FK_t_plantas_t_usuarios" Association="HRSystemModel.FK_t_plantas_t_usuarios">
+            <End Role="t_usuarios" EntitySet="t_usuarios" />
+            <End Role="t_plantas" EntitySet="t_plantas" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="fk_objd_pta">
           <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="0..1" />
@@ -894,6 +920,8 @@
           <Property Name="f_id" Type="DateTime" Precision="3" />
           <NavigationProperty Name="t_meridet" Relationship="HRSystemModel.fk_merit_calif" FromRole="t_califica" ToRole="t_meridet" />
           <NavigationProperty Name="t_objetivos" Relationship="HRSystemModel.fk_obj_cali" FromRole="t_califica" ToRole="t_objetivos" />
+          <Property Name="score_ini" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="score_fin" Type="Decimal" Precision="3" Scale="0" />
         </EntityType>
         <EntityType Name="t_config_m4">
           <Key>
@@ -937,7 +965,7 @@
           <Property Name="lump_imp" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="lump_porc" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="salario_nuevo" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="market_mcr" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="market_mcr" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="merit_guide" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="estatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="nota" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -1105,6 +1133,18 @@
           <Property Type="String" Name="gerente" Nullable="true" MaxLength="20" />
           <Property Type="Decimal" Name="salary" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
+        <Association Name="FK_t_plantas_t_usuarios">
+          <End Type="HRSystemModel.t_usuarios" Role="t_usuarios" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_plantas" Role="t_plantas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_usuarios">
+              <PropertyRef Name="usuario" />
+            </Principal>
+            <Dependent Role="t_plantas">
+              <PropertyRef Name="gte_email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1147,6 +1187,7 @@
           <EntitySetMapping Name="t_empleados">
             <EntityTypeMapping TypeName="HRSystemModel.t_empleados">
               <MappingFragment StoreEntitySet="t_empleados">
+                <ScalarProperty Name="mkt_med" ColumnName="mkt_med" />
                 <ScalarProperty Name="califica" ColumnName="califica" />
                 <ScalarProperty Name="gerente" ColumnName="gerente" />
                 <ScalarProperty Name="jobcode" ColumnName="jobcode" />
@@ -1270,6 +1311,8 @@
           <EntitySetMapping Name="t_califica">
             <EntityTypeMapping TypeName="HRSystemModel.t_califica">
               <MappingFragment StoreEntitySet="t_califica">
+                <ScalarProperty Name="score_fin" ColumnName="score_fin" />
+                <ScalarProperty Name="score_ini" ColumnName="score_ini" />
                 <ScalarProperty Name="f_id" ColumnName="f_id" />
                 <ScalarProperty Name="u_id" ColumnName="u_id" />
                 <ScalarProperty Name="rango_fin" ColumnName="rango_fin" />

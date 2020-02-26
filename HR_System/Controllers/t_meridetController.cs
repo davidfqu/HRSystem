@@ -156,7 +156,7 @@ namespace HR_System.Controllers
             decimal meritg1 = Convert.ToDecimal((t_meridet.t_califica.rango_ini * t_merit.ElementAt(0).budget_porc)) / 100;
             decimal meritg2 = Convert.ToDecimal((t_meridet.t_califica.rango_fin * t_merit.ElementAt(0).budget_porc)) / 100;
 
-            
+            ViewBag.merithstatus = t_merit.ElementAt(0).estatus;
             ViewBag.meritg1 = meritg1;
             ViewBag.meritg2 = meritg2;
             return View();
@@ -176,7 +176,7 @@ namespace HR_System.Controllers
             if (!t_merit.Any())
                 return RedirectToAction("Index", "Home", null);
 
-            t_meridet t_meridet = db.t_meridet.Find(supervisor,System.DateTime.Now.Year,empleado);
+            t_meridet t_meridet = db.t_meridet.Find(supervisor, System.DateTime.Now.Year, empleado);
 
             t_meridet.salario_nuevo = t_meridet.salario_axo + merit;
             t_meridet.sugerido_imp = merit;
@@ -185,7 +185,7 @@ namespace HR_System.Controllers
             t_meridet.lump_imp = lump;
             t_meridet.estatus = "AP";
             t_meridet.nota = comments;
-            t_meridet.u_id = supervisor;
+            t_meridet.u_id = Convert.ToString(Session["userAccount"]);
             t_meridet.f_id = System.DateTime.Now;
             db.Entry(t_meridet).State = EntityState.Modified;
             db.SaveChanges();

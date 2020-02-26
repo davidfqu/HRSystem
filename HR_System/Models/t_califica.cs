@@ -27,6 +27,8 @@ namespace HR_System.Models
         public Nullable<decimal> rango_fin { get; set; }
         public string u_id { get; set; }
         public Nullable<System.DateTime> f_id { get; set; }
+        public Nullable<decimal> score_ini { get; set; }
+        public Nullable<decimal> score_fin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<t_meridet> t_meridet { get; set; }
