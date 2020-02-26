@@ -90,7 +90,7 @@
 
 </div>
 
-@if (Convert.ToString(ViewBag.merit.autoriza) == Convert.ToString(Session["EmployeeNo"]))
+@if (Convert.ToString(ViewBag.merit.autoriza) == Convert.ToString(Session["EmployeeNo"]) && ViewBag.merit.estatus == "AP")
 {
     <div class="row mb-0">
         <div class="col-12 d-flex justify-content-center align-content-center">
