@@ -98,7 +98,8 @@
           <Property Name="jobcode" Type="varchar" MaxLength="10" />
           <Property Name="gerente" Type="varchar" MaxLength="20" />
           <Property Name="califica" Type="varchar" MaxLength="10" />
-          <Property Name="mkt_med" Type="varbinary(max)" />
+          <Property Name="mkt_med" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="merit_planner" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="t_jobcode">
           <Key>
@@ -424,6 +425,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_t_empleados_gerentes">
+          <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
+          <End Role="t_empleados1" Type="Self.t_empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_empleados1">
+              <PropertyRef Name="gerente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_t_empleados_supervisor">
           <End Role="t_empleados" Type="Self.t_empleados" Multiplicity="0..1" />
           <End Role="t_empleados1" Type="Self.t_empleados" Multiplicity="*" />
@@ -530,6 +543,10 @@
             <End Role="t_plantas" EntitySet="t_plantas" />
             <End Role="t_usuarios" EntitySet="t_usuarios" />
           </AssociationSet>
+          <AssociationSet Name="FK_t_empleados_gerentes" Association="Self.FK_t_empleados_gerentes">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_empleados1" EntitySet="t_empleados" />
+          </AssociationSet>
           <AssociationSet Name="FK_t_empleados_supervisor" Association="Self.FK_t_empleados_supervisor">
             <End Role="t_empleados" EntitySet="t_empleados" />
             <End Role="t_empleados1" EntitySet="t_empleados" />
@@ -595,7 +612,10 @@
           <Property Name="jobcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="gerente" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="califica" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="mkt_med" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="mkt_med" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="merit_planner" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="t_empleados11" Relationship="HRSystemModel.FK_t_empleados_gerentes" FromRole="t_empleados" ToRole="t_empleados1" />
+          <NavigationProperty Name="t_empleados21" Relationship="HRSystemModel.FK_t_empleados_gerentes" FromRole="t_empleados1" ToRole="t_empleados" />
         </EntityType>
         <EntityType Name="t_objetidet">
           <Key>
@@ -841,6 +861,10 @@
           <AssociationSet Name="FK_t_plantas_t_usuarios" Association="HRSystemModel.FK_t_plantas_t_usuarios">
             <End Role="t_usuarios" EntitySet="t_usuarios" />
             <End Role="t_plantas" EntitySet="t_plantas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_t_empleados_gerentes" Association="HRSystemModel.FK_t_empleados_gerentes">
+            <End Role="t_empleados" EntitySet="t_empleados" />
+            <End Role="t_empleados1" EntitySet="t_empleados" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="fk_objd_pta">
@@ -1145,6 +1169,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_t_empleados_gerentes">
+          <End Type="HRSystemModel.t_empleados" Role="t_empleados" Multiplicity="0..1" />
+          <End Type="HRSystemModel.t_empleados" Role="t_empleados1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="t_empleados">
+              <PropertyRef Name="empleado" />
+            </Principal>
+            <Dependent Role="t_empleados1">
+              <PropertyRef Name="gerente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1187,6 +1223,7 @@
           <EntitySetMapping Name="t_empleados">
             <EntityTypeMapping TypeName="HRSystemModel.t_empleados">
               <MappingFragment StoreEntitySet="t_empleados">
+                <ScalarProperty Name="merit_planner" ColumnName="merit_planner" />
                 <ScalarProperty Name="mkt_med" ColumnName="mkt_med" />
                 <ScalarProperty Name="califica" ColumnName="califica" />
                 <ScalarProperty Name="gerente" ColumnName="gerente" />

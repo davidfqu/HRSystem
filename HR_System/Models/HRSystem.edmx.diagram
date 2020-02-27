@@ -36,6 +36,7 @@
         <AssociationConnector Association="HRSystemModel.fk_meridet_job" />
         <AssociationConnector Association="HRSystemModel.fk_meridet_enc" />
         <AssociationConnector Association="HRSystemModel.FK_t_plantas_t_usuarios" />
+        <AssociationConnector Association="HRSystemModel.FK_t_empleados_gerentes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

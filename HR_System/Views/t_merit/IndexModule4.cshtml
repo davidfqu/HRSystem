@@ -38,8 +38,9 @@
 }
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Module 4</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Annual Merit Salary Plannnig</h3>
-<h3 class="text-center  pb-2" style="font-size:2.5vw">@ViewBag.merit.depto</h3>
-<div class="row mt-2 my-auto">
+<h3 class="text-center  pb-2" style="font-size:2.5vw">@ViewBag.merit.depto <span class="rounded-pill p-2" style="background-color:#f2f2f2;font-size:1.5vw"><span class="font-weight-bold">Planner:</span> @ViewBag.merit.t_empleados1.nombre </span></h3>
+
+<div class="row mt-2 my-auto mb-0">
 
     <div class="col-3 my-auto mr-0">
         <canvas id="ChartProgresso"></canvas>
@@ -73,6 +74,21 @@
                 </label>
             </div>
             <div class="col-2"></div>
+
+        </div>
+        <div class="row mt-0">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="d-flex justify-content-between">
+                    <small class="text-muted" style="font-size:15px">Direct Report Merit Plans Approved</small>
+                    <small style="font-size:13px"><span><strong>@ViewBag.ApproveCount</strong></span>/<span></span>@ViewBag.Directos.Count</small>
+                </div>
+                <div class="progress md-progress" style="height:5px">
+                    <div class="progress-bar bg-primary" role="progressbar" 
+                         aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ApprovePer"></div>
+                </div>
+            </div>
+            <div class="col-1"></div>
         </div>
 
     </div>
@@ -90,30 +106,30 @@
 
 </div>
 
+
+
 @if (Convert.ToString(ViewBag.merit.autoriza) == Convert.ToString(Session["EmployeeNo"]) && ViewBag.merit.estatus == "AP")
 {
-    <div class="row mb-0">
+    <div class="row mb-0 mt-2">
         <div class="col-12 d-flex justify-content-center align-content-center">
             <a href="@Url.Action("AutorizeMP","t_merit",new {supervisor = ViewBag.merit.supervisor, axo = ViewBag.merit.axo})" class="btn btn-success rounded-pill" role="button" )>Autorize Merit Plan</a>
 
-            <button type="button" class="btn btn-primary rounded-pill p-0" data-toggle="tooltip" data-placement="right" title="Add/Edit Comments" style="height:46.08px; width:46.08px">
-               <span data-toggle="modal" data-target="#AddObjModal"><i class="far fa-comment" style="font-size:25px"></i></span> 
+            <button type="button" class="btn btn-danger rounded-pill" data-toggle="modal" data-target="#AddObjModal" >
+              Reject
             </button>
         </div>
     </div>
 }
 
-@if (Convert.ToString(ViewBag.merit.supervisor) == Convert.ToString(Session["EmployeeNo"]) && ViewBag.merit.n_autoriza != null)
+@if (Convert.ToString(ViewBag.merit.supervisor) == Convert.ToString(Session["EmployeeNo"]) && ViewBag.merit.ind_autoriza == "2")
 {
     <div class="row mb-0">
         <div class="col-12 d-flex justify-content-center align-content-center">
-           <div class="my-auto">Director Plant Comments:</div> 
-            <button type="button" class="btn btn-primary rounded-pill p-0" data-toggle="tooltip" data-placement="right" title="@ViewBag.merit.n_autoriza" style="height:46.08px; width:46.08px">
-                <i class="far fa-comment" style="font-size:25px"></i>
-            </button>
+            <p> <span style="font-size:15px" class="badge badge-danger badge-pill">Your merit plan was rejected</span><span class="ml-2 font-weight-bold">Note: </span>@ViewBag.merit.n_autoriza </p>
         </div>
     </div>
 }
+
 
 
 <br />
@@ -192,11 +208,11 @@
 <div class="modal fade" id="AddObjModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
-        @using (Html.BeginForm("AddComments", "t_merit"))
+        @using (Html.BeginForm("Reject", "t_merit"))
         {
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4>Comments</h4>
+                    <h4>Reject</h4>
                     <button type="button" class="close mr-0" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -214,8 +230,8 @@
 
                                 <div class="form-group">
                                     <div class="md-form md-outline">
-                                        <textarea id="comments" name="comments" class="md-textarea form-control" rows="5" maxlength="200">@ViewBag.merit.n_autoriza</textarea>
-                                        <label for="comments">Add/Edit Observations</label>
+                                        <textarea id="n_aprobado" name="n_autoriza" class="md-textarea form-control" rows="5" maxlength="200"></textarea>
+                                        <label for="n_aprobado">Reason</label>
                                     </div>
                                 </div>
 
@@ -224,7 +240,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <input type="submit" value="Update" class="btn btn-primary" />
+                            <input type="submit" value="Reject" class="btn btn-danger" />
                         </div>
                     </div>
                 </div>

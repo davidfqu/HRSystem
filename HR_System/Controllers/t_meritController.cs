@@ -36,6 +36,21 @@ namespace HR_System.Controllers
             return RedirectToAction("IndexModule4", "t_merit", new {empleado = t_merit.supervisor });
         }
 
+        public ActionResult Reject(string supervisor, decimal axo, string n_autoriza)
+        {
+            if (!Login())
+                return RedirectToAction("NoUser", "Home", null);
+
+            t_merit t_merit = db.t_merit.Find(supervisor, axo);
+            t_merit.ind_autoriza = "2";
+            t_merit.f_autoriza = System.DateTime.Now;
+            t_merit.n_autoriza = n_autoriza;
+            db.Entry(t_merit).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("IndexModule4", "t_merit", new { empleado = t_merit.supervisor });
+        }
+
         public ActionResult AddComments(string supervisor, decimal axo, string comments)
         {
             if (!Login())
@@ -55,7 +70,9 @@ namespace HR_System.Controllers
             if (!Login())
                 return RedirectToAction("NoUser", "Home", null);
 
-            var configplanta = db.t_plantas.Find(Convert.ToString(Session["Plant"]));
+            string planta = Convert.ToString(Session["Plant"]);
+
+            var configplanta = db.t_plantas.Find(planta);
 
             if (Convert.ToString(Session["userAccount"]) != configplanta.gte_email)
                 return RedirectToAction("Index", "Home", null);
@@ -64,7 +81,10 @@ namespace HR_System.Controllers
 
             var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x=> x.axo == System.DateTime.Now.Year && (x.autoriza == empleado || x.supervisor == empleado)).OrderBy(x => x.supervisor).ToList();
             var t_meridet = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.supervisor == empleado && x.axo == System.DateTime.Today.Year).OrderBy(x => x.supervisor).ToList();
+            var t_meridet2 = db.t_meridet.Include(t => t.t_califica).Include(t => t.t_empleados).Include(t => t.t_jobcode).Include(t => t.t_merit).Where(x => x.axo == System.DateTime.Today.Year && x.supervisor.Substring(0,3) == planta).OrderBy(x => x.supervisor).ToList();
 
+
+            double approve = 0;
             decimal totalbudget = 0;
             decimal totalspent = 0;
             decimal totalavailable = 0;
@@ -76,6 +96,12 @@ namespace HR_System.Controllers
             string colorcal = "";
             var departments = new List<MyDirects>();
             var directs = new List<MyDirects>();
+
+            foreach(var item in t_meridet2)
+            {
+                if (item.estatus == "AP")
+                    approve++;
+            }
 
             foreach (var item in t_merit)
             {
@@ -185,6 +211,11 @@ namespace HR_System.Controllers
             ViewBag.tavailable = totalavailable;
             ViewBag.statusmerit = smstatus;
 
+            ViewBag.ApproveCount = approve;
+            string aper = Math.Round((approve / t_meridet2.Count) * 100).ToString() + "%";
+            ViewBag.ApprovePer = aper;
+            ViewBag.MCount = t_meridet2.Count;
+
             ViewBag.percent = Math.Round((ViewBag.tspent / ViewBag.tbudget) * 100);
             ViewBag.departments = departments;
             ViewBag.directs = directs;
@@ -222,6 +253,8 @@ namespace HR_System.Controllers
             string iconocal = "";
             string colorcal = "";
 
+            double approve = 0;
+
             foreach (var item in t_meridet)
             {
                 switch (item.estatus)
@@ -232,6 +265,7 @@ namespace HR_System.Controllers
 
                     case "AP":
                         estado = "Approved";
+                        approve++;
                         break;
 
                     default:
@@ -282,12 +316,14 @@ namespace HR_System.Controllers
 
             }
 
-
+            ViewBag.ApproveCount = approve;
             ViewBag.Directos = directs;
+            string aper = Math.Round((approve / directs.Count) * 100 ).ToString() +"%";
+            ViewBag.ApprovePer = aper;
 
             ViewBag.merit = t_merit.ElementAt(0);
             ViewBag.available = t_merit.ElementAt(0).budget_imp - t_merit.ElementAt(0).budget_spen;
-            ViewBag.percent = Convert.ToString(Math.Round((Convert.ToDouble(t_merit.ElementAt(0).budget_spen / t_merit.ElementAt(0).budget_imp)) * 100));
+            ViewBag.percent = Convert.ToString(Math.Round(Convert.ToDouble((t_merit.ElementAt(0).budget_spen / t_merit.ElementAt(0).budget_imp)* 100)));
 
             string statusmerit = "";
 
@@ -313,6 +349,8 @@ namespace HR_System.Controllers
                     statusmerit = "No Merit";
                     break;
             }
+
+            
 
             ViewBag.statusmerit = statusmerit;
 

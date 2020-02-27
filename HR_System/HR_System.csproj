@@ -240,6 +240,7 @@
     <Compile Include="Controllers\t_meritController.cs" />
     <Compile Include="Controllers\t_objetidetController.cs" />
     <Compile Include="Controllers\t_objetivosController.cs" />
+    <Compile Include="Controllers\t_usuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -405,11 +406,6 @@
     <Content Include="Views\t_objetidet\Approval.cshtml" />
     <Content Include="Views\t_objetivos\MenuModule1.cshtml" />
     <Content Include="Views\Home\NoUser.cshtml" />
-    <Content Include="Views\t_empleados\Create.cshtml" />
-    <Content Include="Views\t_empleados\Delete.cshtml" />
-    <Content Include="Views\t_empleados\Details.cshtml" />
-    <Content Include="Views\t_empleados\Edit.cshtml" />
-    <Content Include="Views\t_empleados\Index.cshtml" />
     <Content Include="Views\t_objetivos\DirectReports.cshtml" />
     <Content Include="Views\t_config_m1\Create.cshtml" />
     <Content Include="Views\t_config_m1\Delete.cshtml" />
@@ -431,6 +427,11 @@
     <Content Include="Views\t_meridet\MeritProcess.cshtml" />
     <Content Include="Views\t_merit\Start.cshtml" />
     <Content Include="Views\t_merit\IndexModule4D.cshtml" />
+    <Content Include="Views\t_usuarios\Create.cshtml" />
+    <Content Include="Views\t_usuarios\Delete.cshtml" />
+    <Content Include="Views\t_usuarios\Details.cshtml" />
+    <Content Include="Views\t_usuarios\Edit.cshtml" />
+    <Content Include="Views\t_usuarios\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

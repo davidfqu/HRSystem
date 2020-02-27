@@ -22,6 +22,7 @@ namespace HR_System.Models
             this.t_merit = new HashSet<t_merit>();
             this.t_meridet = new HashSet<t_meridet>();
             this.t_merit1 = new HashSet<t_merit>();
+            this.t_empleados11 = new HashSet<t_empleados>();
         }
     
         public string empleado { get; set; }
@@ -33,7 +34,8 @@ namespace HR_System.Models
         public string jobcode { get; set; }
         public string gerente { get; set; }
         public string califica { get; set; }
-        public byte[] mkt_med { get; set; }
+        public Nullable<decimal> mkt_med { get; set; }
+        public string merit_planner { get; set; }
     
         public virtual t_plantas t_plantas { get; set; }
         public virtual t_usuarios t_usuarios { get; set; }
@@ -48,5 +50,8 @@ namespace HR_System.Models
         public virtual ICollection<t_meridet> t_meridet { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<t_merit> t_merit1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<t_empleados> t_empleados11 { get; set; }
+        public virtual t_empleados t_empleados21 { get; set; }
     }
 }

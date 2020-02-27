@@ -242,7 +242,7 @@ else
         });
 
         var salaxo = @ViewBag.merit.salario_axo
-        var marketmid = @ViewBag.merit.t_jobcode.mrp;
+        var marketmid = @ViewBag.merit.market_mcr;
         var spent = @ViewBag.spent;
         var meritg1 = @ViewBag.meritg1;
         var meritg2 = @ViewBag.meritg2;
@@ -291,7 +291,7 @@ else
         $("#merit").on({
 
             blur: function () {
-                newavailable = available - newmerit - newlump;
+                newavailable = Math.trunc((available - newmerit - newlump)*100) / 100;
                 dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
@@ -324,7 +324,7 @@ else
                 }
                 meritper.value = meritperc
                 newsalarycur = (absalary + absalary * ((this.value) / absalary));
-                newmerit = absalary * ((this.value) / absalary);
+                newmerit = Math.trunc(((this.value * absalary) / 100) *100) / 100;
                 newsalary.innerHTML = formatter.format(newsalarycur.toFixed(2));
                 marketmidas.innerHTML = ((newsalarycur / marketmid) * 100).toFixed(2);
                 if (((newsalarycur / marketmid) * 100) > 120) {
@@ -346,7 +346,7 @@ else
         $("#meritper").on({
 
             blur: function () {
-                newavailable = (available - newmerit - newlump);
+                newavailable = Math.trunc((available - newmerit - newlump)*100) / 100;
                 dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
@@ -380,7 +380,7 @@ else
                 }
                 merit.value = meritn;
                 newsalarycur = (absalary + ((this.value * absalary) / 100));
-                newmerit = ((this.value * absalary) / 100).toFixed(2);
+                newmerit = Math.trunc(((this.value * absalary) / 100) *100) / 100;
                 newsalary.innerHTML = formatter.format(newsalarycur.toFixed(2));
                 marketmidas.innerHTML = ((newsalarycur / marketmid) * 100).toFixed(2);
                 if (((newsalarycur / marketmid) * 100) > 120) {
@@ -403,7 +403,7 @@ else
 
         $("#lump").on({
             blur: function () {
-                newavailable = available - newmerit - newlump;
+                newavailable = Math.trunc((available - newmerit - newlump)*100) / 100;
                 dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
@@ -421,7 +421,7 @@ else
 
         $("#lumpper").on({
             blur: function () {
-                newavailable = available - newmerit - newlump;
+                newavailable = Math.trunc((available - newmerit - newlump)*100) / 100;
                 dabudget.innerHTML = formatter.format(newavailable.toFixed(2));
                 newspent = spent*1 + newmerit*1 + newlump*1;
                 difbudg = (bamaount - meritn - newlump).toFixed(2);
@@ -500,7 +500,6 @@ else
 
         $("form").submit(function(event){
             if (newavailable < 0){
-                alert(newavailable)
                 alert1();
                 event.preventDefault();
             }else
