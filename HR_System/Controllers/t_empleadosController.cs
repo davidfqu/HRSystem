@@ -17,7 +17,7 @@ namespace HR_System.Controllers
         // GET: t_empleados
         public ActionResult Index()
         {
-            var t_empleados = db.t_empleados.Include(t => t.t_plantas).Include(t => t.t_usuarios).Include(t => t.t_empleados2);
+            var t_empleados = db.t_empleados.Include(t => t.t_plantas).Include(t => t.t_usuarios).Include(t => t.t_empleados2).Include(t => t.t_empleados21);
             return View(t_empleados.ToList());
         }
 
@@ -42,6 +42,7 @@ namespace HR_System.Controllers
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre");
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre");
             ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre");
+            ViewBag.gerente = new SelectList(db.t_empleados, "empleado", "nombre");
             return View();
         }
 
@@ -50,7 +51,7 @@ namespace HR_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "empleado,nombre,supervisor,usuario,f_id,planta")] t_empleados t_empleados)
+        public ActionResult Create([Bind(Include = "empleado,nombre,supervisor,usuario,f_id,planta,jobcode,gerente,califica,mkt_med,merit_planner")] t_empleados t_empleados)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +63,7 @@ namespace HR_System.Controllers
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_empleados.planta);
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre", t_empleados.usuario);
             ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.supervisor);
+            ViewBag.gerente = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.gerente);
             return View(t_empleados);
         }
 
@@ -80,6 +82,7 @@ namespace HR_System.Controllers
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_empleados.planta);
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre", t_empleados.usuario);
             ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.supervisor);
+            ViewBag.gerente = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.gerente);
             return View(t_empleados);
         }
 
@@ -88,7 +91,7 @@ namespace HR_System.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "empleado,nombre,supervisor,usuario,f_id,planta")] t_empleados t_empleados)
+        public ActionResult Edit([Bind(Include = "empleado,nombre,supervisor,usuario,f_id,planta,jobcode,gerente,califica,mkt_med,merit_planner")] t_empleados t_empleados)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +102,7 @@ namespace HR_System.Controllers
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre", t_empleados.planta);
             ViewBag.usuario = new SelectList(db.t_usuarios, "usuario", "nombre", t_empleados.usuario);
             ViewBag.supervisor = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.supervisor);
+            ViewBag.gerente = new SelectList(db.t_empleados, "empleado", "nombre", t_empleados.gerente);
             return View(t_empleados);
         }
 

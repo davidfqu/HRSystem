@@ -74,7 +74,7 @@ namespace HR_System.Controllers
 
             var configplanta = db.t_plantas.Find(planta);
 
-            if (Convert.ToString(Session["userAccount"]) != configplanta.gte_email)
+            if (Convert.ToString(Session["userAccount"]) != configplanta.direct_email)
                 return RedirectToAction("Index", "Home", null);
 
             string empleado = Convert.ToString(Session["EmployeeNo"]);
@@ -236,7 +236,7 @@ namespace HR_System.Controllers
 
                 var configplanta = db.t_plantas.Find(Convert.ToString(Session["Plant"]));
 
-                if (Convert.ToString(Session["userAccount"]) == configplanta.gte_email)
+                if (Convert.ToString(Session["userAccount"]) == configplanta.direct_email)
                     return RedirectToAction("IndexModule4D", "t_merit", null);
             }
             

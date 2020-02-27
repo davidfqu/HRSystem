@@ -432,6 +432,12 @@
     <Content Include="Views\t_usuarios\Details.cshtml" />
     <Content Include="Views\t_usuarios\Edit.cshtml" />
     <Content Include="Views\t_usuarios\Index.cshtml" />
+    <Content Include="Views\t_empleados\Create.cshtml" />
+    <Content Include="Views\t_empleados\Delete.cshtml" />
+    <Content Include="Views\t_empleados\Details.cshtml" />
+    <Content Include="Views\t_empleados\Edit.cshtml" />
+    <Content Include="Views\t_empleados\Index.cshtml" />
+    <Content Include="Views\t_usuarios\NewUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

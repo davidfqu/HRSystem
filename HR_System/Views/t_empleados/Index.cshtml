@@ -1,0 +1,88 @@
+﻿@model IEnumerable<HR_System.Models.t_empleados>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.califica)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mkt_med)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.merit_planner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_plantas.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_usuarios.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_empleados2.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.t_empleados21.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.jobcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.califica)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mkt_med)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.merit_planner)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_plantas.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_usuarios.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_empleados2.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.t_empleados21.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.empleado }) |
+            @Html.ActionLink("Details", "Details", new { id=item.empleado }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.empleado })
+        </td>
+    </tr>
+}
+
+</table>

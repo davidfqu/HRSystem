@@ -15,6 +15,31 @@ namespace HR_System.Controllers
         private HRSystemEntities db = new HRSystemEntities();
 
         // GET: t_usuarios
+        public ActionResult NewUser()
+        {
+            ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre");
+
+            List<SelectListItem> roles = new List<SelectListItem>();
+            roles.Add(new SelectListItem() { Text = "User", Value = "USER" });
+            roles.Add(new SelectListItem() { Text = "Manager", Value = "MGR" });
+            roles.Add(new SelectListItem() { Text = "Administrator", Value = "ADMCO" });
+            ViewBag.rol = new SelectList(roles, "Value", "Text");
+
+            ViewBag.supervisor = new SelectList(db.t_empleados,"empleado", "nombre");
+            ViewBag.manager = new SelectList(db.t_empleados.Include(t => t.t_usuarios).Where(x => x.t_usuarios.rol == "MGR"), "empleado","nombre");
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewUser(string planta, string empleado, string usuario, string email, string rol, string supervisor, string manager)
+        {
+           
+            return View();
+        }
+
+
         public ActionResult Index()
         {
             var t_usuarios = db.t_usuarios.Include(t => t.t_plantas);
