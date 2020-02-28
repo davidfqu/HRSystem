@@ -1,0 +1,52 @@
+﻿@model IEnumerable<HR_System.Models.t_config_m4>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.f_inicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.f_final)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cap_mrp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ind_alerta1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_inicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.f_final)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cap_mrp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ind_alerta1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.clave }) |
+            @Html.ActionLink("Details", "Details", new { id=item.clave }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.clave })
+        </td>
+    </tr>
+}
+
+</table>

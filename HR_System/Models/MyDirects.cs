@@ -7,6 +7,7 @@ namespace HR_System.Models
 {
     public class MyDirects
     {
+        public string usuario { get; set; }
         public string empleado { get; set; }
         public string nombre { get; set; }
         public decimal axo { get; set; }

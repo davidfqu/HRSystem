@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Globalization;
 
 namespace HR_System.Models
 {
@@ -40,6 +41,7 @@ namespace HR_System.Models
         }
         public empleadoTress datosTress(string empleado, string planta)
         {
+            TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
             empleadoTress empleadodatos = new empleadoTress();
             if (planta == "686")
             {
@@ -61,7 +63,7 @@ namespace HR_System.Models
                 var datos = db.Query(selectedQueryString).ToList();
                 if (datos.Any())
                 {
-                    empleadodatos.nombre = datos.ElementAt(0).NOMBRE;
+                    empleadodatos.nombre =  cultInfo.ToTitleCase(datos.ElementAt(0).NOMBRE.ToLower());
                     empleadodatos.puesto = datos.ElementAt(0).PUESTO;
                     empleadodatos.depto = datos.ElementAt(0).DEPTO;
                     empleadodatos.btImagen = (Byte[])datos.ElementAt(0)[6];

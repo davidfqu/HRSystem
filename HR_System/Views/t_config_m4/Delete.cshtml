@@ -1,0 +1,57 @@
+﻿@model HR_System.Models.t_config_m4
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>t_config_m4</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.f_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_final)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_final)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cap_mrp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cap_mrp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ind_alerta1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ind_alerta1)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

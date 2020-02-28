@@ -169,7 +169,6 @@ namespace HR_System.Controllers
 
             String supervisor = Convert.ToString(Session["EmployeeNo"]);
 
-            bool completed = true;
 
             var t_merit = db.t_merit.Include(t => t.t_empleados).Include(t => t.t_empleados1).Where(x => x.supervisor == supervisor && x.axo == System.DateTime.Now.Year).ToList();
 
@@ -190,22 +189,7 @@ namespace HR_System.Controllers
             db.Entry(t_meridet).State = EntityState.Modified;
             db.SaveChanges();
 
-            var t_meridet2 = db.t_meridet.Where(x => x.supervisor == supervisor && x.axo == System.DateTime.Now.Year);
-
-            foreach (var item in t_meridet2)
-            {
-                if (item.estatus != "AP")
-                    completed = false;
-            }
-
-            if(completed)
-            {
-                t_merit t_merit2 = db.t_merit.Find(supervisor, System.DateTime.Now.Year);
-                t_merit2.estatus = "AP";
-                db.Entry(t_merit2).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-
+          
             return RedirectToAction("IndexModule4", "t_merit", null);
         }
 
@@ -334,6 +318,7 @@ namespace HR_System.Controllers
             string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
             Session["userAccount"] = username;
             var t_usuarios = db.t_usuarios.Find(username);
+            Session["Rol"] = t_usuarios.rol;
             if (t_usuarios == null)
             {
                 //si usuario no esta

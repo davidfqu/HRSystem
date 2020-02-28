@@ -282,6 +282,8 @@ else
         marketmidas.innerHTML = ((salaxo / marketmid) * 100).toFixed(2);
         if (((salaxo / marketmid) * 100) > 120) {
             $("#marketcolor").addClass("text-danger");
+            $("#lumpper").attr("readonly", false);
+            $("#lump").attr("readonly", false);
         }
         else
         {
@@ -510,7 +512,7 @@ else
                     event.preventDefault();
                 }
                 else
-                    if(((newsalarycur / marketmid) * 100) > 120)
+                    if(((newsalarycur / marketmid) * 100) > 120 && (meritn !=0))
                     {
                         alert3();
                         event.preventDefault();

@@ -331,6 +331,7 @@ namespace HR_System.Controllers
             string username = Convert.ToString(User.Identity.Name).Substring(11).ToLower();
             Session["userAccount"] = username;
             var t_usuarios = db.t_usuarios.Find(username);
+            Session["Rol"] = t_usuarios.rol;
             if (t_usuarios == null)
             {
                 //si usuario no esta

@@ -1,73 +1,84 @@
-﻿@model HR_System.Models.t_usuarios
-
+﻿
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2 class="mt-2">Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>t_usuarios</h4>
+    <h4>Are you sure you want to delete the next user?</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.nombre)
+            Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nombre)
+            @ViewBag.details.nombre
+        </dd>
+
+
+        <dt>
+            Employee #
+        </dt>
+
+        <dd>
+            @ViewBag.details.empleado
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.email)
+            User
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.email)
+            @ViewBag.details.usuario
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.activo)
+            Email
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.activo)
+            @ViewBag.details.sextra1
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.rol)
+            Department
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.rol)
+            @ViewBag.details.depto
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.f_id)
+            Job Position
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.f_id)
+            @ViewBag.details.puesto;
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.t_plantas.nombre)
+            Manager
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.t_plantas.nombre)
+            @ViewBag.details.manager1
         </dd>
 
     </dl>
+</div>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+@using (Html.BeginForm("Delete", "t_usuarios", FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    <input type="text" name="usuario" value="@ViewBag.details.usuario" hidden />
+    <button class="btn btn-danger rounded-pill" type="submit">Delete</button>
+}
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+
+
+<div class="mt-2">
+    <a href="@Url.Action("Index", "t_usuarios",null)"><i class="fas fa-chevron-left"></i>  Back</a>
 </div>

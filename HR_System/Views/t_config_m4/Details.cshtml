@@ -1,0 +1,51 @@
+﻿@model HR_System.Models.t_config_m4
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>t_config_m4</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.f_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_final)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_final)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cap_mrp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cap_mrp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ind_alerta1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ind_alerta1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.clave }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

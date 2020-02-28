@@ -1,67 +1,74 @@
-﻿@model HR_System.Models.t_usuarios
-
+﻿
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="mt-2">Details</h2>
 
 <div>
-    <h4>t_usuarios</h4>
+    <h4>Users</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.nombre)
+            Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.nombre)
+            @ViewBag.details.nombre
+        </dd>
+
+
+        <dt>
+            Employee #
+        </dt>
+
+        <dd>
+            @ViewBag.details.empleado
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.email)
+            User
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.email)
+            @ViewBag.details.usuario
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.activo)
+            Email
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.activo)
+            @ViewBag.details.sextra1
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.rol)
+            Department
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.rol)
+            @ViewBag.details.depto
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.f_id)
+           Job Position
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.f_id)
+            @ViewBag.details.puesto;
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.t_plantas.nombre)
+            Manager
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.t_plantas.nombre)
+            @ViewBag.details.manager1
         </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.usuario }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="mt-2">
+    <a href="@Url.Action("Index", "t_usuarios",null)"><i class="fas fa-chevron-left"></i>  Back</a>
+</div>
