@@ -188,7 +188,7 @@ namespace HR_System.Controllers
             t_meridet.f_id = System.DateTime.Now;
             db.Entry(t_meridet).State = EntityState.Modified;
             db.SaveChanges();
-
+           
           
             return RedirectToAction("IndexModule4", "t_merit", null);
         }

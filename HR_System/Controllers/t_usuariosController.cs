@@ -46,7 +46,8 @@ namespace HR_System.Controllers
             List<SelectListItem> roles = new List<SelectListItem>();
             roles.Add(new SelectListItem() { Text = "User", Value = "USER" });
             roles.Add(new SelectListItem() { Text = "Manager", Value = "MGR" });
-            roles.Add(new SelectListItem() { Text = "Administrator", Value = "ADMCO" });
+            roles.Add(new SelectListItem() { Text = "Compensation Admin", Value = "ADMCO" });
+            roles.Add(new SelectListItem() { Text = "HR Admin", Value = "ADMHR" });
             ViewBag.rol = new SelectList(roles, "Value", "Text");
 
             var empleadoslist = db.t_empleados.OrderBy(x => x.nombre).ToList();
@@ -273,10 +274,10 @@ namespace HR_System.Controllers
             ViewBag.planta = new SelectList(db.t_plantas, "planta", "nombre");
 
             List<SelectListItem> roles = new List<SelectListItem>();
-            roles.Add(new SelectListItem() { Text = t_empleados.t_usuarios.rol, Value = t_empleados.t_usuarios.rol });
             roles.Add(new SelectListItem() { Text = "User", Value = "USER" });
             roles.Add(new SelectListItem() { Text = "Manager", Value = "MGR" });
-            roles.Add(new SelectListItem() { Text = "Administrator", Value = "ADMCO" });
+            roles.Add(new SelectListItem() { Text = "Compensation Admin", Value = "ADMCO" });
+            roles.Add(new SelectListItem() { Text = "HR Admin", Value = "ADMHR" });
             ViewBag.rol = new SelectList(roles, "Value", "Text");
 
             var empleadoslist = db.t_empleados.OrderBy(x => x.nombre).ToList();

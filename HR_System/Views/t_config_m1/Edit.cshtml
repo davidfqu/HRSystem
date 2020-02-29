@@ -5,6 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section style{
+    <link href="~/css/Toasts.css" rel="stylesheet" />
+}
+
+<div id="snackbar">
+   Done! Your changes have been made
+</div>
+
+
 <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-2 mt-3" style="font-size:1.5vw">Performance Review</h6>
 <h3 class="font-weight-bold text-center  pb-2" style="font-size:3.5vw">Configurations </h3>
 <hr />
@@ -24,7 +33,7 @@
             to
             @Html.EditorFor(model => model.f_objfin, new { htmlAttributes = new { @class = "form-control datepicker " } })
             Year:
-            @Html.EditorFor(model => model.axo_activo, new { htmlAttributes = new { @class = "form-control" } })
+            <input type="number" name="axo_activo" class="form-control" value="@Model.axo_activo"  />
         </div>
 
 
@@ -67,6 +76,29 @@
             timepicker: true,
             format: 'Y-m-d'
         });
-    </script>
+       
 
+    </script>
+    <script>
+
+        var alert = @ViewBag.Alert;
+
+        if (alert == "1")
+        {
+            alert1();
+        }
+
+
+        function alert1() {
+            // Get the snackbar DIV
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 10000);
+        };
+
+    </script>
 }

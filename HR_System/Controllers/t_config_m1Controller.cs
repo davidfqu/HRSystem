@@ -59,8 +59,12 @@ namespace HR_System.Controllers
         }
 
         // GET: t_config_m1/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string alert = "")
         {
+            if(alert == "1")
+            {
+                ViewBag.Alert = "1";
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -84,7 +88,7 @@ namespace HR_System.Controllers
             {
                 db.Entry(t_config_m1).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Edit",new { id = t_config_m1.clave });
+                return RedirectToAction("Edit",new { id = t_config_m1.clave, alert = "1" });
             }
             return View(t_config_m1);
         }

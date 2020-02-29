@@ -39,7 +39,7 @@
                                 Home
                             </a>
                         </li>
-                        @if (Convert.ToString(Session["Rol"]) == "ADMCO")
+                        @if (Convert.ToString(Session["Rol"]) == "ADMCO" || Convert.ToString(Session["Rol"]) == "ADMHR")
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -55,14 +55,14 @@
                                 Reports
                             </a>
                         </li>
-                     @if (Convert.ToString(Session["Rol"]) == "ADMCO")
+                     @if (Convert.ToString(Session["Rol"]) == "ADMCO" || Convert.ToString(Session["Rol"]) == "ADMHR")
                      {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">Configurations</a> 
                             <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="@Url.Action("Edit", "t_config_m1", new { id = "01" })">Module 1</a>
-                                <a class="dropdown-item" href="@Url.Action("Edit", "t_config_m4", new { id = "01" })">Module 4</a>
+                                <a class="dropdown-item" href="@Url.Action("Edit", "t_config_m1", new { id = "01" })">Performance Review</a>
+                                <a class="dropdown-item" href="@Url.Action("Edit", "t_config_m4", new { id = "01" })">Annual Merit Salary Planning</a>
                             </div>
                         </li>
                      }

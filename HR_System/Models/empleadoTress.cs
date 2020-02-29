@@ -57,7 +57,7 @@ namespace HR_System.Models
                                         inner join [Tress_MedlineMXL].[dbo].TURNO tu on co.CB_TURNO = tu.TU_CODIGO 
 										left join [Tress_MedlineMXL].[dbo].COLABORA co2 on co.CB_NIVEL4 = co2.CB_CODIGO
                                         left join [Tress_MedlineMXL].[dbo].IMAGEN im ON co.CB_CODIGO = im.CB_CODIGO  
-                                        WHERE co.CB_CODIGO = " + empleado + @" and co.CB_ACTIVO = 'S' 
+                                        WHERE co.CB_CODIGO = " + empleado + @"
                                         ORDER BY PU_DESCRIP,CB_TURNO";
 
                 var datos = db.Query(selectedQueryString).ToList();
