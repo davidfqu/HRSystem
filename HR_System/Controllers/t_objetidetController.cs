@@ -114,6 +114,10 @@ namespace HR_System.Controllers
             empleado = Convert.ToString(Session["EmployeeNo"]);
 
             var objetivoHeader = db.t_objetivos.Include(t => t.t_empleados).Include(t => t.t_plantas).Where(x => x.empleado == empleado && x.axo == axo).ToList().ElementAt(0);
+
+            if (objetivoHeader.estatus != "EN")
+                return RedirectToAction("Create", new { empleado = objetivoHeader.empleado, axo = objetivoHeader.axo });
+
             ViewBag.Objective = objetivoHeader;
 
             try
